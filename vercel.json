@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/weekly-matches",
+      "schedule": "0 7 * * 1"
+    },
+    {
+      "path": "/api/cron/ghost-check",
+      "schedule": "0 */6 * * *"
+    }
+  ]
+}

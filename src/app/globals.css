@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #0c0a07;
+    --accent: #c8542a;
+    --cream: #f4ede3;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #0c0a07;
+    color: #f4ede3;
+    font-family: 'Cabinet Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+  }
+
+  ::selection {
+    background-color: #c8542a;
+    color: #f4ede3;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0c0a07;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2a2520;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c8542a;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent text-cream px-8 py-4 text-sm font-medium tracking-widest uppercase transition-all duration-200 hover:bg-opacity-90 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply border border-border text-cream-muted px-8 py-4 text-sm font-medium tracking-widest uppercase transition-all duration-200 hover:border-cream hover:text-cream active:scale-95;
+  }
+
+  .card {
+    @apply bg-surface border border-border;
+  }
+
+  .section-label {
+    @apply text-accent text-xs tracking-[0.3em] uppercase font-medium font-cabinet;
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('https://fonts.cdnfonts.com/css/cabinet-grotesk') format('woff2');
+  font-display: swap;
+}
