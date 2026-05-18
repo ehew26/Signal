@@ -657,7 +657,7 @@ function Step6({ onBack }: { onBack: () => void }) {
     <div className="space-y-8">
       <div>
         <h3 className="font-fraunces text-lg text-cream mb-2">Start your membership</h3>
-        <p className="text-cream-muted text-sm">Founding members get 60 days free. $34.99/month after your trial ends.</p>
+        <p className="text-cream-muted text-sm">Founding members get 60 days free. $6.99/month after your trial ends.</p>
       </div>
 
       <div className="border border-border p-6">
@@ -667,7 +667,7 @@ function Step6({ onBack }: { onBack: () => void }) {
             <p className="text-cream-muted text-xs mt-1">5 matches weekly · Verified community · Cancel anytime</p>
           </div>
           <div className="text-right">
-            <p className="font-fraunces text-3xl text-cream">$34<span className="text-accent text-xl">.99</span></p>
+            <p className="font-fraunces text-3xl text-cream">$6<span className="text-accent text-xl">.99</span></p>
             <p className="text-cream-muted text-xs">/month after trial</p>
           </div>
         </div>

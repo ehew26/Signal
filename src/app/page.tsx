@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, CheckCircle, MapPin, Shield, Mic, Users } from 'lucide-react'
+import IntroSplash from '@/components/IntroSplash'
 
 // Animated waveform bars component
 function WaveformBars({ playing = false, color = '#c8542a', bars = 20 }: { playing?: boolean; color?: string; bars?: number }) {
@@ -117,7 +118,7 @@ function StatsTicker() {
     "0% pay-to-win",
     "100% identity verified",
     "No swiping. Ever.",
-    "Founding member pricing: $34.99/mo",
+    "Founding member pricing: $6.99/mo",
     "Siesta Key to Anna Maria Island",
   ]
   const doubled = [...stats, ...stats]
@@ -256,6 +257,7 @@ function WaitlistForm() {
 
 export default function LandingPage() {
   const heroRef = useRef<HTMLDivElement>(null)
+  const [showIntro, setShowIntro] = useState(true)
 
   useEffect(() => {
     // Scroll reveal animations
@@ -288,6 +290,7 @@ export default function LandingPage() {
 
   return (
     <main className="bg-background min-h-screen">
+      {showIntro && <IntroSplash onComplete={() => setShowIntro(false)} />}
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 border-b border-border/50 bg-background/80 backdrop-blur-md">
         <div className="font-fraunces text-2xl text-cream">
@@ -354,7 +357,7 @@ export default function LandingPage() {
               </div>
 
               <p className="text-cream-muted text-xs mt-6 tracking-wide">
-                Founding member pricing · 60 days free · $34.99/mo after
+                Founding member pricing · 60 days free · $6.99/mo after
               </p>
             </div>
 
@@ -529,7 +532,7 @@ export default function LandingPage() {
 
           <div className="border border-border p-10 animate-on-scroll">
             <div className="text-cream-muted text-xs tracking-widest uppercase mb-4">Founding Member</div>
-            <div className="font-fraunces text-7xl text-cream mb-2">$34<span className="text-accent text-4xl">.99</span></div>
+            <div className="font-fraunces text-7xl text-cream mb-2">$6<span className="text-accent text-4xl">.99</span></div>
             <div className="text-cream-muted mb-8">per month · after 60-day free trial</div>
             <ul className="text-left space-y-3 mb-10 max-w-xs mx-auto">
               {[

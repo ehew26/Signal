@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#0c0a07",
+        background: "#ffffff",
         accent: "#c8542a",
-        cream: "#f4ede3",
-        "cream-muted": "#a89b8c",
-        "surface": "#161410",
-        "surface-2": "#1e1b17",
-        "border": "#2a2520",
+        cream: "#0d1f4e",
+        "cream-muted": "#4a5568",
+        "surface": "#f7f8fc",
+        "surface-2": "#eef0f7",
+        "border": "#d1d9e8",
       },
       fontFamily: {
         fraunces: ["Fraunces", "serif"],
