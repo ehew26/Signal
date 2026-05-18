@@ -201,27 +201,39 @@ function Step2({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
     if (!files) return
     setUploading(true)
 
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
-
-    for (const file of Array.from(files)) {
-      if (photos.length >= 6) break
-      const ext = file.name.split('.').pop()
-      const path = `${user.id}/${Date.now()}.${ext}`
-      const { error } = await supabase.storage.from('photos').upload(path, file)
-      if (!error) {
-        const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path)
-        await supabase.from('photos').insert({
-          user_id: user.id,
-          url: publicUrl,
-          storage_path: path,
-          display_order: photos.length,
-        })
-        setPhotos(prev => [...prev, publicUrl])
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        alert('Session expired. Please refresh and try again.')
+        return
       }
+
+      for (const file of Array.from(files)) {
+        if (photos.length >= 6) break
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`${file.name} is too large. Max size is 10MB.`)
+          continue
+        }
+        const ext = file.name.split('.').pop()
+        const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+        const { error } = await supabase.storage.from('photos').upload(path, file)
+        if (!error) {
+          const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path)
+          await supabase.from('photos').insert({
+            user_id: user.id,
+            url: publicUrl,
+            storage_path: path,
+            display_order: photos.length,
+          })
+          setPhotos(prev => [...prev, publicUrl])
+        } else {
+          alert(`Failed to upload ${file.name}. Please try again.`)
+        }
+      }
+    } finally {
+      setUploading(false)
     }
-    setUploading(false)
   }
 
   async function handleNext() {
