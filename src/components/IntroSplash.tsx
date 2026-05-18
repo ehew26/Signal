@@ -2,20 +2,53 @@
 
 import { useEffect, useState } from 'react'
 
+function playTick(audioCtx: AudioContext, time: number) {
+  const osc = audioCtx.createOscillator()
+  const gain = audioCtx.createGain()
+  osc.connect(gain)
+  gain.connect(audioCtx.destination)
+  osc.type = 'square'
+  osc.frequency.setValueAtTime(800, time)
+  osc.frequency.exponentialRampToValueAtTime(400, time + 0.015)
+  gain.gain.setValueAtTime(0.35, time)
+  gain.gain.exponentialRampToValueAtTime(0.001, time + 0.04)
+  osc.start(time)
+  osc.stop(time + 0.04)
+}
+
 export default function IntroSplash({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<'enter' | 'hold' | 'exit'>('enter')
   const [blink, setBlink] = useState(true)
 
   useEffect(() => {
+    // Web Audio turn signal clicks
+    let audioCtx: AudioContext | null = null
+    try {
+      audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const now = audioCtx.currentTime
+      const clickInterval = 0.45 // matches blink interval
+      const totalDuration = 6.5 // total intro length in seconds
+      for (let i = 0; i < totalDuration / clickInterval; i++) {
+        playTick(audioCtx, now + i * clickInterval)
+      }
+    } catch (e) {
+      // Audio not supported — silently skip
+    }
+
     const blinkInterval = setInterval(() => setBlink(b => !b), 450)
     const t1 = setTimeout(() => setPhase('hold'), 600)
-    const t2 = setTimeout(() => setPhase('exit'), 2600)
-    const t3 = setTimeout(() => onComplete(), 3300)
+    const t2 = setTimeout(() => setPhase('exit'), 6600)
+    const t3 = setTimeout(() => {
+      onComplete()
+      audioCtx?.close()
+    }, 7300)
+
     return () => {
       clearInterval(blinkInterval)
       clearTimeout(t1)
       clearTimeout(t2)
       clearTimeout(t3)
+      audioCtx?.close()
     }
   }, [onComplete])
 
