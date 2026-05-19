@@ -7,7 +7,7 @@
 @layer base {
   :root {
     --background: #ffffff;
-    --accent: #c8542a;
+    --accent: #2563eb;
     --cream: #0d1f4e;
   }
 
@@ -32,7 +32,7 @@
   }
 
   ::selection {
-    background-color: #c8542a;
+    background-color: #2563eb;
     color: #f4ede3;
   }
 
@@ -50,7 +50,7 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #c8542a;
+    background: #2563eb;
   }
 }
 

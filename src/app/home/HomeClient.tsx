@@ -16,7 +16,7 @@ function WaveformBars({ playing = false, small = false }: { playing?: boolean; s
           className={playing ? 'animate-waveform' : ''}
           style={{
             width: small ? 2 : 3,
-            backgroundColor: '#c8542a',
+            backgroundColor: '#2563eb',
             height: playing ? undefined : `${Math.random() * (small ? 16 : 22) + 4}px`,
             minHeight: 4,
             maxHeight: small ? 20 : 28,
@@ -231,12 +231,18 @@ export default function HomeClient({
   profile,
   signalsSent,
   weekDate,
+  memberCount = 0,
+  launchTarget = 150,
 }: {
   matches: any[]
   profile: any
   signalsSent: number
   weekDate: string
+  memberCount?: number
+  launchTarget?: number
 }) {
+  const launched = memberCount >= launchTarget
+  const progress = Math.min(100, Math.round((memberCount / launchTarget) * 100))
   const [localMatches, setLocalMatches] = useState(matches)
 
   async function handleSignal(matchId: string, toUserId: string) {
@@ -318,6 +324,39 @@ export default function HomeClient({
       </nav>
 
       <div className="max-w-4xl mx-auto px-6 py-10">
+        {/* Launch progress banner */}
+        {!launched && (
+          <div className="mb-10 border border-accent/30 bg-accent/5 p-6 relative overflow-hidden">
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse-slow" />
+            <div className="relative">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-accent text-[11px] tracking-[0.3em] uppercase font-medium">Pre-Launch · Sarasota-Manatee</span>
+                <span className="text-cream-muted text-xs tabular-nums">{memberCount} / {launchTarget}</span>
+              </div>
+              <h2 className="font-fraunces text-2xl text-cream mb-2">
+                Signal goes live at <span className="text-accent italic">{launchTarget} founding members.</span>
+              </h2>
+              <p className="text-cream-muted text-sm mb-4">
+                Build your profile now — matching switches on the moment we hit the target. You&rsquo;ll be in the first cohort.
+              </p>
+              <div className="h-1.5 bg-surface-2 relative overflow-hidden">
+                <div
+                  className="absolute inset-y-0 left-0 bg-accent transition-all duration-1000"
+                  style={{ width: `${progress}%` }}
+                />
+                <div
+                  className="absolute inset-y-0 bg-accent/40 blur-sm transition-all duration-1000"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <div className="flex justify-between mt-2 text-[10px] text-cream-muted tracking-wider uppercase">
+                <span>{progress}% to launch</span>
+                <span>{Math.max(0, launchTarget - memberCount)} spots left</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>

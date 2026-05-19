@@ -62,7 +62,7 @@ export default function IntroPage() {
               height: 0,
               borderTop: '16px solid transparent',
               borderBottom: '16px solid transparent',
-              borderRight: `24px solid #c8542a`,
+              borderRight: `24px solid #2563eb`,
               opacity: blink ? (1 - i * 0.25) : 0.1,
               transition: `opacity ${0.1 + i * 0.05}s ease`,
             }}
@@ -85,7 +85,7 @@ export default function IntroPage() {
         }}
       >
         Signal
-        <span style={{ color: '#c8542a' }}>.</span>
+        <span style={{ color: '#2563eb' }}>.</span>
       </div>
 
       {/* Turn signal right */}
@@ -108,7 +108,7 @@ export default function IntroPage() {
               height: 0,
               borderTop: '16px solid transparent',
               borderBottom: '16px solid transparent',
-              borderLeft: `24px solid #c8542a`,
+              borderLeft: `24px solid #2563eb`,
               opacity: blink ? (1 - i * 0.25) : 0.1,
               transition: `opacity ${0.1 + i * 0.05}s ease`,
             }}

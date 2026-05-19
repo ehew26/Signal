@@ -638,29 +638,23 @@ function Step5({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   )
 }
 
-// Step 6: Payment
+// Step 6: Activate (no payment required during founding period)
 function Step6({ onBack }: { onBack: () => void }) {
-  const [coupon, setCoupon] = useState('FOUNDING')
   const [loading, setLoading] = useState(false)
 
-  async function handlePayment() {
+  async function handleActivate() {
     setLoading(true)
     try {
-      const res = await fetch('/api/stripe/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coupon }),
-      })
+      const res = await fetch('/api/signup/activate', { method: 'POST' })
       const json = await res.json()
-      if (json.url) {
-        window.location.href = json.url
-      } else {
-        alert(`Stripe error: ${json.error ?? 'Could not start checkout. Please try again.'}`)
+      if (!res.ok) {
+        alert(json.error ?? 'Could not activate your account. Please try again.')
         setLoading(false)
+        return
       }
+      window.location.href = '/home?welcome=1'
     } catch (e: any) {
-      console.error(e)
-      alert(`Checkout failed: ${e?.message ?? 'Network error. Please try again.'}`)
+      alert(e?.message ?? 'Network error. Please try again.')
       setLoading(false)
     }
   }
@@ -668,46 +662,32 @@ function Step6({ onBack }: { onBack: () => void }) {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="font-fraunces text-lg text-cream mb-2">Start your membership</h3>
-        <p className="text-cream-muted text-sm">Founding members get 60 days free. $6.99/month after your trial ends.</p>
+        <h3 className="font-fraunces text-2xl text-cream mb-2">You&rsquo;re in.</h3>
+        <p className="text-cream-muted text-sm">
+          No credit card today. Signal is free for every founding member. We&rsquo;ll go live the moment we hit 150 members in the Sarasota-Manatee area.
+        </p>
       </div>
 
-      <div className="border border-border p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <p className="text-cream font-medium">Signal Founding Member</p>
-            <p className="text-cream-muted text-xs mt-1">5 matches weekly · Verified community · Cancel anytime</p>
+      <div className="border border-border p-6 relative overflow-hidden">
+        <div className="absolute -top-16 -right-16 w-48 h-48 bg-accent/10 rounded-full blur-3xl" />
+        <div className="relative">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <p className="text-cream font-medium">Signal Founding Member</p>
+              <p className="text-cream-muted text-xs mt-1">5 matches weekly · Verified community · Cancel anytime</p>
+            </div>
+            <div className="text-right">
+              <p className="font-fraunces text-3xl text-cream">$6<span className="text-accent text-xl">.99</span></p>
+              <p className="text-cream-muted text-xs">/mo · 60 days free after launch</p>
+            </div>
           </div>
-          <div className="text-right">
-            <p className="font-fraunces text-3xl text-cream">$6<span className="text-accent text-xl">.99</span></p>
-            <p className="text-cream-muted text-xs">/month after trial</p>
+          <div className="space-y-3 text-cream-muted text-xs">
+            <div className="flex items-center gap-2"><Check size={12} className="text-accent" /> No charge today &mdash; or any time before we reach 150 members</div>
+            <div className="flex items-center gap-2"><Check size={12} className="text-accent" /> Once we launch, your first 60 days are free</div>
+            <div className="flex items-center gap-2"><Check size={12} className="text-accent" /> Cancel anytime &mdash; no cancellation fees</div>
+            <div className="flex items-center gap-2"><Check size={12} className="text-accent" /> No pay-to-win features, ever</div>
           </div>
         </div>
-
-        <div>
-          <label className="text-cream-muted text-xs tracking-widest uppercase block mb-2">Promo Code</label>
-          <div className="flex gap-3">
-            <input
-              type="text"
-              value={coupon}
-              onChange={e => setCoupon(e.target.value.toUpperCase())}
-              placeholder="FOUNDING"
-              className="flex-1 bg-transparent border border-border text-cream px-4 py-3 focus:outline-none focus:border-accent transition-colors placeholder-cream-muted/30 text-sm"
-            />
-          </div>
-          {coupon === 'FOUNDING' && (
-            <p className="text-accent text-xs mt-2 flex items-center gap-1.5">
-              <Check size={12} /> 60 days free applied
-            </p>
-          )}
-        </div>
-      </div>
-
-      <div className="space-y-3 text-cream-muted text-xs">
-        <div className="flex items-center gap-2"><Check size={12} className="text-accent" /> No charge today with code FOUNDING</div>
-        <div className="flex items-center gap-2"><Check size={12} className="text-accent" /> Cancel anytime — no cancellation fees</div>
-        <div className="flex items-center gap-2"><Check size={12} className="text-accent" /> Data preserved if you pause or cancel</div>
-        <div className="flex items-center gap-2"><Check size={12} className="text-accent" /> No pay-to-win features, ever</div>
       </div>
 
       <div className="flex gap-4">
@@ -715,17 +695,17 @@ function Step6({ onBack }: { onBack: () => void }) {
           <ArrowLeft size={14} /> Back
         </button>
         <button
-          onClick={handlePayment}
+          onClick={handleActivate}
           disabled={loading}
           className="flex-1 bg-accent text-cream py-3.5 text-sm tracking-[0.2em] uppercase font-medium hover:bg-opacity-90 transition-opacity disabled:opacity-60 flex items-center justify-center gap-3"
         >
-          {loading ? 'Redirecting to Stripe...' : 'Start Free Trial'}
+          {loading ? 'Activating...' : 'Activate My Profile'}
           {!loading && <ArrowRight size={16} />}
         </button>
       </div>
 
       <p className="text-cream-muted text-xs text-center">
-        No refunds policy · Secure payment via Stripe
+        Founding cohort &middot; no payment required during launch period
       </p>
     </div>
   )

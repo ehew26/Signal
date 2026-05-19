@@ -12,7 +12,7 @@ function WaveformBars({ playing }: { playing: boolean }) {
           className={playing ? 'animate-waveform' : ''}
           style={{
             width: 3,
-            backgroundColor: '#c8542a',
+            backgroundColor: '#2563eb',
             height: playing ? undefined : `${Math.random() * 24 + 6}px`,
             minHeight: 4,
             maxHeight: 30,

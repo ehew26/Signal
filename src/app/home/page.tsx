@@ -18,9 +18,17 @@ export default async function HomePage() {
     redirect('/signup')
   }
 
-  if (profile?.subscription_status !== 'active') {
+  // During the founding-member period, anyone with a completed profile gets in.
+  const allowed = ['active', 'trialing', 'founding'].includes(profile?.subscription_status)
+  if (!allowed) {
     redirect('/signup?step=6')
   }
+
+  // Count members for the "going live at 150" progress indicator
+  const { count: memberCount } = await supabase
+    .from('profiles')
+    .select('id', { count: 'exact', head: true })
+    .eq('onboarding_complete', true)
 
   // Get this week's matches
   const weekDate = (() => {
@@ -67,5 +75,7 @@ export default async function HomePage() {
     profile={profile}
     signalsSent={signalsSent}
     weekDate={weekDate}
+    memberCount={memberCount ?? 0}
+    launchTarget={150}
   />
 }

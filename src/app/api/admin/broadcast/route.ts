@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
             subject,
             html: `
               <div style="background:#0c0a07;color:#f4ede3;font-family:sans-serif;padding:40px;max-width:600px;margin:0 auto;">
-                <h1 style="color:#c8542a;font-size:28px;margin-bottom:32px;">Signal.</h1>
+                <h1 style="color:#2563eb;font-size:28px;margin-bottom:32px;">Signal.</h1>
                 <div style="color:#a89b8c;line-height:1.7;white-space:pre-wrap;">${body}</div>
                 <p style="color:#2a2520;font-size:11px;margin-top:48px;">Signal · Sarasota-Manatee, Florida</p>
               </div>

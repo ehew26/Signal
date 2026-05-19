@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle, MapPin, Shield, Mic, Users } from 'lucide-reac
 import IntroSplash from '@/components/IntroSplash'
 
 // Animated waveform bars component
-function WaveformBars({ playing = false, color = '#c8542a', bars = 20 }: { playing?: boolean; color?: string; bars?: number }) {
+function WaveformBars({ playing = false, color = '#2563eb', bars = 20 }: { playing?: boolean; color?: string; bars?: number }) {
   return (
     <div className="flex items-center gap-[3px]" style={{ height: 32 }}>
       {Array.from({ length: bars }).map((_, i) => (
@@ -75,7 +75,7 @@ function FloatingProfileCard() {
           <div className="border-t border-border pt-4 mb-5">
             <p className="text-[10px] text-cream-muted tracking-widest uppercase mb-2">Voice Prompt</p>
             <p className="text-cream text-sm mb-3 font-fraunces italic">"The kind of Sunday morning I want more of..."</p>
-            <WaveformBars color="#c8542a" bars={24} />
+            <WaveformBars color="#2563eb" bars={24} />
           </div>
 
           {/* Action buttons */}
@@ -357,7 +357,7 @@ export default function LandingPage() {
               </div>
 
               <p className="text-cream-muted text-xs mt-6 tracking-wide">
-                Founding member pricing · 60 days free · $6.99/mo after
+                Free during founding period · 60 days free after launch · $6.99/mo after that
               </p>
             </div>
 
@@ -429,7 +429,7 @@ export default function LandingPage() {
               <div key={i} className="animate-on-scroll border border-border bg-background p-6 hover:border-accent transition-colors duration-500">
                 <p className="font-fraunces text-lg italic text-cream mb-2">"{prompt.question}"</p>
                 <p className="text-cream-muted text-sm mb-6">{prompt.name}</p>
-                <WaveformBars color="#c8542a" bars={28} />
+                <WaveformBars color="#2563eb" bars={28} />
                 <div className="flex items-center justify-between mt-4">
                   <span className="text-cream-muted text-xs">0:28</span>
                   <button className="w-9 h-9 border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-cream transition-all">
@@ -533,7 +533,7 @@ export default function LandingPage() {
           <div className="border border-border p-10 animate-on-scroll">
             <div className="text-cream-muted text-xs tracking-widest uppercase mb-4">Founding Member</div>
             <div className="font-fraunces text-7xl text-cream mb-2">$6<span className="text-accent text-4xl">.99</span></div>
-            <div className="text-cream-muted mb-8">per month · after 60-day free trial</div>
+            <div className="text-cream-muted mb-8">per month · 60 days free after sign-up</div>
             <ul className="text-left space-y-3 mb-10 max-w-xs mx-auto">
               {[
                 "5 verified matches every Monday",
@@ -552,7 +552,7 @@ export default function LandingPage() {
             <Link href="/signup" className="bg-accent text-cream px-10 py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-opacity-90 transition-opacity inline-block">
               Start Free Trial
             </Link>
-            <p className="text-cream-muted text-xs mt-4">Use code FOUNDING at checkout for 60 days free</p>
+            <p className="text-cream-muted text-xs mt-4">No credit card required during our founding-member period</p>
           </div>
         </div>
       </section>
