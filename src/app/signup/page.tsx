@@ -652,7 +652,7 @@ function Step6({ onBack }: { onBack: () => void }) {
         setLoading(false)
         return
       }
-      window.location.href = '/home?welcome=1'
+      window.location.href = '/welcome'
     } catch (e: any) {
       alert(e?.message ?? 'Network error. Please try again.')
       setLoading(false)
