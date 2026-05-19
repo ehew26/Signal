@@ -47,8 +47,8 @@ export async function POST(req: NextRequest) {
     const session = await stripe.checkout.sessions.create(sessionParams)
 
     return NextResponse.json({ url: session.url })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Checkout error:', error)
-    return NextResponse.json({ error: 'Internal error' }, { status: 500 })
+    return NextResponse.json({ error: error?.message ?? 'Internal error' }, { status: 500 })
   }
 }

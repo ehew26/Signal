@@ -651,10 +651,16 @@ function Step6({ onBack }: { onBack: () => void }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ coupon }),
       })
-      const { url } = await res.json()
-      if (url) window.location.href = url
-    } catch (e) {
+      const json = await res.json()
+      if (json.url) {
+        window.location.href = json.url
+      } else {
+        alert(`Stripe error: ${json.error ?? 'Could not start checkout. Please try again.'}`)
+        setLoading(false)
+      }
+    } catch (e: any) {
       console.error(e)
+      alert(`Checkout failed: ${e?.message ?? 'Network error. Please try again.'}`)
       setLoading(false)
     }
   }
