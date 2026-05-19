@@ -11,12 +11,12 @@ function playTick(audioCtx: AudioContext, time: number) {
   osc.connect(gain)
   gain.connect(audioCtx.destination)
   osc.type = 'square'
-  osc.frequency.setValueAtTime(800, time)
-  osc.frequency.exponentialRampToValueAtTime(400, time + 0.015)
-  gain.gain.setValueAtTime(0.35, time)
-  gain.gain.exponentialRampToValueAtTime(0.001, time + 0.04)
+  osc.frequency.setValueAtTime(820, time)
+  osc.frequency.exponentialRampToValueAtTime(380, time + 0.018)
+  gain.gain.setValueAtTime(0.3, time)
+  gain.gain.exponentialRampToValueAtTime(0.001, time + 0.045)
   osc.start(time)
-  osc.stop(time + 0.04)
+  osc.stop(time + 0.05)
 }
 
 export default function IntroSplash({ onComplete }: { onComplete: () => void }) {
@@ -28,16 +28,16 @@ export default function IntroSplash({ onComplete }: { onComplete: () => void }) 
     try {
       audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)()
       const now = audioCtx.currentTime
-      const clickInterval = 0.45
+      const clickInterval = 0.44
       const totalDuration = 6.5
-      for (let i = 0; i < totalDuration / clickInterval; i++) {
+      for (let i = 0; i < Math.floor(totalDuration / clickInterval); i++) {
         playTick(audioCtx, now + i * clickInterval)
       }
     } catch {
       // Audio not supported — silently skip
     }
 
-    const blinkInterval = setInterval(() => setBlink(b => !b), 450)
+    const blinkInterval = setInterval(() => setBlink(b => !b), 440)
     const t1 = setTimeout(() => setPhase('hold'), 600)
     const t2 = setTimeout(() => setPhase('exit'), 6600)
     const t3 = setTimeout(() => {
@@ -54,6 +54,10 @@ export default function IntroSplash({ onComplete }: { onComplete: () => void }) 
     }
   }, [onComplete])
 
+  const signalOpacity = blink ? 1 : 0.1
+  const signalFilter = blink ? `drop-shadow(0 0 14px ${BLUE}aa)` : 'none'
+  const signalTransition = 'opacity 0.1s ease, filter 0.1s ease'
+
   return (
     <div
       style={{
@@ -65,7 +69,6 @@ export default function IntroSplash({ onComplete }: { onComplete: () => void }) 
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 32,
         opacity: phase === 'exit' ? 0 : 1,
         transition: 'opacity 0.7s ease',
         overflow: 'hidden',
@@ -78,10 +81,10 @@ export default function IntroSplash({ onComplete }: { onComplete: () => void }) 
           position: 'absolute',
           inset: 0,
           backgroundImage:
-            'linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
-          maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)',
+            'linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px)',
+          backgroundSize: '52px 52px',
+          maskImage: 'radial-gradient(ellipse at center, black 20%, transparent 70%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, black 20%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -91,89 +94,98 @@ export default function IntroSplash({ onComplete }: { onComplete: () => void }) 
         aria-hidden
         style={{
           position: 'absolute',
-          width: '70vmin',
-          height: '70vmin',
+          width: '60vmin',
+          height: '60vmin',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${BLUE}22 0%, transparent 60%)`,
-          filter: 'blur(12px)',
+          background: `radial-gradient(circle, ${BLUE}1a 0%, transparent 65%)`,
+          filter: 'blur(20px)',
           pointerEvents: 'none',
         }}
       />
 
-      {/* Left turn signal */}
+      {/* Main layout: [left signals] [wordmark] [right signals] */}
       <div
         style={{
           display: 'flex',
-          gap: 6,
-          opacity: blink ? 1 : 0.12,
-          transition: 'opacity 0.12s',
-          filter: blink ? `drop-shadow(0 0 12px ${BLUE}88)` : 'none',
+          alignItems: 'center',
+          gap: 'clamp(20px, 4vw, 48px)',
           position: 'relative',
         }}
       >
-        {[2, 1, 0].map(i => (
-          <div key={i} style={{
-            width: 0, height: 0,
-            borderTop: '18px solid transparent',
-            borderBottom: '18px solid transparent',
-            borderRight: `26px solid ${BLUE}`,
-            opacity: 1 - i * 0.2,
-          }} />
-        ))}
-      </div>
+        {/* Left turn signal — arrows pointing left */}
+        <div
+          style={{
+            display: 'flex',
+            gap: 5,
+            opacity: signalOpacity,
+            filter: signalFilter,
+            transition: signalTransition,
+            flexDirection: 'row',
+          }}
+        >
+          {[2, 1, 0].map(i => (
+            <div key={i} style={{
+              width: 0, height: 0,
+              borderTop: 'clamp(12px, 2.5vw, 20px) solid transparent',
+              borderBottom: 'clamp(12px, 2.5vw, 20px) solid transparent',
+              borderRight: `clamp(16px, 3.5vw, 28px) solid ${BLUE}`,
+              opacity: 1 - i * 0.25,
+            }} />
+          ))}
+        </div>
 
-      {/* Wordmark */}
-      <div
-        style={{
-          fontFamily: 'Georgia, "Times New Roman", serif',
-          fontSize: 'clamp(80px, 16vw, 150px)',
-          fontWeight: 300,
-          fontStyle: 'italic',
-          color: DEEP,
-          letterSpacing: '-0.02em',
-          transform: phase === 'enter' ? 'scale(0.9)' : 'scale(1)',
-          opacity: phase === 'enter' ? 0 : 1,
-          transition: 'all 0.9s cubic-bezier(0.16, 1, 0.3, 1)',
-          lineHeight: 1,
-          position: 'relative',
-          textShadow: `0 0 60px ${BLUE}33`,
-        }}
-      >
-        Signal<span style={{ color: BLUE }}>.</span>
-      </div>
+        {/* Wordmark */}
+        <div
+          style={{
+            fontFamily: 'Georgia, "Times New Roman", serif',
+            fontSize: 'clamp(72px, 14vw, 140px)',
+            fontWeight: 300,
+            fontStyle: 'italic',
+            color: DEEP,
+            letterSpacing: '-0.02em',
+            transform: phase === 'enter' ? 'scale(0.88)' : 'scale(1)',
+            opacity: phase === 'enter' ? 0 : 1,
+            transition: 'opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1)',
+            lineHeight: 1,
+            textShadow: `0 0 80px ${BLUE}22`,
+          }}
+        >
+          Signal<span style={{ color: BLUE }}>.</span>
+        </div>
 
-      {/* Right turn signal */}
-      <div
-        style={{
-          display: 'flex',
-          gap: 6,
-          opacity: blink ? 1 : 0.12,
-          transition: 'opacity 0.12s',
-          filter: blink ? `drop-shadow(0 0 12px ${BLUE}88)` : 'none',
-          position: 'relative',
-        }}
-      >
-        {[0, 1, 2].map(i => (
-          <div key={i} style={{
-            width: 0, height: 0,
-            borderTop: '18px solid transparent',
-            borderBottom: '18px solid transparent',
-            borderLeft: `26px solid ${BLUE}`,
-            opacity: 1 - i * 0.2,
-          }} />
-        ))}
+        {/* Right turn signal — arrows pointing right */}
+        <div
+          style={{
+            display: 'flex',
+            gap: 5,
+            opacity: signalOpacity,
+            filter: signalFilter,
+            transition: signalTransition,
+            flexDirection: 'row',
+          }}
+        >
+          {[0, 1, 2].map(i => (
+            <div key={i} style={{
+              width: 0, height: 0,
+              borderTop: 'clamp(12px, 2.5vw, 20px) solid transparent',
+              borderBottom: 'clamp(12px, 2.5vw, 20px) solid transparent',
+              borderLeft: `clamp(16px, 3.5vw, 28px) solid ${BLUE}`,
+              opacity: 1 - i * 0.25,
+            }} />
+          ))}
+        </div>
       </div>
 
       {/* Tagline */}
       <p
         style={{
-          color: '#4a5568',
-          fontSize: 12,
-          letterSpacing: '0.4em',
+          color: '#718096',
+          fontSize: 11,
+          letterSpacing: '0.45em',
           textTransform: 'uppercase',
           opacity: phase === 'hold' ? 1 : 0,
-          transition: 'opacity 0.5s ease 0.4s',
-          marginTop: 4,
+          transition: 'opacity 0.6s ease 0.5s',
+          marginTop: 28,
           position: 'relative',
         }}
       >

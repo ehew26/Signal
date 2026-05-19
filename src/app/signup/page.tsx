@@ -8,23 +8,29 @@ import Link from 'next/link'
 
 // Progress bar
 function ProgressBar({ step, total }: { step: number; total: number }) {
+  const pct = Math.round((step / total) * 100)
   return (
     <div className="w-full mb-12">
       <div className="flex items-center justify-between mb-3">
         <span className="text-cream-muted text-xs tracking-widest uppercase">Step {step} of {total}</span>
-        <span className="text-cream-muted text-xs">{Math.round((step / total) * 100)}%</span>
+        <span className="text-accent text-xs tabular-nums font-medium">{pct}%</span>
       </div>
-      <div className="h-px bg-border w-full relative">
+      <div className="h-1 bg-surface-2 w-full relative overflow-hidden">
         <div
-          className="absolute top-0 left-0 h-px bg-accent transition-all duration-500"
-          style={{ width: `${(step / total) * 100}%` }}
+          className="absolute inset-y-0 left-0 bg-accent"
+          style={{ width: `${pct}%`, transitionProperty: 'width', transitionDuration: '500ms', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+        />
+        <div
+          className="absolute inset-y-0 bg-accent/30 blur-sm"
+          style={{ width: `${pct}%`, transitionProperty: 'width', transitionDuration: '500ms', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
         />
       </div>
-      <div className="flex justify-between mt-2">
+      <div className="flex justify-between mt-2.5">
         {Array.from({ length: total }).map((_, i) => (
           <div
             key={i}
-            className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${i < step ? 'bg-accent' : 'bg-border'}`}
+            className={`w-1.5 h-1.5 rounded-full ${i < step ? 'bg-accent' : 'bg-border'}`}
+            style={{ transitionProperty: 'background-color', transitionDuration: '300ms' }}
           />
         ))}
       </div>
