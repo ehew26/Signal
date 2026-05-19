@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       { auth: { autoRefreshToken: false, persistSession: false } }
     )
 
-    // Try to create the user
+    // Try to create the user with email pre-confirmed
     let userId: string
     const { data: created, error: createError } = await admin.auth.admin.createUser({
       email,
@@ -27,30 +27,22 @@ export async function POST(req: NextRequest) {
     })
 
     if (createError) {
-      // If user already exists (from a previous failed attempt), look them up
-      if (createError.message.toLowerCase().includes('already') || createError.message.toLowerCase().includes('duplicate')) {
-        const { data: existing } = await admin.auth.admin.listUsers()
-        const found = existing?.users?.find(u => u.email === email)
-        if (!found) {
-          return NextResponse.json({ error: createError.message }, { status: 400 })
-        }
-        userId = found.id
-        // Update their password and confirm their email
-        await admin.auth.admin.updateUserById(userId, {
-          password,
-          email_confirm: true,
-        })
-      } else {
+      // User may already exist from a previous attempt — look them up and update
+      const { data: list } = await admin.auth.admin.listUsers({ perPage: 1000 })
+      const existing = list?.users?.find(u => u.email === email)
+      if (!existing) {
         return NextResponse.json({ error: createError.message }, { status: 400 })
       }
+      userId = existing.id
+      await admin.auth.admin.updateUserById(userId, { password, email_confirm: true })
     } else {
       userId = created.user.id
-      // Force-confirm email in case email_confirm didn't take effect
-      await admin.auth.admin.updateUserById(userId, { email_confirm: true })
     }
 
-    // Upsert profile row
-    const age = Math.floor((Date.now() - new Date(dateOfBirth).getTime()) / (365.25 * 24 * 60 * 60 * 1000))
+    // Upsert profile
+    const age = Math.floor(
+      (Date.now() - new Date(dateOfBirth).getTime()) / (365.25 * 24 * 60 * 60 * 1000)
+    )
     await admin.from('profiles').upsert({
       id: userId,
       name,
@@ -62,23 +54,7 @@ export async function POST(req: NextRequest) {
       onboarding_step: 2,
     })
 
-    // Generate a magic-link token so the client can set a session without
-    // relying on signInWithPassword (which fails if email isn't confirmed)
-    const { data: linkData, error: linkError } = await admin.auth.admin.generateLink({
-      type: 'magiclink',
-      email,
-    })
-
-    if (linkError || !linkData?.properties?.hashed_token) {
-      // Fall back to signInWithPassword — at this point email should be confirmed
-      return NextResponse.json({ success: true, method: 'password' })
-    }
-
-    return NextResponse.json({
-      success: true,
-      method: 'otp',
-      token_hash: linkData.properties.hashed_token,
-    })
+    return NextResponse.json({ success: true })
   } catch (err: any) {
     return NextResponse.json({ error: err.message ?? 'Server error' }, { status: 500 })
   }
