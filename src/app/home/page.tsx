@@ -18,9 +18,9 @@ export default async function HomePage() {
     redirect('/signup')
   }
 
-  // During the founding-member period, anyone with a completed profile gets in.
-  const allowed = ['active', 'trialing', 'founding'].includes(profile?.subscription_status)
-  if (!allowed) {
+  // During the founding-member period anyone with a completed profile is
+  // marked 'active' (no payment yet). Block only explicit cancellations.
+  if (profile?.subscription_status === 'cancelled') {
     redirect('/signup?step=6')
   }
 
