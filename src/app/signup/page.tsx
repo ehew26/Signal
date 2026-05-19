@@ -79,16 +79,37 @@ function Step1({ onNext, data, setData }: {
       return
     }
 
-    // Now sign in to establish a live session for photo upload
     const supabase = createClient()
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email: data.email,
-      password: data.password,
-    })
-    if (signInError) {
-      setError(signInError.message)
-      setLoading(false)
-      return
+
+    if (json.method === 'otp' && json.token_hash) {
+      // Use the magic-link token returned by the server to establish a session
+      // without needing email confirmation
+      const { error: otpError } = await supabase.auth.verifyOtp({
+        token_hash: json.token_hash,
+        type: 'magiclink',
+      })
+      if (otpError) {
+        // OTP failed — fall back to password sign-in
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: data.email,
+          password: data.password,
+        })
+        if (signInError) {
+          setError('Account created! Please check your email to confirm, then sign in.')
+          setLoading(false)
+          return
+        }
+      }
+    } else {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      })
+      if (signInError) {
+        setError('Account created! Please check your email to confirm, then sign in.')
+        setLoading(false)
+        return
+      }
     }
 
     setLoading(false)
