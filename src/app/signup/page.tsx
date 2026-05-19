@@ -219,19 +219,27 @@ function Step2({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
         }
         const ext = file.name.split('.').pop()
         const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-        const { error } = await supabase.storage.from('photos').upload(path, file)
-        if (!error) {
-          const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path)
-          await supabase.from('photos').insert({
-            user_id: user.id,
-            url: publicUrl,
-            storage_path: path,
-            display_order: photos.length,
-          })
-          setPhotos(prev => [...prev, publicUrl])
-        } else {
-          alert(`Failed to upload ${file.name}. Please try again.`)
+        const { error: uploadError } = await supabase.storage
+          .from('photos')
+          .upload(path, file, { contentType: file.type || 'image/jpeg', upsert: false })
+        if (uploadError) {
+          console.error('Upload error:', uploadError)
+          alert(`Upload failed for ${file.name}: ${uploadError.message}`)
+          continue
         }
+        const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path)
+        const { error: dbError } = await supabase.from('photos').insert({
+          user_id: user.id,
+          url: publicUrl,
+          storage_path: path,
+          display_order: photos.length,
+        })
+        if (dbError) {
+          console.error('DB insert error:', dbError)
+          alert(`Saved file but couldn't record it: ${dbError.message}`)
+          continue
+        }
+        setPhotos(prev => [...prev, publicUrl])
       }
     } finally {
       setUploading(false)
