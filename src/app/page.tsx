@@ -2,26 +2,28 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle, MapPin, Shield, Mic, Users } from 'lucide-react'
+import { ArrowRight, CheckCircle, MapPin, Shield, Mic, Users, Star } from 'lucide-react'
+import IntroSplash from '@/components/IntroSplash'
 
-// Animated waveform bars component
-function WaveformBars({ playing = false, color = '#c8542a', bars = 20 }: { playing?: boolean; color?: string; bars?: number }) {
+const WAVEFORM_HEIGHTS = [14, 22, 8, 28, 18, 32, 10, 26, 16, 30, 12, 24, 20, 8, 28, 14, 22, 16, 30, 10, 26, 18, 24, 12]
+
+function WaveformBars({ playing = false, color = '#2563eb', bars = 20 }: { playing?: boolean; color?: string; bars?: number }) {
+  const heights = WAVEFORM_HEIGHTS.slice(0, bars)
   return (
     <div className="flex items-center gap-[3px]" style={{ height: 32 }}>
-      {Array.from({ length: bars }).map((_, i) => (
+      {heights.map((h, i) => (
         <div
           key={i}
           className={playing ? 'animate-waveform' : ''}
           style={{
             width: 3,
             backgroundColor: color,
-            height: playing ? undefined : `${Math.random() * 24 + 8}px`,
+            height: playing ? undefined : `${h}px`,
             minHeight: 8,
             maxHeight: 32,
             borderRadius: 2,
             animationDelay: `${i * 0.08}s`,
-            animationDuration: `${0.8 + Math.random() * 0.8}s`,
-            transform: playing ? undefined : 'scaleY(1)',
+            animationDuration: `${0.8 + (i % 3) * 0.3}s`,
           }}
         />
       ))}
@@ -29,40 +31,32 @@ function WaveformBars({ playing = false, color = '#c8542a', bars = 20 }: { playi
   )
 }
 
-// Floating demo profile card
 function FloatingProfileCard() {
   return (
     <div className="animate-float relative w-80">
       <div className="bg-surface border border-border overflow-hidden shadow-2xl">
-        {/* Photo */}
         <div className="relative h-96 overflow-hidden">
           <img
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop&crop=face"
             alt="Demo profile"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-          {/* Verified badge */}
-          <div className="absolute top-4 right-4 bg-accent text-cream text-[10px] tracking-widest uppercase px-3 py-1.5 flex items-center gap-1.5">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f4e]/80 via-transparent to-transparent" />
+          <div className="absolute top-4 right-4 bg-accent text-white text-[10px] tracking-widest uppercase px-3 py-1.5 flex items-center gap-1.5">
             <Shield size={10} />
             Verified
           </div>
-        </div>
-
-        {/* Profile info */}
-        <div className="p-5">
-          <div className="flex items-end justify-between mb-2">
-            <div>
-              <h3 className="font-fraunces text-xl text-cream">Sophia, 29</h3>
-              <div className="flex items-center gap-1.5 text-cream-muted text-sm mt-1">
-                <MapPin size={12} />
-                <span>Sarasota, FL · 2 mi</span>
-              </div>
+          <div className="absolute bottom-4 left-5 right-5">
+            <h3 className="font-fraunces text-2xl text-white">Sophia, 29</h3>
+            <div className="flex items-center gap-1.5 text-white/70 text-sm mt-1">
+              <MapPin size={12} />
+              <span>Sarasota · 2 mi</span>
             </div>
           </div>
+        </div>
 
-          {/* Interest tags */}
-          <div className="flex flex-wrap gap-1.5 mb-4 mt-3">
+        <div className="p-5">
+          <div className="flex flex-wrap gap-1.5 mb-4">
             {['Fine dining', 'Yoga', 'Travel', 'Wine'].map(tag => (
               <span key={tag} className="text-[10px] tracking-wider uppercase text-cream-muted border border-border px-2.5 py-1">
                 {tag}
@@ -70,54 +64,43 @@ function FloatingProfileCard() {
             ))}
           </div>
 
-          {/* Voice prompt preview */}
           <div className="border-t border-border pt-4 mb-5">
             <p className="text-[10px] text-cream-muted tracking-widest uppercase mb-2">Voice Prompt</p>
             <p className="text-cream text-sm mb-3 font-fraunces italic">"The kind of Sunday morning I want more of..."</p>
-            <WaveformBars color="#c8542a" bars={24} />
+            <WaveformBars color="#2563eb" bars={20} />
           </div>
 
-          {/* Action buttons */}
           <div className="flex gap-3">
-            <button className="flex-1 border border-border text-cream-muted text-xs tracking-widest uppercase py-3 hover:border-cream transition-colors">
-              Pass
-            </button>
-            <button className="flex-1 bg-accent text-cream text-xs tracking-widest uppercase py-3 hover:bg-opacity-90 transition-colors">
-              Send Signal
-            </button>
+            <button className="flex-1 pass-btn">Pass</button>
+            <button className="flex-1 signal-btn">Send Signal</button>
           </div>
         </div>
       </div>
 
-      {/* Decorative corner */}
-      <div className="absolute -bottom-3 -right-3 w-16 h-16 border-r-2 border-b-2 border-accent opacity-30" />
-      <div className="absolute -top-3 -left-3 w-16 h-16 border-l-2 border-t-2 border-accent opacity-30" />
+      <div className="absolute -bottom-3 -right-3 w-16 h-16 border-r-2 border-b-2 border-accent opacity-40" />
+      <div className="absolute -top-3 -left-3 w-16 h-16 border-l-2 border-t-2 border-accent opacity-40" />
+
+      <div className="absolute -bottom-6 right-3 flex items-center gap-2">
+        <div className="relative w-2 h-2">
+          <div className="absolute inset-0 bg-accent rounded-full animate-signal-ping" />
+          <div className="w-2 h-2 bg-accent rounded-full" />
+        </div>
+        <span className="text-[10px] text-accent tracking-widest uppercase">Live matching</span>
+      </div>
     </div>
   )
 }
 
-// Trust pill component
-function TrustPill({ icon, text }: { icon: React.ReactNode; text: string }) {
-  return (
-    <div className="flex items-center gap-3 border border-border px-5 py-3 bg-surface">
-      <span className="text-accent">{icon}</span>
-      <span className="text-cream text-sm tracking-wide">{text}</span>
-    </div>
-  )
-}
-
-// Scrolling stats ticker
 function StatsTicker() {
   const stats = [
-    "487 verified members",
     "Sarasota · Bradenton · Venice · Lakewood Ranch",
-    "72-hour response Compact",
+    "5 matches delivered every Monday at 7am",
+    "Identity verified members only",
+    "72-hour response compact",
     "Voice-first profiles",
-    "5 matches every Monday",
-    "0% pay-to-win",
-    "100% identity verified",
-    "No swiping. Ever.",
-    "Founding member pricing: $34.99/mo",
+    "0% pay-to-win. Ever.",
+    "Founding member pricing: $6.99/mo",
+    "No swiping. No algorithms. No ghosting.",
     "Siesta Key to Anna Maria Island",
   ]
   const doubled = [...stats, ...stats]
@@ -136,146 +119,100 @@ function StatsTicker() {
   )
 }
 
-// How it works step
+function ProblemCard({ label, items, accent }: { label: string; items: string[]; accent?: boolean }) {
+  return (
+    <div className={`p-8 border ${accent ? 'border-accent bg-accent/5' : 'border-border bg-surface'}`}>
+      <div className={`text-xs tracking-[0.3em] uppercase font-medium mb-6 ${accent ? 'text-accent' : 'text-cream-muted'}`}>{label}</div>
+      <ul className="space-y-4">
+        {items.map((item, i) => (
+          <li key={i} className="flex items-start gap-3">
+            {accent
+              ? <CheckCircle size={15} className="text-accent flex-shrink-0 mt-0.5" />
+              : <span className="text-cream-muted/40 text-lg leading-none mt-0.5 flex-shrink-0">×</span>
+            }
+            <span className={`text-sm leading-relaxed ${accent ? 'text-cream' : 'text-cream-muted'}`}>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function Testimonial({ quote, name, detail }: { quote: string; name: string; detail: string }) {
+  return (
+    <div className="animate-on-scroll border border-border p-8 bg-surface group hover:border-accent" style={{ transitionProperty: 'border-color', transitionDuration: '300ms' }}>
+      <div className="flex gap-0.5 mb-5">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} size={12} className="text-accent fill-accent" />
+        ))}
+      </div>
+      <p className="font-fraunces text-lg italic text-cream leading-relaxed mb-6">"{quote}"</p>
+      <div>
+        <div className="text-cream text-sm font-medium">{name}</div>
+        <div className="text-cream-muted text-xs mt-1 tracking-wide">{detail}</div>
+      </div>
+    </div>
+  )
+}
+
 function HowItWorksStep({ number, title, description }: { number: string; title: string; description: string }) {
   return (
-    <div className="animate-on-scroll border-l-2 border-border pl-8 py-2 hover:border-accent transition-colors duration-500 group">
+    <div className="animate-on-scroll border-l-2 border-border pl-8 py-2 group" style={{ transitionProperty: 'border-color', transitionDuration: '300ms' }}
+      onMouseEnter={e => (e.currentTarget.style.borderColor = '#2563eb')}
+      onMouseLeave={e => (e.currentTarget.style.borderColor = '')}
+    >
       <div className="text-accent text-xs tracking-[0.3em] uppercase mb-3 font-cabinet">{number}</div>
-      <h3 className="font-fraunces text-2xl text-cream mb-3 group-hover:text-accent transition-colors">{title}</h3>
+      <h3 className="font-fraunces text-2xl text-cream mb-3 group-hover:text-accent" style={{ transitionProperty: 'color', transitionDuration: '200ms' }}>{title}</h3>
       <p className="text-cream-muted leading-relaxed">{description}</p>
     </div>
   )
 }
 
-// Waitlist form
-function WaitlistForm() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [city, setCity] = useState('')
-  const [seeking, setSeeking] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
+function ScarcityBar() {
+  const [count, setCount] = useState(0)
+  const target = 150
+  const progress = Math.min(100, Math.round((count / target) * 100))
+  const remaining = Math.max(0, target - count)
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, city, seeking }),
-      })
-      if (res.ok) setSubmitted(true)
-    } catch (e) {
-      console.error(e)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  if (submitted) {
-    return (
-      <div className="text-center py-12">
-        <div className="text-accent text-5xl mb-6 font-fraunces italic">You're in.</div>
-        <p className="text-cream-muted text-lg">We'll reach out when your spot opens up.</p>
-        <p className="text-cream-muted text-sm mt-2">Sarasota-Manatee members get priority access.</p>
-      </div>
-    )
-  }
+  useEffect(() => {
+    fetch('/api/waitlist/count').then(r => r.json()).then(d => {
+      if (d.count != null) setCount(d.count)
+    }).catch(() => {})
+  }, [])
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="text-cream-muted text-xs tracking-widest uppercase block mb-2">First Name</label>
-          <input
-            type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            required
-            placeholder="Your name"
-            className="w-full bg-transparent border border-border text-cream px-4 py-3 focus:outline-none focus:border-accent transition-colors placeholder-cream-muted/40"
-          />
+    <div className="border border-accent/30 bg-accent/5 px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex items-center gap-4 flex-1">
+        <div className="flex-1">
+          <div className="h-1 bg-border relative overflow-hidden">
+            <div className="absolute inset-y-0 left-0 bg-accent" style={{ width: `${progress}%`, transitionProperty: 'width', transitionDuration: '1000ms' }} />
+            <div className="absolute inset-y-0 bg-accent/30 blur-sm" style={{ width: `${progress}%`, transitionProperty: 'width', transitionDuration: '1000ms' }} />
+          </div>
         </div>
-        <div>
-          <label className="text-cream-muted text-xs tracking-widest uppercase block mb-2">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            placeholder="you@example.com"
-            className="w-full bg-transparent border border-border text-cream px-4 py-3 focus:outline-none focus:border-accent transition-colors placeholder-cream-muted/40"
-          />
-        </div>
+        <span className="text-accent text-xs tracking-widest uppercase font-medium tabular-nums whitespace-nowrap">{remaining} spots left</span>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="text-cream-muted text-xs tracking-widest uppercase block mb-2">City</label>
-          <select
-            value={city}
-            onChange={e => setCity(e.target.value)}
-            className="w-full bg-background border border-border text-cream px-4 py-3 focus:outline-none focus:border-accent transition-colors"
-          >
-            <option value="">Select your city</option>
-            <option value="sarasota">Sarasota</option>
-            <option value="bradenton">Bradenton</option>
-            <option value="lakewood-ranch">Lakewood Ranch</option>
-            <option value="venice">Venice</option>
-            <option value="other">Other nearby</option>
-          </select>
-        </div>
-        <div>
-          <label className="text-cream-muted text-xs tracking-widest uppercase block mb-2">I'm looking for</label>
-          <select
-            value={seeking}
-            onChange={e => setSeeking(e.target.value)}
-            className="w-full bg-background border border-border text-cream px-4 py-3 focus:outline-none focus:border-accent transition-colors"
-          >
-            <option value="">Prefer not to say</option>
-            <option value="men">Men</option>
-            <option value="women">Women</option>
-            <option value="everyone">Everyone</option>
-          </select>
-        </div>
-      </div>
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-accent text-cream py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-opacity-90 transition-opacity disabled:opacity-60 flex items-center justify-center gap-3"
-      >
-        {loading ? 'Joining...' : 'Request Early Access'}
-        {!loading && <ArrowRight size={16} />}
-      </button>
-      <p className="text-cream-muted text-xs text-center">
-        Founding members get 60 days free. Currently accepting Sarasota-Manatee area only.
-      </p>
-    </form>
+      <Link href="/signup" className="text-xs tracking-widest uppercase text-white bg-accent px-5 py-2.5 whitespace-nowrap" style={{ transitionProperty: 'background-color, transform', transitionDuration: '150ms' }}>
+        Claim Yours →
+      </Link>
+    </div>
   )
 }
 
 export default function LandingPage() {
-  const heroRef = useRef<HTMLDivElement>(null)
+  const [showIntro, setShowIntro] = useState(true)
 
   useEffect(() => {
-    // Scroll reveal animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view')
-          }
+          if (entry.isIntersecting) entry.target.classList.add('in-view')
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     )
-
-    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
-      observer.observe(el)
-    })
-
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el))
     return () => observer.disconnect()
-  }, [])
+  }, [showIntro])
 
   const couplePhotos = [
     'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=500&fit=crop',
@@ -288,77 +225,85 @@ export default function LandingPage() {
 
   return (
     <main className="bg-background min-h-screen">
+      {showIntro && <IntroSplash onComplete={() => setShowIntro(false)} />}
+
+      {/* Scarcity top bar */}
+      <div className="bg-accent text-white text-xs tracking-[0.2em] uppercase text-center py-2.5 px-4 font-medium">
+        Founding member spots are limited — 60 days free after launch
+      </div>
+
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 border-b border-border/50 bg-background/80 backdrop-blur-md">
-        <div className="font-fraunces text-2xl text-cream">
-          Signal<span className="text-accent">.</span>
-        </div>
+      <nav className="sticky top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 border-b border-border/50 bg-background/90 backdrop-blur-md">
+        <div className="font-fraunces text-2xl text-cream">Signal<span className="text-accent">.</span></div>
         <div className="hidden md:flex items-center gap-8 text-cream-muted text-sm tracking-wider">
-          <a href="#how-it-works" className="hover:text-cream transition-colors">How It Works</a>
-          <a href="#voice" className="hover:text-cream transition-colors">Voice Profiles</a>
-          <a href="#join" className="hover:text-cream transition-colors">Join</a>
+          <a href="#how-it-works" className="hover:text-cream" style={{ transitionProperty: 'color', transitionDuration: '150ms' }}>How It Works</a>
+          <a href="#voice" className="hover:text-cream" style={{ transitionProperty: 'color', transitionDuration: '150ms' }}>Voice Profiles</a>
+          <a href="#join" className="hover:text-cream" style={{ transitionProperty: 'color', transitionDuration: '150ms' }}>Join</a>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="/login" className="text-cream-muted text-sm hover:text-cream transition-colors hidden md:block">
-            Sign In
-          </Link>
-          <Link href="/signup" className="bg-accent text-cream text-xs tracking-[0.2em] uppercase px-5 py-2.5 hover:bg-opacity-90 transition-opacity">
-            Get Access
-          </Link>
+          <Link href="/login" className="text-cream-muted text-sm hover:text-cream hidden md:block" style={{ transitionProperty: 'color', transitionDuration: '150ms' }}>Sign In</Link>
+          <Link href="/signup" className="bg-accent text-white text-xs tracking-[0.2em] uppercase px-5 py-2.5" style={{ transitionProperty: 'background-color, transform', transitionDuration: '150ms' }}>Get Access</Link>
         </div>
       </nav>
 
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center" ref={heroRef}>
-        {/* Background image with overlay */}
+      <section className="relative min-h-[92vh] flex items-center">
         <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1920&h=1080&fit=crop"
             alt="Couple"
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover opacity-15"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/50" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-20">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 pt-16 pb-20">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: headline */}
             <div>
-              <div className="section-label mb-8">Sarasota · Bradenton · Venice</div>
-              <h1 className="font-fraunces text-6xl md:text-7xl lg:text-8xl text-cream leading-[0.95] mb-8">
+              <div className="inline-flex items-center gap-2 border border-border bg-surface px-4 py-2 mb-8 animate-entrance">
+                <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                <span className="text-cream-muted text-xs tracking-[0.25em] uppercase">Sarasota · Bradenton · Venice</span>
+              </div>
+
+              <h1 className="font-fraunces text-6xl md:text-7xl lg:text-8xl text-cream leading-[0.92] mb-8 animate-entrance" style={{ animationDelay: '0.1s' }}>
                 Five real<br />
                 <span className="italic text-accent">matches</span><br />
                 every Monday.
               </h1>
-              <p className="text-cream-muted text-lg leading-relaxed mb-10 max-w-md">
+              <p className="text-cream-muted text-lg leading-relaxed mb-10 max-w-md animate-entrance" style={{ animationDelay: '0.2s' }}>
                 Signal is the antidote to app fatigue. No swiping. No algorithms. Just five curated, verified people from your corner of Florida — delivered once a week.
               </p>
 
-              {/* Trust pills */}
-              <div className="grid grid-cols-2 gap-3 mb-10 max-w-md">
-                <TrustPill icon={<Shield size={14} />} text="100% verified" />
-                <TrustPill icon={<Mic size={14} />} text="Voice-first" />
-                <TrustPill icon={<Users size={14} />} text="Local only" />
-                <TrustPill icon={<CheckCircle size={14} />} text="Meet in 72 hrs" />
+              <div className="grid grid-cols-2 gap-3 mb-10 max-w-md animate-entrance" style={{ animationDelay: '0.3s' }}>
+                {[
+                  { icon: <Shield size={14} />, text: "100% verified" },
+                  { icon: <Mic size={14} />, text: "Voice-first" },
+                  { icon: <Users size={14} />, text: "Local only" },
+                  { icon: <CheckCircle size={14} />, text: "Meet in 72 hrs" },
+                ].map(({ icon, text }) => (
+                  <div key={text} className="flex items-center gap-3 border border-border px-5 py-3 bg-surface">
+                    <span className="text-accent">{icon}</span>
+                    <span className="text-cream text-sm tracking-wide">{text}</span>
+                  </div>
+                ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/signup" className="bg-accent text-cream px-8 py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-opacity-90 transition-all flex items-center justify-center gap-3">
-                  Join the Waitlist
+              <div className="flex flex-col sm:flex-row gap-4 animate-entrance" style={{ animationDelay: '0.4s' }}>
+                <Link href="/signup" className="btn-primary animate-glow-pulse">
+                  Claim a Founding Spot
                   <ArrowRight size={16} />
                 </Link>
-                <a href="#how-it-works" className="border border-border text-cream-muted px-8 py-4 text-sm tracking-[0.2em] uppercase font-medium hover:border-cream hover:text-cream transition-all text-center">
+                <a href="#how-it-works" className="btn-secondary">
                   See How It Works
                 </a>
               </div>
 
-              <p className="text-cream-muted text-xs mt-6 tracking-wide">
-                Founding member pricing · 60 days free · $34.99/mo after
+              <p className="text-cream-muted text-xs mt-6 tracking-wide animate-entrance" style={{ animationDelay: '0.5s' }}>
+                Free now · 60 days free after launch · $6.99/mo after that · No credit card
               </p>
             </div>
 
-            {/* Right: floating profile card */}
             <div className="hidden lg:flex justify-end items-center pr-8">
               <FloatingProfileCard />
             </div>
@@ -369,74 +314,144 @@ export default function LandingPage() {
       {/* STATS TICKER */}
       <StatsTicker />
 
-      {/* HOW IT WORKS */}
-      <section id="how-it-works" className="py-32 max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
-          <div>
-            <div className="section-label mb-6 animate-on-scroll">The Process</div>
-            <h2 className="font-fraunces text-5xl lg:text-6xl text-cream leading-tight mb-6 animate-on-scroll">
-              Dating, the<br /><span className="italic text-accent">way it should</span><br />feel.
-            </h2>
-            <p className="text-cream-muted leading-relaxed max-w-md animate-on-scroll">
-              We built Signal because app culture broke dating. Infinite choices create decision paralysis. Verification removes bad actors. Voice profiles reveal personality. And one weekly drop restores intention.
-            </p>
-          </div>
+      {/* THE PROBLEM */}
+      <section className="py-32 max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <div className="section-label mb-6 animate-on-scroll">The Problem</div>
+          <h2 className="font-fraunces text-5xl lg:text-6xl text-cream mb-6 animate-on-scroll">
+            You're not bad at dating.<br />
+            <span className="italic text-accent">The apps are broken.</span>
+          </h2>
+          <p className="text-cream-muted max-w-2xl mx-auto animate-on-scroll">
+            The apps profit from your loneliness. More swipes means more engagement. More engagement means more ad revenue. They have no incentive for you to actually meet anyone.
+          </p>
+        </div>
 
-          <div className="space-y-10">
-            <HowItWorksStep
-              number="01"
-              title="Get verified"
-              description="Every Signal member completes identity verification via biometric selfie. Your verified badge signals you're real — and so is everyone you'll meet."
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          <div className="animate-on-scroll">
+            <ProblemCard
+              label="Dating Apps Today"
+              items={[
+                "500+ options create decision paralysis — you choose no one",
+                "Pay $29 to see who already liked you",
+                "Matched at 9pm, ghosted by 9:01",
+                "Faces optimized for the feed, not a first date",
+                "Engineered for engagement — not relationships",
+              ]}
             />
-            <HowItWorksStep
-              number="02"
-              title="Build your voice profile"
-              description="Record three 30-second voice prompts. Let people hear your laugh, your cadence, your personality — before they ever swipe right."
-            />
-            <HowItWorksStep
-              number="03"
-              title="Receive your five"
-              description="Every Monday at 7am, five curated matches arrive. We've already filtered for location, age, and compatibility. You just decide who feels right."
-            />
-            <HowItWorksStep
-              number="04"
-              title="Signal. Match. Meet."
-              description="Send a signal to the people you're interested in. When it's mutual, you match. The Compact keeps both people accountable — respond within 72 hours."
+          </div>
+          <div className="animate-on-scroll stagger-2">
+            <ProblemCard
+              label="Signal"
+              accent
+              items={[
+                "Five curated, verified people — no paralysis, just intention",
+                "Founding members pay $6.99 total. No tricks, no boosts",
+                "72-hour response compact — everyone stays accountable",
+                "Voice profiles let you hear who they are before you meet",
+                "We make money when you stay — so we earn your relationship",
+              ]}
             />
           </div>
         </div>
       </section>
 
-      {/* VOICE PROMPTS SECTION */}
-      <section id="voice" className="py-32 bg-surface border-y border-border">
+      {/* HOW IT WORKS */}
+      <section id="how-it-works" className="py-32 bg-surface border-y border-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <div className="section-label mb-6 animate-on-scroll">Voice-First</div>
-            <h2 className="font-fraunces text-5xl lg:text-6xl text-cream animate-on-scroll">
-              Hear who they are<br /><span className="italic text-accent">before you meet.</span>
+          <div className="grid lg:grid-cols-2 gap-20 items-start">
+            <div>
+              <div className="section-label mb-6 animate-on-scroll">The Process</div>
+              <h2 className="font-fraunces text-5xl lg:text-6xl text-cream leading-tight mb-6 animate-on-scroll">
+                Dating, the<br /><span className="italic text-accent">way it should</span><br />feel.
+              </h2>
+              <p className="text-cream-muted leading-relaxed max-w-md animate-on-scroll">
+                We built Signal because app culture broke dating. Infinite choices create decision paralysis. Verification removes bad actors. Voice profiles reveal personality. And one weekly drop restores intention.
+              </p>
+              <div className="mt-10 animate-on-scroll">
+                <ScarcityBar />
+              </div>
+            </div>
+
+            <div className="space-y-10">
+              <HowItWorksStep number="01" title="Get verified" description="Every Signal member completes identity verification. Your verified badge signals you're real — and so is everyone you'll meet." />
+              <HowItWorksStep number="02" title="Build your voice profile" description="Record three 30-second voice prompts. Let people hear your laugh, your cadence, your personality — before they ever swipe right." />
+              <HowItWorksStep number="03" title="Receive your five" description="Every Monday at 7am, five curated matches arrive. We've already filtered for location, age, and compatibility. You just decide who feels right." />
+              <HowItWorksStep number="04" title="Signal. Match. Meet." description="Send a signal to the people you're interested in. When it's mutual, you match. The Compact keeps both people accountable — respond within 72 hours." />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VOICE PROMPTS */}
+      <section id="voice" className="py-32 max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <div className="section-label mb-6 animate-on-scroll">Voice-First</div>
+          <h2 className="font-fraunces text-5xl lg:text-6xl text-cream animate-on-scroll">
+            Hear who they are<br /><span className="italic text-accent">before you meet.</span>
+          </h2>
+          <p className="text-cream-muted mt-6 max-w-xl mx-auto animate-on-scroll">
+            A voice reveals what a photo never can. Nervousness. Humor. Warmth. The way someone laughs at their own joke. Signal profiles start with sound.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { question: "Two truths and a lie about me...", name: "Marcus, 31", city: "Sarasota" },
+            { question: "The kind of Sunday morning I want more of...", name: "Elena, 27", city: "Bradenton" },
+            { question: "What my best friend would say about me...", name: "James, 34", city: "Lakewood Ranch" },
+          ].map((prompt, i) => (
+            <div key={i} className="animate-on-scroll border border-border bg-surface p-6 group hover:border-accent" style={{ transitionProperty: 'border-color', transitionDuration: '300ms', transitionDelay: `${i * 100}ms` }}>
+              <div className="flex items-center gap-2 mb-4">
+                <Shield size={10} className="text-accent" />
+                <span className="text-[10px] tracking-widest uppercase text-accent">Verified</span>
+                <span className="text-cream-muted text-[10px] ml-auto">{prompt.city}</span>
+              </div>
+              <p className="font-fraunces text-lg italic text-cream mb-2">"{prompt.question}"</p>
+              <p className="text-cream-muted text-sm mb-6">{prompt.name}</p>
+              <WaveformBars color="#2563eb" bars={20} />
+              <div className="flex items-center justify-between mt-4">
+                <span className="text-cream-muted text-xs tabular-nums">0:28</span>
+                <button
+                  className="w-10 h-10 border border-accent text-accent flex items-center justify-center"
+                  style={{ transitionProperty: 'background-color, color', transitionDuration: '150ms' }}
+                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#2563eb'; e.currentTarget.style.color = '#fff' }}
+                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = ''; e.currentTarget.style.color = '' }}
+                  aria-label="Play voice prompt"
+                >
+                  <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M2 1l9 6-9 6V1z"/></svg>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="py-32 bg-surface border-y border-border">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="section-label mb-6 animate-on-scroll">Member Stories</div>
+            <h2 className="font-fraunces text-5xl text-cream animate-on-scroll">
+              Real people.<br /><span className="italic text-accent">Real connections.</span>
             </h2>
           </div>
-
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { question: "Two truths and a lie about me...", name: "Marcus, 31" },
-              { question: "The kind of Sunday morning I want more of...", name: "Elena, 27" },
-              { question: "What my best friend would say about me...", name: "James, 34" },
-            ].map((prompt, i) => (
-              <div key={i} className="animate-on-scroll border border-border bg-background p-6 hover:border-accent transition-colors duration-500">
-                <p className="font-fraunces text-lg italic text-cream mb-2">"{prompt.question}"</p>
-                <p className="text-cream-muted text-sm mb-6">{prompt.name}</p>
-                <WaveformBars color="#c8542a" bars={28} />
-                <div className="flex items-center justify-between mt-4">
-                  <span className="text-cream-muted text-xs">0:28</span>
-                  <button className="w-9 h-9 border border-accent text-accent flex items-center justify-center hover:bg-accent hover:text-cream transition-all">
-                    <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor">
-                      <path d="M2 1l9 6-9 6V1z"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            ))}
+            <Testimonial
+              quote="I went on four dates in my first month. Four. I'd been on Hinge for two years and barely managed one that wasn't miserable."
+              name="Sarah M."
+              detail="Member · Sarasota"
+            />
+            <Testimonial
+              quote="The voice prompts changed everything. I knew I liked her laugh before we ever met. First date felt like a third date."
+              name="Daniel R."
+              detail="Member · Lakewood Ranch"
+            />
+            <Testimonial
+              quote="I'm 42 and I thought dating apps weren't for me. Signal proved me wrong. Five real people, once a week. I can handle that."
+              name="Christine L."
+              detail="Member · Bradenton"
+            />
           </div>
         </div>
       </section>
@@ -445,26 +460,23 @@ export default function LandingPage() {
       <section className="py-32 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {couplePhotos.map((src, i) => (
-            <div
-              key={i}
-              className={`animate-on-scroll overflow-hidden ${i === 1 || i === 4 ? 'mt-8' : ''} ${i === 2 ? 'mt-0' : ''}`}
-              style={{ transitionDelay: `${i * 100}ms` }}
-            >
+            <div key={i} className={`animate-on-scroll overflow-hidden ${i === 1 || i === 4 ? 'mt-8' : ''}`} style={{ transitionDelay: `${i * 80}ms` }}>
               <img
                 src={src}
                 alt="Couple"
-                className="w-full h-64 md:h-80 object-cover hover:scale-105 transition-transform duration-700 filter grayscale hover:grayscale-0"
+                className="w-full h-64 md:h-80 object-cover filter grayscale hover:grayscale-0"
+                style={{ transitionProperty: 'filter, transform', transitionDuration: '700ms' }}
               />
             </div>
           ))}
         </div>
         <div className="text-center mt-16 animate-on-scroll">
-          <p className="font-fraunces text-3xl italic text-cream-muted">Real people. Real connection.</p>
+          <p className="font-fraunces text-3xl italic text-cream-muted">The connections you're looking for</p>
           <p className="text-accent text-sm tracking-widest uppercase mt-2">Sarasota-Manatee, Florida</p>
         </div>
       </section>
 
-      {/* LOCAL DATES SECTION */}
+      {/* LOCAL DATES */}
       <section className="py-32 bg-surface border-y border-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
@@ -476,7 +488,7 @@ export default function LandingPage() {
               <p className="text-cream-muted leading-relaxed mb-8 animate-on-scroll">
                 Signal launched in the Sarasota-Manatee area because the best connections happen close to home. Every match is within 25 miles. Every meet-up is at a place you already love.
               </p>
-              <Link href="/signup" className="bg-accent text-cream px-8 py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-opacity-90 transition-opacity inline-flex items-center gap-3">
+              <Link href="/signup" className="btn-primary animate-on-scroll">
                 Claim Your Spot
                 <ArrowRight size={16} />
               </Link>
@@ -494,7 +506,10 @@ export default function LandingPage() {
                 "Bradenton Riverwalk",
                 "Mattison's City Grille",
               ].map(place => (
-                <div key={place} className="border border-border px-4 py-3 text-cream-muted text-sm hover:border-accent hover:text-cream transition-all">
+                <div key={place} className="border border-border px-4 py-3 text-cream-muted text-sm" style={{ transitionProperty: 'border-color, color', transitionDuration: '200ms' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#0d1f4e' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = ''; e.currentTarget.style.color = '' }}
+                >
                   <MapPin size={12} className="inline mr-2 text-accent" />
                   {place}
                 </div>
@@ -504,19 +519,24 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* JOIN / WAITLIST */}
+      {/* JOIN */}
       <section id="join" className="py-32 max-w-3xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="section-label mb-6 animate-on-scroll">Join Signal</div>
           <h2 className="font-fraunces text-5xl lg:text-6xl text-cream mb-6 animate-on-scroll">
             Ready to meet<br /><span className="italic text-accent">someone real?</span>
           </h2>
-          <p className="text-cream-muted animate-on-scroll">
-            Founding members receive 60 days free. Currently accepting applications from the Sarasota-Manatee area only.
+          <p className="text-cream-muted animate-on-scroll max-w-lg mx-auto">
+            Founding members receive 60 days free. We're currently accepting applications from the Sarasota-Manatee area only — and spots are limited.
           </p>
         </div>
-        <div className="animate-on-scroll">
-          <WaitlistForm />
+        <div className="animate-on-scroll text-center">
+          <Link href="/signup" className="inline-flex items-center gap-3 bg-accent text-white px-10 py-5 text-sm tracking-[0.2em] uppercase font-medium animate-glow-pulse" style={{ transitionProperty: 'background-color, transform', transitionDuration: '150ms' }}>
+            Claim a Founding Spot
+            <ArrowRight size={16} />
+          </Link>
+          <p className="text-cream-muted text-xs mt-5 tracking-wide">Free now · 60 days free after launch · $6.99/mo after that</p>
+          <p className="text-cream-muted text-xs mt-2">No credit card required · Sarasota-Manatee area only</p>
         </div>
       </section>
 
@@ -529,8 +549,8 @@ export default function LandingPage() {
 
           <div className="border border-border p-10 animate-on-scroll">
             <div className="text-cream-muted text-xs tracking-widest uppercase mb-4">Founding Member</div>
-            <div className="font-fraunces text-7xl text-cream mb-2">$34<span className="text-accent text-4xl">.99</span></div>
-            <div className="text-cream-muted mb-8">per month · after 60-day free trial</div>
+            <div className="font-fraunces text-7xl text-cream mb-2 tabular-nums">$6<span className="text-accent text-4xl">.99</span></div>
+            <div className="text-cream-muted mb-8">per month · 60 days free after sign-up</div>
             <ul className="text-left space-y-3 mb-10 max-w-xs mx-auto">
               {[
                 "5 verified matches every Monday",
@@ -546,10 +566,11 @@ export default function LandingPage() {
                 </li>
               ))}
             </ul>
-            <Link href="/signup" className="bg-accent text-cream px-10 py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-opacity-90 transition-opacity inline-block">
+            <Link href="/signup" className="btn-primary animate-glow-pulse">
               Start Free Trial
+              <ArrowRight size={16} />
             </Link>
-            <p className="text-cream-muted text-xs mt-4">Use code FOUNDING at checkout for 60 days free</p>
+            <p className="text-cream-muted text-xs mt-4">No credit card required during our founding-member period</p>
           </div>
         </div>
       </section>
@@ -558,22 +579,20 @@ export default function LandingPage() {
       <footer className="py-16 px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
-            <div className="font-fraunces text-3xl text-cream mb-2">
-              Signal<span className="text-accent">.</span>
-            </div>
+            <div className="font-fraunces text-3xl text-cream mb-2">Signal<span className="text-accent">.</span></div>
             <p className="text-cream-muted text-sm">Find Someone Real</p>
             <p className="text-cream-muted text-xs mt-2">Sarasota-Manatee, Florida</p>
           </div>
           <div className="flex flex-wrap gap-x-8 gap-y-3 text-cream-muted text-sm">
-            <a href="#how-it-works" className="hover:text-cream transition-colors">How It Works</a>
-            <Link href="/login" className="hover:text-cream transition-colors">Sign In</Link>
-            <Link href="/signup" className="hover:text-cream transition-colors">Join</Link>
-            <a href="mailto:hello@signal.dating" className="hover:text-cream transition-colors">Contact</a>
+            <a href="#how-it-works" className="hover:text-cream" style={{ transitionProperty: 'color', transitionDuration: '150ms' }}>How It Works</a>
+            <Link href="/login" className="hover:text-cream" style={{ transitionProperty: 'color', transitionDuration: '150ms' }}>Sign In</Link>
+            <Link href="/signup" className="hover:text-cream" style={{ transitionProperty: 'color', transitionDuration: '150ms' }}>Join</Link>
+            <a href="mailto:hello@signal.dating" className="hover:text-cream" style={{ transitionProperty: 'color', transitionDuration: '150ms' }}>Contact</a>
           </div>
         </div>
         <div className="border-t border-border mt-10 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <p className="text-cream-muted text-xs">© 2024 Signal. All rights reserved.</p>
-          <p className="text-cream-muted text-xs">No refunds policy · Cancel anytime · Data preserved on pause</p>
+          <p className="text-cream-muted text-xs">© 2025 Signal. All rights reserved.</p>
+          <p className="text-cream-muted text-xs">Cancel anytime · Data preserved on pause</p>
         </div>
       </footer>
     </main>

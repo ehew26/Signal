@@ -201,23 +201,13 @@ function MatchCard({ match, onSignal, onPass }: {
         {/* Action buttons */}
         {!isSignaled && (
           <div className="flex gap-3">
-            <button
-              onClick={onPass}
-              className="flex-1 border border-border text-cream-muted text-xs tracking-widest uppercase py-3.5 hover:border-cream hover:text-cream transition-colors"
-            >
-              Pass
-            </button>
-            <button
-              onClick={onSignal}
-              className="flex-1 bg-accent text-cream text-xs tracking-widest uppercase py-3.5 hover:bg-opacity-90 transition-colors"
-            >
-              Send Signal
-            </button>
+            <button onClick={onPass} className="flex-1 pass-btn">Pass</button>
+            <button onClick={onSignal} className="flex-1 signal-btn">Send Signal</button>
           </div>
         )}
 
         {isSignaled && (
-          <div className="text-center py-3 border border-accent text-accent text-xs tracking-widest uppercase">
+          <div className="text-center py-3 border border-accent/50 bg-accent/5 text-accent text-xs tracking-widest uppercase">
             Signal Sent — Waiting for theirs
           </div>
         )}
