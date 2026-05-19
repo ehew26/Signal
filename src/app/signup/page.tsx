@@ -204,42 +204,26 @@ function Step2({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
     setUploading(true)
 
     try {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        alert('Session expired. Please refresh and try again.')
-        return
-      }
-
       for (const file of Array.from(files)) {
         if (photos.length >= 6) break
         if (file.size > 10 * 1024 * 1024) {
-          alert(`${file.name} is too large. Max size is 10MB.`)
+          alert(`${file.name} is too large. Max 10 MB.`)
           continue
         }
-        const ext = file.name.split('.').pop()
-        const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-        const { error: uploadError } = await supabase.storage
-          .from('photos')
-          .upload(path, file, { contentType: file.type || 'image/jpeg', upsert: false })
-        if (uploadError) {
-          console.error('Upload error:', uploadError)
-          alert(`Upload failed for ${file.name}: ${uploadError.message}`)
+
+        const form = new FormData()
+        form.append('file', file)
+        form.append('displayOrder', String(photos.length))
+
+        const res = await fetch('/api/upload/photo', { method: 'POST', body: form })
+        const json = await res.json()
+
+        if (!res.ok) {
+          alert(`Upload failed: ${json.error ?? 'Unknown error'}`)
           continue
         }
-        const { data: { publicUrl } } = supabase.storage.from('photos').getPublicUrl(path)
-        const { error: dbError } = await supabase.from('photos').insert({
-          user_id: user.id,
-          url: publicUrl,
-          storage_path: path,
-          display_order: photos.length,
-        })
-        if (dbError) {
-          console.error('DB insert error:', dbError)
-          alert(`Saved file but couldn't record it: ${dbError.message}`)
-          continue
-        }
-        setPhotos(prev => [...prev, publicUrl])
+
+        setPhotos(prev => [...prev, json.url])
       }
     } finally {
       setUploading(false)
