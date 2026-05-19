@@ -27,7 +27,7 @@ export async function updateSession(request: NextRequest) {
 
   const protectedRoutes = ['/home', '/messages', '/profile']
   const adminRoutes = ['/admin']
-  const authRoutes = ['/login', '/signup']
+  const authRoutes = ['/login']
 
   const isProtected = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
   void adminRoutes
