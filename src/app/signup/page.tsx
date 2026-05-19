@@ -59,33 +59,36 @@ function Step1({ onNext, data, setData }: {
       return
     }
 
-    const supabase = createClient()
-    const { error: signUpError } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-      options: {
-        data: { name: data.name }
-      }
+    // Create user server-side (auto-confirms email so session works immediately)
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        dateOfBirth: data.dateOfBirth,
+        gender: data.gender,
+        city: data.city,
+      }),
     })
-
-    if (signUpError) {
-      setError(signUpError.message)
+    const json = await res.json()
+    if (!res.ok) {
+      setError(json.error || 'Sign up failed. Please try again.')
       setLoading(false)
       return
     }
 
-    // Update profile
-    const { data: { user } } = await supabase.auth.getUser()
-    if (user) {
-      await supabase.from('profiles').upsert({
-        id: user.id,
-        name: data.name,
-        email: data.email,
-        date_of_birth: data.dateOfBirth,
-        gender: data.gender,
-        city: data.city,
-        onboarding_step: 2,
-      })
+    // Now sign in to establish a live session for photo upload
+    const supabase = createClient()
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
+    })
+    if (signInError) {
+      setError(signInError.message)
+      setLoading(false)
+      return
     }
 
     setLoading(false)
