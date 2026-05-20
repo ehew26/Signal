@@ -85,6 +85,17 @@ function Step1({ onNext, data, setData }: {
       return
     }
 
+    // Attribute referral if the user arrived via a share link
+    const refCode = sessionStorage.getItem('signal_ref')
+    if (refCode) {
+      fetch('/api/referral', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refCode }),
+      }).catch(() => {})
+      sessionStorage.removeItem('signal_ref')
+    }
+
     const supabase = createClient()
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email: data.email,

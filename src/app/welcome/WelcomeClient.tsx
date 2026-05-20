@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Check, Mail, Users, Sparkles, ArrowRight } from 'lucide-react'
+import ShareSignal from '@/components/ShareSignal'
 
 export default function WelcomeClient({
   name,
@@ -169,6 +170,11 @@ export default function WelcomeClient({
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Share prompt */}
+        <div className="mb-8">
+          <ShareSignal />
         </div>
 
         {/* CTA */}
