@@ -230,9 +230,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const dbUrl = process.env.DATABASE_URL || 'postgresql://postgres.mleccfanxpcwyutnorqk:Baseball105%21Woodbury26%21@aws-0-us-east-1.pooler.supabase.com:5432/postgres'
-
-  const pool = new Pool({ connectionString: dbUrl, ssl: { rejectUnauthorized: false } })
+  const pool = new Pool({
+    host: 'aws-0-us-east-1.pooler.supabase.com',
+    port: 5432,
+    database: 'postgres',
+    user: 'postgres.mleccfanxpcwyutnorqk',
+    password: process.env.DB_PASSWORD || 'Baseball105!Woodbury26!',
+    ssl: { rejectUnauthorized: false },
+  })
   try {
     await pool.query(SCHEMA_SQL)
     return NextResponse.json({ success: true, message: 'Database schema applied successfully.' })
