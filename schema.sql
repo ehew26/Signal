@@ -5,9 +5,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   date_of_birth DATE NOT NULL,
-  age INTEGER GENERATED ALWAYS AS (
-    EXTRACT(YEAR FROM AGE(date_of_birth))::INTEGER
-  ) STORED,
+  age INTEGER,
   bio TEXT,
   city TEXT DEFAULT 'Sarasota',
   state TEXT DEFAULT 'FL',
