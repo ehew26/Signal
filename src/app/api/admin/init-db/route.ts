@@ -230,13 +230,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const dbUrl = process.env.DATABASE_URL
-  if (!dbUrl) {
-    return NextResponse.json({
-      error: 'DATABASE_URL not set. Add it in Vercel: Settings → Environment Variables.',
-      hint: 'Get it from Supabase → Settings → Database → Connection string → URI (use the "Session mode" URI on port 5432)',
-    }, { status: 500 })
-  }
+  const dbUrl = process.env.DATABASE_URL || 'postgresql://postgres.mleccfanxpcwyutnorqk:Baseball105%21Woodbury26%21@aws-0-us-east-1.pooler.supabase.com:5432/postgres'
 
   const pool = new Pool({ connectionString: dbUrl, ssl: { rejectUnauthorized: false } })
   try {
