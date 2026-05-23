@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { sendWelcomeEmail } from '@/lib/resend'
 
 export const dynamic = 'force-dynamic'
 
@@ -53,6 +54,8 @@ export async function POST(req: NextRequest) {
       age,
       onboarding_step: 2,
     })
+
+    sendWelcomeEmail(email, name).catch(() => {})
 
     return NextResponse.json({ success: true })
   } catch (err: any) {

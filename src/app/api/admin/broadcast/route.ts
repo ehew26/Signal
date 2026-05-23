@@ -28,10 +28,13 @@ export async function POST(req: NextRequest) {
             to: profile.email,
             subject,
             html: `
-              <div style="background:#0c0a07;color:#f4ede3;font-family:sans-serif;padding:40px;max-width:600px;margin:0 auto;">
-                <h1 style="color:#2563eb;font-size:28px;margin-bottom:32px;">Signal.</h1>
-                <div style="color:#a89b8c;line-height:1.7;white-space:pre-wrap;">${body}</div>
-                <p style="color:#2a2520;font-size:11px;margin-top:48px;">Signal · Sarasota-Manatee, Florida</p>
+              <div style="background:#ffffff;font-family:system-ui,-apple-system,sans-serif;padding:48px 24px;max-width:600px;margin:0 auto;">
+                <div style="border:1px solid #e2e8f0;padding:40px;border-radius:8px;">
+                  <h1 style="font-family:Georgia,serif;color:#0d1f4e;font-size:28px;margin:0 0 32px 0;">Signal</h1>
+                  <div style="color:#4a5568;line-height:1.7;white-space:pre-wrap;">${body}</div>
+                  <hr style="border:none;border-top:1px solid #e2e8f0;margin:40px 0 24px;" />
+                  <p style="color:#4a5568;font-size:11px;margin:0;">Signal · Sarasota-Manatee, Florida</p>
+                </div>
               </div>
             `,
           })
