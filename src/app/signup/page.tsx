@@ -511,6 +511,9 @@ function Step3({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
           Continue <ArrowRight size={16} />
         </button>
       </div>
+      <button onClick={onNext} className="w-full text-cream-muted text-xs hover:text-cream transition-colors text-center mt-2">
+        Skip for now (you can add voice prompts from your profile later)
+      </button>
     </div>
   )
 }
