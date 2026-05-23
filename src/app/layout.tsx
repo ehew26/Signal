@@ -1,14 +1,33 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const APP_URL = 'https://signal-date-app.vercel.app'
+
 export const metadata: Metadata = {
-  title: "Signal — Find Someone Real",
-  description: "Five curated matches every Monday. 100% verified. Voice-first profiles. Local to Sarasota-Manatee.",
-  keywords: "dating app, Sarasota, local dating, verified dating, voice profiles",
+  metadataBase: new URL(APP_URL),
+  title: "Signal — Dating App for Sarasota & Manatee County",
+  description: "The only dating app built exclusively for Sarasota-Manatee, FL. Five curated, verified matches every Monday. Voice profiles. No swiping. 150 founding spots.",
+  keywords: "dating app Sarasota, Sarasota dating, Manatee dating, Bradenton dating, local dating Florida, dating app Florida, Lakewood Ranch singles, Sarasota singles, Signal dating",
+  authors: [{ name: "Signal" }],
   openGraph: {
-    title: "Signal — Find Someone Real",
-    description: "Five curated matches every Monday. 100% verified. Voice-first profiles. Local to Sarasota-Manatee.",
+    title: "Signal — Dating App for Sarasota & Manatee",
+    description: "The only dating app built exclusively for Sarasota-Manatee. Five verified matches every Monday. 150 founding spots.",
     type: "website",
+    url: APP_URL,
+    siteName: "Signal",
+    locale: "en_US",
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Signal — Find Someone Real' }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Signal — Dating App for Sarasota & Manatee",
+    description: "The only dating app built exclusively for Sarasota-Manatee. Five verified matches every Monday. 150 founding spots.",
+    images: ['/opengraph-image'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
   },
 };
 
