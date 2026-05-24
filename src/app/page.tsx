@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowRight, CheckCircle, MapPin, Shield, Mic, Users, Star } from 'lucide-react'
 import IntroSplash from '@/components/IntroSplash'
+import { ScrollProgress, MouseSpotlight, LiveJoinToasts, TiltCard, AnimatedCounter } from '@/components/WowEffects'
 
 const WAVEFORM_HEIGHTS = [14, 22, 8, 28, 18, 32, 10, 26, 16, 30, 12, 24, 20, 8, 28, 14, 22, 16, 30, 10, 26, 18, 24, 12]
 
@@ -141,7 +142,12 @@ function ProblemCard({ label, items, accent }: { label: string; items: string[];
 
 function Testimonial({ quote, name, detail }: { quote: string; name: string; detail: string }) {
   return (
-    <div className="animate-on-scroll border border-border p-8 bg-surface group hover:border-accent" style={{ transitionProperty: 'border-color', transitionDuration: '300ms' }}>
+    <div
+      className="animate-on-scroll border border-border p-8 bg-surface group hover:border-accent hover:-translate-y-1"
+      style={{ transitionProperty: 'border-color, transform, box-shadow', transitionDuration: '300ms' }}
+      onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 40px rgba(37,99,235,0.1)' }}
+      onMouseLeave={e => { e.currentTarget.style.boxShadow = '' }}
+    >
       <div className="flex gap-0.5 mb-5">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star key={i} size={12} className="text-accent fill-accent" />
@@ -165,6 +171,109 @@ function HowItWorksStep({ number, title, description }: { number: string; title:
       <div className="text-accent text-xs tracking-[0.3em] uppercase mb-3 font-cabinet">{number}</div>
       <h3 className="font-fraunces text-2xl text-cream mb-3 group-hover:text-accent" style={{ transitionProperty: 'color', transitionDuration: '200ms' }}>{title}</h3>
       <p className="text-cream-muted leading-relaxed">{description}</p>
+    </div>
+  )
+}
+
+function VoicePromptCards() {
+  const [playing, setPlaying] = useState<number | null>(null)
+  const [progress, setProgress] = useState<Record<number, number>>({})
+  const timers = useRef<Record<number, ReturnType<typeof setInterval>>>({})
+
+  const prompts = [
+    { question: "Two truths and a lie about me...", name: "Marcus, 31", city: "Sarasota", duration: 28 },
+    { question: "The kind of Sunday morning I want more of...", name: "Elena, 27", city: "Bradenton", duration: 22 },
+    { question: "What my best friend would say about me...", name: "James, 34", city: "Lakewood Ranch", duration: 31 },
+  ]
+
+  const togglePlay = (i: number) => {
+    if (playing === i) {
+      clearInterval(timers.current[i])
+      setPlaying(null)
+      return
+    }
+    if (playing !== null) clearInterval(timers.current[playing])
+    setPlaying(i)
+    setProgress(p => ({ ...p, [i]: 0 }))
+    const total = prompts[i].duration * 1000
+    const start = Date.now()
+    timers.current[i] = setInterval(() => {
+      const elapsed = Date.now() - start
+      const pct = Math.min(100, (elapsed / total) * 100)
+      setProgress(p => ({ ...p, [i]: pct }))
+      if (pct >= 100) {
+        clearInterval(timers.current[i])
+        setPlaying(null)
+      }
+    }, 80)
+  }
+
+  useEffect(() => () => Object.values(timers.current).forEach(clearInterval), [])
+
+  return (
+    <div className="grid md:grid-cols-3 gap-6">
+      {prompts.map((prompt, i) => {
+        const isPlaying = playing === i
+        const pct = progress[i] ?? 0
+        const elapsed = Math.round((pct / 100) * prompt.duration)
+        const fmt = (s: number) => `0:${String(s).padStart(2, '0')}`
+        return (
+          <div
+            key={i}
+            className="animate-on-scroll border bg-surface p-6 group cursor-pointer"
+            style={{
+              borderColor: isPlaying ? '#2563eb' : undefined,
+              transitionProperty: 'border-color, box-shadow',
+              transitionDuration: '300ms',
+              transitionDelay: `${i * 100}ms`,
+              boxShadow: isPlaying ? '0 0 24px rgba(37,99,235,0.15)' : undefined,
+            }}
+            onMouseEnter={e => { if (!isPlaying) e.currentTarget.style.borderColor = '#2563eb' }}
+            onMouseLeave={e => { if (!isPlaying) e.currentTarget.style.borderColor = '' }}
+            onClick={() => togglePlay(i)}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <Shield size={10} className="text-accent" />
+              <span className="text-[10px] tracking-widest uppercase text-accent">Verified</span>
+              <span className="text-cream-muted text-[10px] ml-auto">{prompt.city}</span>
+            </div>
+            <p className="font-fraunces text-lg italic text-cream mb-2">"{prompt.question}"</p>
+            <p className="text-cream-muted text-sm mb-6">{prompt.name}</p>
+            <WaveformBars playing={isPlaying} color="#2563eb" bars={20} />
+
+            {/* Progress bar */}
+            <div className="h-[2px] bg-border mt-4 mb-3 overflow-hidden">
+              <div
+                className="h-full bg-accent"
+                style={{ width: `${pct}%`, transition: pct === 0 ? 'none' : 'width 0.08s linear' }}
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span className="text-cream-muted text-xs tabular-nums">
+                {isPlaying ? fmt(elapsed) : '0:00'} / {fmt(prompt.duration)}
+              </span>
+              <button
+                className="w-10 h-10 flex items-center justify-center"
+                style={{
+                  backgroundColor: isPlaying ? '#2563eb' : 'transparent',
+                  border: '1px solid #2563eb',
+                  color: isPlaying ? '#fff' : '#2563eb',
+                  transitionProperty: 'background-color, color',
+                  transitionDuration: '150ms',
+                }}
+                aria-label={isPlaying ? 'Pause' : 'Play'}
+                onClick={e => { e.stopPropagation(); togglePlay(i) }}
+              >
+                {isPlaying
+                  ? <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor"><rect x="0" y="0" width="3" height="12"/><rect x="7" y="0" width="3" height="12"/></svg>
+                  : <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M2 1l9 6-9 6V1z"/></svg>
+                }
+              </button>
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }
@@ -271,6 +380,9 @@ export default function LandingPage() {
 
   return (
     <main className="bg-background min-h-screen">
+      <ScrollProgress />
+      <MouseSpotlight />
+      <LiveJoinToasts />
       {showIntro && <IntroSplash onComplete={() => setShowIntro(false)} />}
 
       {/* Scarcity top bar */}
@@ -325,31 +437,36 @@ export default function LandingPage() {
 
               <h1 className="font-fraunces text-6xl md:text-7xl lg:text-8xl text-cream leading-[0.92] mb-8 animate-entrance" style={{ animationDelay: '0.1s' }}>
                 Five real<br />
-                <span className="italic text-accent">matches</span><br />
+                <span className="italic text-shimmer">matches</span><br />
                 every Monday.
               </h1>
               <p className="text-cream-muted text-lg leading-relaxed mb-10 max-w-md animate-entrance" style={{ animationDelay: '0.2s' }}>
                 Signal is the antidote to app fatigue. No swiping. No algorithms. Just five curated, verified people from your corner of Florida — delivered once a week.
               </p>
 
-              <div className="grid grid-cols-2 gap-3 mb-10 max-w-md animate-entrance" style={{ animationDelay: '0.3s' }}>
+              {/* Animated stats */}
+              <div className="grid grid-cols-3 gap-4 mb-10 max-w-md animate-entrance" style={{ animationDelay: '0.3s' }}>
                 {[
-                  { icon: <Shield size={14} />, text: "100% verified" },
-                  { icon: <Mic size={14} />, text: "Voice-first" },
-                  { icon: <Users size={14} />, text: "Local only" },
-                  { icon: <CheckCircle size={14} />, text: "Meet in 72 hrs" },
-                ].map(({ icon, text }) => (
-                  <div key={text} className="flex items-center gap-3 border border-border px-5 py-3 bg-surface">
-                    <span className="text-accent">{icon}</span>
-                    <span className="text-cream text-sm tracking-wide">{text}</span>
+                  { num: 5, suffix: '', label: 'Matches weekly' },
+                  { num: 100, suffix: '%', label: 'Verified' },
+                  { num: 150, suffix: '', label: 'Founding spots' },
+                ].map(({ num, suffix, label }) => (
+                  <div key={label} className="border border-border px-4 py-4 bg-surface text-center group hover:border-accent" style={{ transitionProperty: 'border-color', transitionDuration: '200ms' }}>
+                    <div className="font-fraunces text-3xl italic text-accent tabular-nums">
+                      <AnimatedCounter to={num} suffix={suffix} />
+                    </div>
+                    <div className="text-cream-muted text-[10px] tracking-widest uppercase mt-1">{label}</div>
                   </div>
                 ))}
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 animate-entrance" style={{ animationDelay: '0.4s' }}>
-                <Link href="/signup" className="btn-primary animate-glow-pulse">
-                  Claim a Founding Spot
-                  <ArrowRight size={16} />
+                <Link href="/signup" className="btn-primary animate-glow-pulse relative overflow-hidden group">
+                  <span className="relative z-10 flex items-center gap-3">
+                    Claim a Founding Spot
+                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
+                  </span>
+                  <span className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
                 </Link>
                 <a href="#how-it-works" className="btn-secondary">
                   See How It Works
@@ -362,7 +479,9 @@ export default function LandingPage() {
             </div>
 
             <div className="hidden lg:flex justify-end items-center pr-8">
-              <FloatingProfileCard />
+              <TiltCard>
+                <FloatingProfileCard />
+              </TiltCard>
             </div>
           </div>
         </div>
@@ -370,6 +489,28 @@ export default function LandingPage() {
 
       {/* STATS TICKER */}
       <StatsTicker />
+
+      {/* LIVE STATS BANNER */}
+      <section className="py-20 bg-accent relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {[
+              { num: 25, suffix: ' mi', label: 'Max match radius' },
+              { num: 5, suffix: '', label: 'Matches per week' },
+              { num: 72, suffix: 'h', label: 'Response compact' },
+              { num: 150, suffix: '', label: 'Founding spots total' },
+            ].map(({ num, suffix, label }) => (
+              <div key={label}>
+                <div className="font-fraunces text-5xl md:text-6xl italic text-white tabular-nums">
+                  <AnimatedCounter to={num} suffix={suffix} />
+                </div>
+                <div className="text-white/70 text-xs tracking-widest uppercase mt-2">{label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* THE PROBLEM */}
       <section className="py-32 max-w-7xl mx-auto px-6 lg:px-8">
@@ -452,36 +593,7 @@ export default function LandingPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { question: "Two truths and a lie about me...", name: "Marcus, 31", city: "Sarasota" },
-            { question: "The kind of Sunday morning I want more of...", name: "Elena, 27", city: "Bradenton" },
-            { question: "What my best friend would say about me...", name: "James, 34", city: "Lakewood Ranch" },
-          ].map((prompt, i) => (
-            <div key={i} className="animate-on-scroll border border-border bg-surface p-6 group hover:border-accent" style={{ transitionProperty: 'border-color', transitionDuration: '300ms', transitionDelay: `${i * 100}ms` }}>
-              <div className="flex items-center gap-2 mb-4">
-                <Shield size={10} className="text-accent" />
-                <span className="text-[10px] tracking-widest uppercase text-accent">Verified</span>
-                <span className="text-cream-muted text-[10px] ml-auto">{prompt.city}</span>
-              </div>
-              <p className="font-fraunces text-lg italic text-cream mb-2">"{prompt.question}"</p>
-              <p className="text-cream-muted text-sm mb-6">{prompt.name}</p>
-              <WaveformBars color="#2563eb" bars={20} />
-              <div className="flex items-center justify-between mt-4">
-                <span className="text-cream-muted text-xs tabular-nums">0:28</span>
-                <button
-                  className="w-10 h-10 border border-accent text-accent flex items-center justify-center"
-                  style={{ transitionProperty: 'background-color, color', transitionDuration: '150ms' }}
-                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#2563eb'; e.currentTarget.style.color = '#fff' }}
-                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = ''; e.currentTarget.style.color = '' }}
-                  aria-label="Play voice prompt"
-                >
-                  <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M2 1l9 6-9 6V1z"/></svg>
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+        <VoicePromptCards />
       </section>
 
       {/* TESTIMONIALS */}
