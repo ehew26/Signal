@@ -129,6 +129,113 @@ export async function sendGhostWarningEmail(to: string, name: string, warningNum
   })
 }
 
+interface CreatorReportOptions {
+  to: string
+  weekStart: string
+  weekEnd: string
+  weekTotal: number
+  monthTotal: number
+  monthlyGoal: number
+  ofWeek: number
+  cbWeek: number
+  otherWeek: number
+  topContent: Array<{ title: string; platform: string; content_type: string; tips: number; likes: number; views: number; posted_date: string }>
+  onlyfansUrl?: string
+  chaturbateUrl?: string
+}
+
+export async function sendCreatorWeeklyReport(opts: CreatorReportOptions) {
+  const {
+    to, weekStart, weekEnd, weekTotal, monthTotal, monthlyGoal,
+    ofWeek, cbWeek, otherWeek, topContent, onlyfansUrl, chaturbateUrl,
+  } = opts
+
+  const goalPct = Math.min(100, Math.round((monthTotal / monthlyGoal) * 100))
+  const remaining = Math.max(0, monthlyGoal - monthTotal)
+  const progressBar = `
+    <div style="background:#e2e8f0;border-radius:4px;height:12px;margin:8px 0 4px;">
+      <div style="background:#2563eb;border-radius:4px;height:12px;width:${goalPct}%;transition:width 0.3s;"></div>
+    </div>
+    <p style="color:#4a5568;font-size:12px;margin:0;">${goalPct}% of $${monthlyGoal.toFixed(2)} goal · $${remaining.toFixed(2)} remaining</p>
+  `
+
+  const platformRows = [
+    ofWeek > 0 ? `<tr><td style="padding:8px 0;color:#0d1f4e;font-size:14px;">OnlyFans</td><td style="padding:8px 0;color:#2563eb;font-size:14px;font-weight:600;text-align:right;">$${ofWeek.toFixed(2)}</td></tr>` : '',
+    cbWeek > 0 ? `<tr><td style="padding:8px 0;color:#0d1f4e;font-size:14px;">Chaturbate</td><td style="padding:8px 0;color:#2563eb;font-size:14px;font-weight:600;text-align:right;">$${cbWeek.toFixed(2)}</td></tr>` : '',
+    otherWeek > 0 ? `<tr><td style="padding:8px 0;color:#0d1f4e;font-size:14px;">Other</td><td style="padding:8px 0;color:#2563eb;font-size:14px;font-weight:600;text-align:right;">$${otherWeek.toFixed(2)}</td></tr>` : '',
+  ].filter(Boolean).join('')
+
+  const contentRows = topContent.length > 0
+    ? topContent.map(c => `
+        <tr>
+          <td style="padding:8px 0;color:#0d1f4e;font-size:13px;border-bottom:1px solid #e2e8f0;">
+            <strong>${c.title}</strong><br/>
+            <span style="color:#4a5568;font-size:11px;">${c.platform} · ${c.content_type} · ${c.posted_date}</span>
+          </td>
+          <td style="padding:8px 0;text-align:right;color:#4a5568;font-size:12px;border-bottom:1px solid #e2e8f0;vertical-align:top;">
+            ${c.tips > 0 ? `$${Number(c.tips).toFixed(2)} tips` : ''}<br/>
+            ${c.likes > 0 ? `${c.likes} likes` : ''}${c.views > 0 ? ` · ${c.views} views` : ''}
+          </td>
+        </tr>
+      `).join('')
+    : '<tr><td colspan="2" style="color:#4a5568;font-size:13px;padding:8px 0;">No content logged yet.</td></tr>'
+
+  const platformLinks = [
+    onlyfansUrl ? `<a href="${onlyfansUrl}" style="color:#2563eb;text-decoration:none;font-size:13px;margin-right:16px;">→ OnlyFans</a>` : '',
+    chaturbateUrl ? `<a href="${chaturbateUrl}" style="color:#2563eb;text-decoration:none;font-size:13px;">→ Chaturbate</a>` : '',
+  ].filter(Boolean).join('')
+
+  const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://signal.dating'
+
+  return resend.emails.send({
+    from: FROM_EMAIL,
+    to,
+    subject: `Weekly Creator Report · ${weekStart} – ${weekEnd}`,
+    html: emailWrapper(`
+      <p style="color:${TEXT_SECONDARY};font-size:12px;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 8px 0;">Creator Report</p>
+      <h2 style="font-family:Georgia,serif;color:${TEXT_PRIMARY};font-size:22px;margin:0 0 4px 0;">Week of ${weekStart}</h2>
+      <p style="color:${TEXT_SECONDARY};font-size:13px;margin:0 0 32px 0;">${weekStart} → ${weekEnd}</p>
+
+      <div style="display:flex;gap:16px;margin-bottom:32px;">
+        <div style="flex:1;border:1px solid ${BORDER};padding:20px;border-radius:6px;">
+          <p style="color:${TEXT_SECONDARY};font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin:0 0 4px 0;">This Week</p>
+          <p style="color:${TEXT_PRIMARY};font-size:28px;font-family:Georgia,serif;margin:0;font-weight:600;">$${weekTotal.toFixed(2)}</p>
+        </div>
+        <div style="flex:1;border:1px solid ${BORDER};padding:20px;border-radius:6px;">
+          <p style="color:${TEXT_SECONDARY};font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin:0 0 4px 0;">Month to Date</p>
+          <p style="color:${ACCENT};font-size:28px;font-family:Georgia,serif;margin:0;font-weight:600;">$${monthTotal.toFixed(2)}</p>
+        </div>
+      </div>
+
+      <h3 style="font-family:Georgia,serif;color:${TEXT_PRIMARY};font-size:16px;margin:0 0 8px 0;">Monthly Goal Progress</h3>
+      ${progressBar}
+
+      ${platformRows ? `
+        <h3 style="font-family:Georgia,serif;color:${TEXT_PRIMARY};font-size:16px;margin:28px 0 8px 0;">This Week by Platform</h3>
+        <table style="width:100%;border-collapse:collapse;border-top:1px solid ${BORDER};">
+          ${platformRows}
+        </table>
+      ` : ''}
+
+      <h3 style="font-family:Georgia,serif;color:${TEXT_PRIMARY};font-size:16px;margin:28px 0 8px 0;">Top Performing Content</h3>
+      <table style="width:100%;border-collapse:collapse;border-top:1px solid ${BORDER};">
+        ${contentRows}
+      </table>
+
+      ${platformLinks ? `
+        <div style="margin-top:32px;padding-top:24px;border-top:1px solid ${BORDER};">
+          <p style="color:${TEXT_SECONDARY};font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 8px 0;">Your Platforms</p>
+          ${platformLinks}
+        </div>
+      ` : ''}
+
+      <div style="margin-top:28px;">
+        ${ctaButton(`${APP_URL}/creator`, 'Open Dashboard')}
+      </div>
+    `),
+  })
+}
+
 export async function sendSuspensionEmail(to: string, name: string, permanent: boolean = false) {
   return resend.emails.send({
     from: FROM_EMAIL,
