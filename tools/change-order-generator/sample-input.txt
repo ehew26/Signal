@@ -1,0 +1,10 @@
+Client: John and Mary Peterson
+Project address: 789 Oak Street, Springfield, ST 00000
+Change order number: 4
+
+Notes from contractor (rough, as spoken):
+- client wants to add a second exterior door on the south side of the garage
+- need a new steel door, 36 inch, with frame and hardware - about $410 for the door itself
+- 6 hours of labor to frame the opening and install
+- need an electrician to move one outlet, that's a $150 flat fee from our sub
+- reason: homeowner decided after the walkthrough they want garage access without going through the house, this wasn't in original scope
