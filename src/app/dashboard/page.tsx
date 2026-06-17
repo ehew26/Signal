@@ -13,6 +13,7 @@ import {
   AlertTriangle,
   Rocket,
   StickyNote,
+  Inbox,
 } from "lucide-react";
 import Shell, { type NavItem } from "@/components/dashboard/Shell";
 import Sparkline from "@/components/dashboard/Sparkline";
@@ -20,17 +21,20 @@ import AreaChart from "@/components/dashboard/AreaChart";
 import {
   kpis,
   pipeline,
-  projects,
   activity,
   type ProjectStatus,
   type Activity,
 } from "@/lib/data";
+import { getProjects, getNewLeadsCount } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Internal Dashboard",
   description: "Vertex AI internal operations dashboard.",
 };
+
+// Always render fresh so new leads/projects show up immediately.
+export const dynamic = "force-dynamic";
 
 const nav: { section: string; items: NavItem[] }[] = [
   {
@@ -70,7 +74,9 @@ function Panel({ className, children }: { className?: string; children: React.Re
   return <div className={cn("rounded-2xl panel p-5 sm:p-6", className)}>{children}</div>;
 }
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const [projects, newLeads] = await Promise.all([getProjects(), getNewLeadsCount()]);
+
   return (
     <Shell
       nav={nav}
@@ -78,6 +84,20 @@ export default function DashboardPage() {
       subtitle="Good morning, Ada — here's how the business is tracking."
       user={{ name: "Ada Reyes", role: "Founder & Principal", initials: "AR" }}
     >
+      {newLeads !== null && (
+        <div className="mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-violet/30 bg-violet/[0.06] px-5 py-3.5">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-violet/15 text-violet">
+            <Inbox className="h-4 w-4" />
+          </span>
+          <p className="text-sm text-mist">
+            <span className="font-semibold">{newLeads}</span>{" "}
+            {newLeads === 1 ? "new lead" : "new leads"} captured in the last 30 days
+          </p>
+          <span className="ml-auto flex items-center gap-1.5 text-xs text-emerald">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" /> Live from Supabase
+          </span>
+        </div>
+      )}
       {/* KPI cards */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {kpis.map((k) => {

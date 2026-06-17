@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
+import { getSupabase } from "@/lib/supabase";
 
 /**
  * Lead capture endpoint.
  *
- * Validates the payload and persists the lead. In production this would write
- * to a database (e.g. Supabase) and/or notify the team via email/Slack. To keep
- * the project front-end-only and dependency-light, persistence is best-effort:
- *  - In local dev we append to a gitignored JSON file (real persistence).
- *  - On serverless (read-only FS) we log and accept gracefully.
- * Swap the `persistLead` body for a Supabase insert when a backend is wired up.
+ * Persists submissions to the Supabase `leads` table (anon INSERT is allowed by
+ * RLS; SELECT is not, so submissions stay private). If the Supabase write fails
+ * for any reason, we fall back to a local file (dev) or a log line (serverless)
+ * so a lead is never silently dropped.
  */
 
 export type Lead = {
@@ -44,10 +43,9 @@ function validate(body: Partial<Lead>): { ok: true; lead: Lead } | { ok: false; 
   };
 }
 
-async function persistLead(lead: Lead) {
+async function persistToFileOrLog(lead: Lead) {
   const record = { ...lead, receivedAt: new Date().toISOString() };
   try {
-    // Local dev persistence — harmless no-op on read-only serverless FS.
     const { writeFile, mkdir, readFile } = await import("fs/promises");
     const path = await import("path");
     const dir = path.join(process.cwd(), ".data");
@@ -62,8 +60,17 @@ async function persistLead(lead: Lead) {
     existing.push(record);
     await writeFile(file, JSON.stringify(existing, null, 2));
   } catch {
-    // Serverless / read-only environment: log so it shows up in platform logs.
     console.log("[lead]", JSON.stringify(record));
+  }
+}
+
+async function persistLead(lead: Lead) {
+  try {
+    const { error } = await getSupabase().from("leads").insert(lead);
+    if (error) throw error;
+  } catch (err) {
+    console.error("[lead] supabase insert failed, falling back:", err);
+    await persistToFileOrLog(lead);
   }
 }
 

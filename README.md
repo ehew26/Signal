@@ -28,13 +28,27 @@ positioning, ICP, pricing, GTM, sales process, financials, and a launch checklis
 
 ## Functional bits
 
-- **Lead capture** — `/contact` posts to `/api/contact`, which validates and
-  persists leads (a gitignored JSON file in dev; logs on serverless). Swap the
-  `persistLead` body for a Supabase insert to go live.
+- **Lead capture (live)** — `/contact` posts to `/api/contact`, which writes
+  real rows to a **Supabase** `leads` table. Row Level Security allows validated
+  anonymous inserts but **no public reads**, so submissions stay private. If the
+  DB write ever fails, it falls back to a local file (dev) or a log line.
+- **Live dashboard data** — `/dashboard` reads `projects` from Supabase and
+  shows a **live lead counter** (a PII-safe `security definer` count function).
+  Falls back to mock data in `src/lib/data.ts` if the DB is unreachable.
 - **Auth** — lightweight cookie session (`/api/auth/login`, `/api/auth/logout`)
-  gating `/dashboard` and `/portal` via `src/middleware.ts`. Replace with
-  Supabase Auth when ready — the middleware can stay.
+  gating `/dashboard` and `/portal` via `src/middleware.ts`. Swap for Supabase
+  Auth when ready — the middleware can stay.
 - **SEO** — dynamic `sitemap.xml`, `robots.txt`, and an OG image.
+
+## Backend (Supabase)
+
+The schema lives in [`supabase/schema.sql`](./supabase/schema.sql). The public
+Supabase URL and anon key are baked into `src/lib/supabase.ts` as env-overridable
+fallbacks (anon keys are public by design — RLS does the protecting), so the
+deployment is zero-config. To point at a different project, set
+`NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`. A
+`SUPABASE_SERVICE_ROLE_KEY` (secret, never committed) unlocks privileged server
+reads if you add one later.
 
 ## Stack
 
