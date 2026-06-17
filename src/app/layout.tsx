@@ -1,51 +1,63 @@
 import type { Metadata } from "next";
+import { Sora, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const APP_URL = 'https://signal-date-app.vercel.app'
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sora",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
+const SITE_URL = "https://vertex-ai.vercel.app";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(APP_URL),
-  title: "Signal — Dating App for Sarasota & Manatee County",
-  description: "The only dating app built exclusively for Sarasota-Manatee, FL. Five curated, verified matches every Monday. Voice profiles. No swiping. 150 founding spots.",
-  keywords: "dating app Sarasota, Sarasota dating, Manatee dating, Bradenton dating, local dating Florida, dating app Florida, Lakewood Ranch singles, Sarasota singles, Signal dating",
-  authors: [{ name: "Signal" }],
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Vertex AI — AI Strategy & Implementation Consulting",
+    template: "%s · Vertex AI",
+  },
+  description:
+    "Vertex AI helps ambitious companies ship production-grade AI. From strategy to deployment — custom agents, automation, and LLM systems that move revenue, not slideware.",
+  keywords:
+    "AI consulting, AI strategy, LLM development, AI automation, custom AI agents, generative AI consulting, enterprise AI, machine learning consulting",
+  authors: [{ name: "Vertex AI" }],
   openGraph: {
-    title: "Signal — Dating App for Sarasota & Manatee",
-    description: "The only dating app built exclusively for Sarasota-Manatee. Five verified matches every Monday. 150 founding spots.",
+    title: "Vertex AI — AI Strategy & Implementation Consulting",
+    description:
+      "Production-grade AI for ambitious companies. Strategy, custom agents, and automation that move revenue.",
     type: "website",
-    url: APP_URL,
-    siteName: "Signal",
+    url: SITE_URL,
+    siteName: "Vertex AI",
     locale: "en_US",
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Signal — Find Someone Real' }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Signal — Dating App for Sarasota & Manatee",
-    description: "The only dating app built exclusively for Sarasota-Manatee. Five verified matches every Monday. 150 founding spots.",
-    images: ['/opengraph-image'],
+    title: "Vertex AI — AI Strategy & Implementation Consulting",
+    description: "Production-grade AI for ambitious companies.",
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true },
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet" />
-      </head>
-      <body className="bg-background text-cream antialiased">
-        {children}
-      </body>
+    <html lang="en" className={`${sora.variable} ${inter.variable} ${jetbrains.variable}`}>
+      <body className="bg-ink text-mist antialiased">{children}</body>
     </html>
   );
 }

@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vertex AI
 
-## Getting Started
+A jaw-dropping marketing site and dual dashboards for **Vertex AI**, an AI
+strategy & implementation consultancy. Built with Next.js 14 (App Router),
+TypeScript, and Tailwind CSS. Front-end only — all data is mocked and lives in
+`src/lib/data.ts`, shaped to make swapping in a real backend a small lift.
 
-First, run the development server:
+## What's inside
+
+| Route        | Purpose                                                                 |
+| ------------ | ----------------------------------------------------------------------- |
+| `/`          | Marketing site — hero, services, case studies, process, pricing, FAQ.   |
+| `/dashboard` | Internal ops dashboard — KPIs, revenue chart, pipeline, projects.       |
+| `/portal`    | Client portal — engagement health, milestones, deliverables.            |
+
+## Stack
+
+- **Next.js 14** App Router + React 18
+- **Tailwind CSS** design system (`tailwind.config.ts`, `src/app/globals.css`)
+- **framer-motion** + CSS animations for motion
+- **lucide-react** icons
+- Pure-SVG charts (no charting dependency)
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # production build
+npm run lint    # lint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+```
+src/
+  app/
+    page.tsx            # marketing landing
+    dashboard/page.tsx  # internal ops dashboard
+    portal/page.tsx     # client portal
+    layout.tsx          # fonts + metadata
+    globals.css         # design system
+  components/
+    site/               # marketing sections (Hero, Navbar, Footer, Faq)
+    dashboard/          # Shell, charts, widgets
+    Reveal.tsx          # scroll-reveal wrapper
+    Aurora.tsx          # animated background
+    Logo.tsx
+  lib/
+    data.ts             # all mock data
+    utils.ts            # helpers (cn, formatting)
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Going full-stack later
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`src/lib/data.ts` types mirror a realistic schema. To wire up a backend,
+replace those exports with data-fetching functions (e.g. Supabase queries) and
+the components keep working unchanged.
