@@ -7,11 +7,34 @@ TypeScript, and Tailwind CSS. Front-end only — all data is mocked and lives in
 
 ## What's inside
 
-| Route        | Purpose                                                                 |
-| ------------ | ----------------------------------------------------------------------- |
-| `/`          | Marketing site — hero, services, case studies, process, pricing, FAQ.   |
-| `/dashboard` | Internal ops dashboard — KPIs, revenue chart, pipeline, projects.       |
-| `/portal`    | Client portal — engagement health, milestones, deliverables.            |
+| Route             | Purpose                                                                 |
+| ----------------- | ----------------------------------------------------------------------- |
+| `/`               | Marketing site — hero, services, case studies, process, pricing, FAQ.   |
+| `/services`       | Full services overview with outcomes, deliverables, timeframes.         |
+| `/about`          | Story, values, and team.                                                |
+| `/work/[slug]`    | Case study detail pages (challenge → approach → outcome).               |
+| `/insights`       | Blog index + articles (`/insights/[slug]`).                             |
+| `/contact`        | Working lead-capture form (`POST /api/contact`).                        |
+| `/login`          | Auth for the gated app (demo credentials provided on the page).         |
+| `/dashboard`      | Internal ops dashboard — KPIs, revenue chart, pipeline, projects. 🔒    |
+| `/portal`         | Client portal — engagement health, milestones, deliverables. 🔒        |
+| `/legal/*`        | Privacy policy and terms of service.                                    |
+
+🔒 = protected by middleware; sign in at `/login` (any valid email + password,
+or click "Fill demo credentials").
+
+See [`BUSINESS.md`](./BUSINESS.md) for the full business operating doc —
+positioning, ICP, pricing, GTM, sales process, financials, and a launch checklist.
+
+## Functional bits
+
+- **Lead capture** — `/contact` posts to `/api/contact`, which validates and
+  persists leads (a gitignored JSON file in dev; logs on serverless). Swap the
+  `persistLead` body for a Supabase insert to go live.
+- **Auth** — lightweight cookie session (`/api/auth/login`, `/api/auth/logout`)
+  gating `/dashboard` and `/portal` via `src/middleware.ts`. Replace with
+  Supabase Auth when ready — the middleware can stay.
+- **SEO** — dynamic `sitemap.xml`, `robots.txt`, and an OG image.
 
 ## Stack
 

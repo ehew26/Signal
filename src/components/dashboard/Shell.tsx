@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Bell, Menu, Search, X } from "lucide-react";
+import { Bell, LogOut, Menu, Search, X } from "lucide-react";
 import Logo from "@/components/Logo";
 import { cn } from "@/lib/utils";
 
@@ -23,7 +23,14 @@ export default function Shell({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  async function logout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.push("/login");
+    router.refresh();
+  }
 
   const SidebarBody = (
     <div className="flex h-full flex-col">
@@ -91,6 +98,14 @@ export default function Shell({
             <p className="truncate text-sm font-medium text-mist">{user.name}</p>
             <p className="truncate text-xs text-mist-faint">{user.role}</p>
           </div>
+          <button
+            onClick={logout}
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-mist-faint transition-colors hover:bg-white/[0.05] hover:text-mist"
+            aria-label="Sign out"
+            title="Sign out"
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </div>

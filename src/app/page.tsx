@@ -124,7 +124,7 @@ export default function HomePage() {
                   title={<>Outcomes, not <span className="gradient-text">output</span></>}
                   sub="A few engagements where AI moved a number that matters."
                 />
-                <Link href="/#contact" className="btn-ghost shrink-0">
+                <Link href="/contact" className="btn-ghost shrink-0">
                   Start your project <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -133,7 +133,10 @@ export default function HomePage() {
             <div className="mt-14 grid gap-5 lg:grid-cols-3">
               {caseStudies.map((c, i) => (
                 <Reveal key={c.id} delay={((i % 3) + 1) as 1 | 2 | 3}>
-                  <article className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl panel p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-card">
+                  <Link
+                    href={`/work/${c.id}`}
+                    className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl panel p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-card"
+                  >
                     <div>
                       <div className="flex items-center justify-between">
                         <span className="chip">{c.industry}</span>
@@ -151,7 +154,7 @@ export default function HomePage() {
                         {c.client}
                       </p>
                     </div>
-                  </article>
+                  </Link>
                 </Reveal>
               ))}
             </div>
@@ -262,7 +265,7 @@ export default function HomePage() {
                       ))}
                     </ul>
                     <Link
-                      href="/#contact"
+                      href="/contact"
                       className={cn("mt-8 w-full", plan.highlighted ? "btn-primary" : "btn-ghost")}
                     >
                       {plan.cta}
@@ -304,7 +307,7 @@ export default function HomePage() {
                 leave you with a clear, honest plan — whether or not you hire us.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Link href="mailto:hello@vertex-ai.com" className="btn-primary">
+                <Link href="/contact" className="btn-primary">
                   Book a strategy call <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link href="/dashboard" className="btn-ghost">

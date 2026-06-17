@@ -7,11 +7,11 @@ import Logo from "@/components/Logo";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/#services", label: "Services" },
+  { href: "/services", label: "Services" },
   { href: "/#work", label: "Work" },
-  { href: "/#process", label: "Process" },
+  { href: "/about", label: "About" },
+  { href: "/insights", label: "Insights" },
   { href: "/#pricing", label: "Pricing" },
-  { href: "/dashboard", label: "Dashboard" },
 ];
 
 export default function Navbar() {
@@ -54,10 +54,10 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-2 md:flex">
-            <Link href="/portal" className="btn-ghost !px-4 !py-2">
+            <Link href="/login" className="btn-ghost !px-4 !py-2">
               Client login
             </Link>
-            <Link href="/#contact" className="btn-primary !px-4 !py-2">
+            <Link href="/contact" className="btn-primary !px-4 !py-2">
               Book a call <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
@@ -86,10 +86,10 @@ export default function Navbar() {
               </Link>
             ))}
             <div className="mt-2 grid grid-cols-2 gap-2">
-              <Link href="/portal" onClick={() => setOpen(false)} className="btn-ghost">
+              <Link href="/login" onClick={() => setOpen(false)} className="btn-ghost">
                 Client login
               </Link>
-              <Link href="/#contact" onClick={() => setOpen(false)} className="btn-primary">
+              <Link href="/contact" onClick={() => setOpen(false)} className="btn-primary">
                 Book a call
               </Link>
             </div>

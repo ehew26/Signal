@@ -88,7 +88,7 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Link href="/#contact" className="btn-primary">
+            <Link href="/contact" className="btn-primary">
               Book a strategy call <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/#work" className="btn-ghost">

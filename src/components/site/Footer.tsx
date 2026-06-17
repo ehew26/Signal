@@ -6,26 +6,27 @@ const columns = [
   {
     title: "Services",
     links: [
-      { label: "AI Agents", href: "/#services" },
-      { label: "Automation", href: "/#services" },
-      { label: "Strategy", href: "/#services" },
-      { label: "RAG Systems", href: "/#services" },
+      { label: "AI Agents", href: "/services" },
+      { label: "Automation", href: "/services" },
+      { label: "Strategy", href: "/services" },
+      { label: "RAG Systems", href: "/services" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "Work", href: "/#work" },
-      { label: "Process", href: "/#process" },
+      { label: "About", href: "/about" },
+      { label: "Insights", href: "/insights" },
       { label: "Pricing", href: "/#pricing" },
-      { label: "Contact", href: "/#contact" },
+      { label: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Product",
     links: [
-      { label: "Internal Dashboard", href: "/dashboard" },
+      { label: "Dashboard", href: "/dashboard" },
       { label: "Client Portal", href: "/portal" },
+      { label: "Sign in", href: "/login" },
     ],
   },
 ];
@@ -74,8 +75,8 @@ export default function Footer() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-mist-faint sm:flex-row sm:px-8">
           <p>© {new Date().getFullYear()} Vertex AI. All rights reserved.</p>
           <p className="flex items-center gap-4">
-            <Link href="#" className="hover:text-mist-dim">Privacy</Link>
-            <Link href="#" className="hover:text-mist-dim">Terms</Link>
+            <Link href="/legal/privacy" className="hover:text-mist-dim">Privacy</Link>
+            <Link href="/legal/terms" className="hover:text-mist-dim">Terms</Link>
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" />
               All systems operational
