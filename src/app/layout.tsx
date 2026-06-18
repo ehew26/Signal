@@ -22,7 +22,7 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE_URL = "https://vertex-ai.vercel.app";
+const SITE_URL = "https://getvertex.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { caseStudies } from "@/lib/data";
 import { posts } from "@/lib/content";
 
-const BASE = "https://vertex-ai.vercel.app";
+const BASE = "https://getvertex.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
