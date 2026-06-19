@@ -155,24 +155,24 @@ export const caseStudyDetails: Record<string, CaseStudyDetail> = {
   northwind: {
     slug: "northwind",
     challenge:
-      "Northwind's 12-person dispatch desk manually routed thousands of shipments a day. Decisions were slow, inconsistent, and impossible to scale into new regions.",
+      "A fast-growing B2B SaaS company's support team was drowning in repetitive tickets — password resets, how-tos, billing questions. First-response times kept climbing and senior agents burned out on work far below their level.",
     approach: [
-      "Audited 9 dispatch workflows and identified routing as the highest-ROI target.",
-      "Designed a tool-using agent with hard guardrails and human escalation paths.",
-      "Built an eval suite against 6 months of historical decisions before going live.",
-      "Rolled out in phases with full observability and a one-click kill switch.",
+      "Analyzed 6 months of tickets to find the highest-volume, automatable intents.",
+      "Built a support agent grounded in their help center, API docs, and product data.",
+      "Added strict guardrails: cite sources, never guess, escalate anything uncertain to a human with full context.",
+      "Ran an eval suite against real historical tickets before launch, then rolled out intent by intent.",
     ],
     outcome:
-      "The agent now handles booking, rerouting, and escalation in real time — freeing the team to manage exceptions instead of grinding through every shipment.",
+      "The agent resolves the bulk of repetitive tickets end-to-end, drafts replies for the rest, and routes complex issues to the right human — so the team spends its time on the conversations that actually need them.",
     stats: [
-      { value: "−38%", label: "Operating cost" },
-      { value: "1,240", label: "Daily dispatches automated" },
-      { value: "2.1s", label: "Avg. decision latency" },
-      { value: "94%", label: "Eval accuracy" },
+      { value: "−52%", label: "Tickets handled by humans" },
+      { value: "<2 min", label: "Median first response" },
+      { value: "100%", label: "Answers cited & grounded" },
+      { value: "4.6/5", label: "CSAT on automated replies" },
     ],
     quote: {
-      text: "Vertex shipped a working agent in three weeks that our last vendor quoted six months for.",
-      author: "Dana Whitfield, COO",
+      text: "Illustrative engagement — your story could go here.",
+      author: "Vertex AI",
     },
   },
   meridian: {

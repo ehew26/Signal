@@ -72,19 +72,20 @@ export default function Hero() {
         <div>
           <div className="chip animate-fade-in">
             <Sparkles className="h-3.5 w-3.5 text-violet" />
-            AI strategy → production, in weeks
+            AI support automation for B2B SaaS
           </div>
 
           <h1 className="mt-6 text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-            <span className="gradient-text">Ship AI that</span>
+            <span className="gradient-text">Resolve more tickets,</span>
             <br />
-            <span className="gradient-text-flow">moves revenue.</span>
+            <span className="gradient-text-flow">with fewer agents.</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist-dim">
-            Vertex AI partners with ambitious teams to design, build, and deploy
-            production-grade AI — custom agents, automation, and LLM systems that
-            pay for themselves. No slideware. No black boxes.
+            Vertex AI builds support automation for B2B SaaS teams — AI agents
+            grounded in your docs and product that resolve repetitive tickets
+            accurately and hand the rest to your team. Live in weeks, not
+            quarters. No slideware. No black boxes.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">

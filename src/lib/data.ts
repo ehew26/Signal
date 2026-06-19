@@ -133,13 +133,13 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     id: "northwind",
-    client: "B2B logistics company",
-    industry: "Supply Chain",
-    result: "Autonomous dispatch agent",
-    metric: "−38%",
-    metricLabel: "operating cost",
+    client: "B2B SaaS company",
+    industry: "B2B SaaS",
+    result: "Support resolution agent",
+    metric: "−52%",
+    metricLabel: "tickets handled by humans",
     summary:
-      "Replaced a 12-person manual routing desk with an agent that books, reroutes, and escalates in real time.",
+      "An agent grounded in their docs and product that resolves repetitive tickets end-to-end and escalates the rest with full context.",
     accent: "from-violet to-cyan",
   },
   {
