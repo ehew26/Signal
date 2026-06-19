@@ -1,11 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Check,
-  Quote,
-  Star,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import Hero from "@/components/site/Hero";
@@ -16,7 +10,6 @@ import {
   services,
   caseStudies,
   processSteps,
-  testimonials,
   plans,
   clientLogos,
 } from "@/lib/data";
@@ -59,7 +52,7 @@ export default function HomePage() {
         {/* ---------- Logo marquee ---------- */}
         <section className="py-10">
           <p className="mb-8 text-center text-xs uppercase tracking-[0.22em] text-mist-faint">
-            Trusted by teams shipping AI to production
+            Built on the tools you already use
           </p>
           <div className="mask-fade-x overflow-hidden">
             <div className="flex w-max animate-marquee gap-14">
@@ -120,9 +113,9 @@ export default function HomePage() {
               <div className="flex flex-col items-end justify-between gap-6 sm:flex-row">
                 <SectionHeading
                   center={false}
-                  eyebrow="Selected work"
-                  title={<>Outcomes, not <span className="gradient-text">output</span></>}
-                  sub="A few engagements where AI moved a number that matters."
+                  eyebrow="Example engagements"
+                  title={<>The kind of work <span className="gradient-text">we build</span></>}
+                  sub="Illustrative scenarios that show how we approach high-value AI problems. We're onboarding our first named clients now."
                 />
                 <Link href="/contact" className="btn-ghost shrink-0">
                   Start your project <ArrowUpRight className="h-4 w-4" />
@@ -140,12 +133,12 @@ export default function HomePage() {
                     <div>
                       <div className="flex items-center justify-between">
                         <span className="chip">{c.industry}</span>
-                        <ArrowUpRight className="h-5 w-5 text-mist-faint transition-colors group-hover:text-violet" />
+                        <span className="text-[10px] font-medium uppercase tracking-wider text-mist-faint">Illustrative</span>
                       </div>
                       <div className={cn("mt-8 bg-gradient-to-r bg-clip-text text-5xl font-semibold text-transparent", c.accent)}>
                         {c.metric}
                       </div>
-                      <p className="mt-1 text-sm text-mist-faint">{c.metricLabel}</p>
+                      <p className="mt-1 text-sm text-mist-faint">target {c.metricLabel}</p>
                     </div>
                     <div className="mt-8 border-t border-line pt-5">
                       <h3 className="text-lg font-semibold text-mist">{c.result}</h3>
@@ -190,38 +183,42 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ---------- Testimonials ---------- */}
+        {/* ---------- Founding clients ---------- */}
         <section className="relative py-24">
-          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="mx-auto max-w-5xl px-5 sm:px-8">
             <Reveal>
-              <SectionHeading
-                eyebrow="What clients say"
-                title={<>Teams that bet on us, <span className="gradient-text">won</span></>}
-              />
+              <div className="relative overflow-hidden rounded-[2rem] border border-line-strong p-8 sm:p-12">
+                <div className="absolute inset-0 -z-10 bg-brand-radial opacity-60" />
+                <span className="eyebrow">
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
+                  Founding clients
+                </span>
+                <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
+                  We&apos;re taking on a small number of{" "}
+                  <span className="gradient-text">founding clients</span>
+                </h2>
+                <p className="mt-4 max-w-2xl leading-relaxed text-mist-dim">
+                  As a new practice, we&apos;re partnering with a few teams at a
+                  discounted, hands-on rate — in exchange for candid feedback and,
+                  if it goes well, a named case study. You get senior AI talent at
+                  a founder-friendly price; we earn proof. Honest trade.
+                </p>
+                <ul className="mt-6 grid gap-3 sm:grid-cols-3">
+                  {[
+                    "Discounted founding-client pricing",
+                    "Direct access to the people building it",
+                    "Production-grade work, fully documented",
+                  ].map((p) => (
+                    <li key={p} className="flex items-start gap-2 text-sm text-mist-dim">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-cyan" /> {p}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/contact" className="btn-primary mt-8">
+                  Become a founding client <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </Reveal>
-            <div className="mt-14 grid gap-5 lg:grid-cols-3">
-              {testimonials.map((t, i) => (
-                <Reveal key={t.name} delay={((i % 3) + 1) as 1 | 2 | 3}>
-                  <figure className="flex h-full flex-col rounded-2xl panel p-7">
-                    <Quote className="h-8 w-8 text-violet/40" />
-                    <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-mist">
-                      “{t.quote}”
-                    </blockquote>
-                    <div className="mt-6 flex items-center gap-1 text-amber">
-                      {Array.from({ length: 5 }).map((_, s) => (
-                        <Star key={s} className="h-4 w-4 fill-current" />
-                      ))}
-                    </div>
-                    <figcaption className="mt-4 border-t border-line pt-4">
-                      <div className="text-sm font-semibold text-mist">{t.name}</div>
-                      <div className="text-xs text-mist-faint">
-                        {t.role} · {t.company}
-                      </div>
-                    </figcaption>
-                  </figure>
-                </Reveal>
-              ))}
-            </div>
           </div>
         </section>
 

@@ -160,3 +160,47 @@ second senior engineer per ~3 concurrent Builds.
 ---
 
 *This doc is a living playbook — revise it as the business learns.*
+
+---
+
+## 11. Launch Playbook (do these in order)
+
+### A. Warm outbound — your first 3 clients
+Your fastest clients come from people who already trust you, not cold ads.
+
+1. List **30–50 people** who know your work (ex-colleagues, ex-managers, founders, peers).
+2. Send each a short, personal note — no pitch deck. Template:
+
+   > Subject: what I'm building now
+   >
+   > Hey {name} — quick update: I've started an AI consulting practice
+   > (Vertex AI) helping {their world}-type teams ship production AI —
+   > agents, automation, and RAG that actually move a number.
+   >
+   > Not asking you to buy anything. If anyone in your network is
+   > wrestling with an AI project and could use a senior set of hands,
+   > I'd love an intro. Site's here if useful: https://getvertex.vercel.app
+   >
+   > Either way, good to be back in touch — how are you?
+
+3. Goal: **5 conversations → 1–2 paid pilots** in the first 30 days.
+
+### B. Proof engine — turn pilots into logos
+- Offer **1–2 founding-client pilots** at a discounted or fixed price, explicitly
+  in exchange for a named case study + testimonial (see the "Founding clients"
+  section on the homepage).
+- The moment a pilot delivers, replace one illustrative `/work` example with the
+  **real, named** case study. Real logos unlock everything else.
+
+### C. Content engine — compounding inbound
+- Publish **one technical post every 1–2 weeks** to `/insights` (we ship with 3
+  seed posts). Each should show how you solved a real, specific problem.
+- Cross-post to LinkedIn the same day; link back to the post.
+- After ~3 months this becomes your most reliable inbound channel.
+
+### D. Sharpen the niche
+"AI that moves revenue" is everyone's pitch. Pick **one** vertical/use-case you
+can win (e.g. "support automation for B2B SaaS", "RAG for legal teams"), then
+rewrite the homepage headline + one example engagement around it. Specificity is
+what generates inbound. *(Tell Claude the niche and it'll rewrite the copy.)*
+

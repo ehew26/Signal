@@ -124,6 +124,23 @@ export default function ContactForm() {
         />
       </div>
 
+      <label className="mt-5 flex items-start gap-2.5 text-xs leading-relaxed text-mist-dim">
+        <input
+          type="checkbox"
+          name="consent"
+          required
+          className="mt-0.5 h-4 w-4 shrink-0 rounded border-line accent-violet"
+        />
+        <span>
+          I agree to Vertex AI storing and processing my details to respond to
+          this enquiry, as described in the{" "}
+          <a href="/legal/privacy" className="text-violet hover:underline">
+            Privacy Policy
+          </a>
+          .
+        </span>
+      </label>
+
       {status === "error" && (
         <p className="mt-3 text-sm text-rose">{error}</p>
       )}

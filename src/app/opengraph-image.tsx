@@ -52,9 +52,9 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", gap: 40, fontSize: 26, color: "#9aa0b9" }}>
-          <span>$42M+ value created</span>
-          <span>120+ systems shipped</span>
-          <span>6.2× avg. ROI</span>
+          <span>Senior-led</span>
+          <span>Evals on every build</span>
+          <span>No lock-in</span>
         </div>
       </div>
     ),

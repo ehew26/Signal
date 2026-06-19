@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Sora, Inter, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const sora = Sora({
@@ -57,7 +58,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${sora.variable} ${inter.variable} ${jetbrains.variable}`}>
-      <body className="bg-ink text-mist antialiased">{children}</body>
+      <body className="bg-ink text-mist antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

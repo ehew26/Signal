@@ -74,6 +74,32 @@ async function persistLead(lead: Lead) {
   }
 }
 
+/**
+ * Optional Slack alert on every new lead. Activates automatically once
+ * SLACK_LEADS_WEBHOOK_URL is set (Slack → Incoming Webhooks). Never blocks the
+ * response or fails the request.
+ */
+async function notifyTeam(lead: Lead) {
+  const webhook = process.env.SLACK_LEADS_WEBHOOK_URL;
+  if (!webhook) return;
+  const lines = [
+    `*New lead — ${lead.name}* (${lead.email})`,
+    lead.company && `Company: ${lead.company}`,
+    lead.reason && `About: ${lead.reason}`,
+    lead.budget && `Budget: ${lead.budget}`,
+    `\n${lead.message}`,
+  ].filter(Boolean);
+  try {
+    await fetch(webhook, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: `:wave: ${lines.join("\n")}` }),
+    });
+  } catch (err) {
+    console.error("[lead] slack notify failed:", err);
+  }
+}
+
 export async function POST(request: Request) {
   let body: Partial<Lead>;
   try {
@@ -88,6 +114,7 @@ export async function POST(request: Request) {
   }
 
   await persistLead(result.lead);
+  await notifyTeam(result.lead);
 
   return NextResponse.json({
     ok: true,

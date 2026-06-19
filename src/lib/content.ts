@@ -19,10 +19,10 @@ export const company = {
 };
 
 export const companyFacts = [
-  { value: "2023", label: "Founded" },
-  { value: "120+", label: "AI systems shipped" },
-  { value: "$42M+", label: "Client value created" },
-  { value: "12", label: "Senior practitioners" },
+  { value: "Founder-led", label: "Senior practitioners only" },
+  { value: "Production", label: "Evals gate every release" },
+  { value: "Your stack", label: "No lock-in — you own the code" },
+  { value: "2-week", label: "First working prototype" },
 ];
 
 export type Value = { title: string; description: string };

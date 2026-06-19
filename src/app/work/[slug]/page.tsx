@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import PageShell from "@/components/site/PageShell";
 import Aurora from "@/components/Aurora";
 import Reveal from "@/components/Reveal";
@@ -42,6 +42,9 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">{study.result}</h1>
             <p className="mt-4 max-w-2xl text-lg text-mist-dim">{study.summary}</p>
+            <p className="mt-5 inline-flex rounded-full border border-line bg-white/[0.03] px-3 py-1.5 text-xs text-mist-faint">
+              Illustrative example engagement — figures are target outcomes, not results from a named client.
+            </p>
           </Reveal>
         </div>
       </section>
@@ -84,13 +87,16 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </Reveal>
 
           <Reveal>
-            <figure className="rounded-2xl panel p-7">
-              <Quote className="h-8 w-8 text-violet/40" />
-              <blockquote className="mt-3 text-lg leading-relaxed text-mist">
-                “{detail.quote.text}”
-              </blockquote>
-              <figcaption className="mt-4 text-sm text-mist-faint">— {detail.quote.author}</figcaption>
-            </figure>
+            <div className="rounded-2xl border border-line bg-white/[0.02] p-7">
+              <p className="text-sm leading-relaxed text-mist-dim">
+                This is an illustrative engagement that shows how we&apos;d approach
+                this problem. Want to be the named client behind a story like this?{" "}
+                <Link href="/contact" className="text-violet hover:underline">
+                  Let&apos;s talk
+                </Link>
+                .
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>

@@ -3,13 +3,12 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import PageShell, { PageHeader } from "@/components/site/PageShell";
 import Reveal from "@/components/Reveal";
-import { companyFacts, values, team, company } from "@/lib/content";
-import { cn } from "@/lib/utils";
+import { companyFacts, values, company } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Vertex AI is a senior team of AI practitioners who ship production systems, not slideware. Meet the people and the principles behind the work.",
+    "Vertex AI is a founder-led, senior practice that ships production-grade AI, not slideware. The principles and the people behind the work.",
 };
 
 export default function AboutPage() {
@@ -55,32 +54,25 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
+      {/* Who you work with */}
       <section className="px-5 pb-24 sm:px-8">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-3xl">
           <Reveal>
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              The <span className="gradient-text">team</span>
+              Who you <span className="gradient-text">work with</span>
             </h2>
-            <p className="mt-3 max-w-xl text-mist-dim">
-              No armies of junior consultants. Every engagement is staffed by senior
-              practitioners who write code and own outcomes.
+            <p className="mt-4 leading-relaxed text-mist-dim">
+              No armies of junior consultants. Every engagement is led by the
+              founder and staffed by senior practitioners who write the code and
+              own the outcome — the same people in the sales call are the ones
+              shipping your system.
+            </p>
+            <p className="mt-4 leading-relaxed text-mist-dim">
+              We&apos;re a new, deliberately small practice. That means you get
+              senior attention and a direct line — not a handoff to an offshore
+              team after the contract is signed.
             </p>
           </Reveal>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {team.map((m, i) => (
-              <Reveal key={m.name} delay={((i % 4) + 1) as 1 | 2 | 3 | 4}>
-                <div className="h-full rounded-2xl panel p-6">
-                  <span className={cn("grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br text-lg font-semibold text-white", m.accent)}>
-                    {m.initials}
-                  </span>
-                  <h3 className="mt-4 text-lg font-semibold text-mist">{m.name}</h3>
-                  <p className="text-xs font-medium text-violet">{m.role}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-mist-dim">{m.bio}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -90,7 +82,7 @@ export default function AboutPage() {
           <div className="relative mx-auto max-w-4xl overflow-hidden rounded-[2rem] border border-line-strong px-8 py-14 text-center">
             <div className="absolute inset-0 -z-10 bg-brand-radial" />
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Want this team on your problem?
+              Want senior AI talent on your problem?
             </h2>
             <Link href="/contact" className="btn-primary mt-7">
               Book a strategy call <ArrowRight className="h-4 w-4" />

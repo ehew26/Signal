@@ -113,10 +113,10 @@ export const processSteps: ProcessStep[] = [
 export type Metric = { value: string; label: string };
 
 export const heroMetrics: Metric[] = [
-  { value: "$42M+", label: "Client value created" },
-  { value: "120+", label: "AI systems shipped" },
-  { value: "6.2×", label: "Avg. ROI in year one" },
-  { value: "98%", label: "Client retention" },
+  { value: "Senior", label: "Practitioners on every engagement" },
+  { value: "2 wks", label: "To a working prototype" },
+  { value: "Evals", label: "Gating every release" },
+  { value: "0", label: "Lock-in — you own the code" },
 ];
 
 export type CaseStudy = {
@@ -133,7 +133,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     id: "northwind",
-    client: "Northwind Logistics",
+    client: "B2B logistics company",
     industry: "Supply Chain",
     result: "Autonomous dispatch agent",
     metric: "−38%",
@@ -144,7 +144,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "meridian",
-    client: "Meridian Health",
+    client: "Regional health network",
     industry: "Healthcare",
     result: "Clinical knowledge assistant",
     metric: "4.1 hrs",
@@ -155,7 +155,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "atlas",
-    client: "Atlas Financial",
+    client: "Consumer fintech",
     industry: "Fintech",
     result: "Underwriting copilot",
     metric: "9×",
@@ -252,15 +252,16 @@ export const plans: Plan[] = [
   },
 ];
 
+// The tools we build on — true, not fabricated client logos.
 export const clientLogos = [
-  "Northwind",
-  "Meridian",
-  "Atlas",
-  "Lumen",
-  "Cascade",
-  "Orbital",
-  "Vanta",
-  "Polaris",
+  "OpenAI",
+  "Anthropic",
+  "AWS",
+  "Google Cloud",
+  "Azure",
+  "Supabase",
+  "Postgres",
+  "Vercel",
 ];
 
 export const faqs = [
