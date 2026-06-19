@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import PageShell, { PageHeader } from "@/components/site/PageShell";
 import Reveal from "@/components/Reveal";
-import { companyFacts, values, company } from "@/lib/content";
+import { companyFacts, values } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About",
@@ -16,8 +16,8 @@ export default function AboutPage() {
     <PageShell>
       <PageHeader
         eyebrow="About"
-        title={<>Senior builders who <span className="gradient-text">ship</span></>}
-        sub={`Founded in ${company.founded}, Vertex AI is a small, senior team that designs and deploys production-grade AI. We've shipped systems to millions of users — and we bring that bar to every engagement.`}
+        title={<>AI that earns its keep for <span className="gradient-text">small businesses</span></>}
+        sub="Vertex AI is a founder-led practice that sets up practical AI for small businesses — answering customers, capturing leads, and booking jobs. No jargon, no lock-in, no full-time tech team required."
       />
 
       {/* Facts */}

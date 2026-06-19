@@ -44,10 +44,10 @@ export default function OpengraphImage() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05, letterSpacing: -2, maxWidth: 980 }}>
-            Resolve more tickets, with fewer agents.
+            Never miss a lead again.
           </div>
           <div style={{ fontSize: 34, color: "#9aa0b9", maxWidth: 900 }}>
-            AI support automation for B2B SaaS — grounded in your docs, live in weeks.
+            AI for small businesses — answers customers, captures leads, books jobs. Live in days.
           </div>
         </div>
 

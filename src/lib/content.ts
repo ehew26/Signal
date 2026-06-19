@@ -98,46 +98,46 @@ export type ServiceDetail = {
 };
 
 export const serviceDetails: Record<string, ServiceDetail> = {
-  agents: {
-    slug: "agents",
-    outcome: "Autonomous agents that take real work off your team's plate.",
-    deliverables: ["Agent architecture & tool design", "Production deployment", "Eval suite & guardrails", "Monitoring dashboard"],
-    idealFor: "Teams drowning in repetitive, judgment-heavy tasks.",
-    timeframe: "4–8 weeks to v1",
+  chatbot: {
+    slug: "chatbot",
+    outcome: "A 24/7 assistant that answers customers and books jobs while you work.",
+    deliverables: ["Website chat widget", "Call & text auto-answer", "Trained on your FAQs & services", "Smart handoff to you"],
+    idealFor: "Any business losing customers to missed calls or slow replies.",
+    timeframe: "Live in days",
+  },
+  leads: {
+    slug: "leads",
+    outcome: "Every lead captured and followed up — automatically, instantly.",
+    deliverables: ["Instant text-back on new leads", "Follow-up sequences", "Lead alerts to your phone", "Simple lead inbox"],
+    idealFor: "Businesses that get leads by phone, form, or DM and can't always respond fast.",
+    timeframe: "Live in days",
+  },
+  booking: {
+    slug: "booking",
+    outcome: "Customers book themselves, your calendar fills, no-shows drop.",
+    deliverables: ["Self-serve booking page", "Calendar sync", "Automatic reminders", "Reschedule handling"],
+    idealFor: "Appointment-based businesses — home services, clinics, salons, trades.",
+    timeframe: "Live in days",
+  },
+  reviews: {
+    slug: "reviews",
+    outcome: "More 5-star reviews, and unhappy customers caught before they post.",
+    deliverables: ["Automated review requests", "Smart timing", "Private feedback routing", "Google/Facebook links"],
+    idealFor: "Local businesses that live and die by their online rating.",
+    timeframe: "Live in days",
   },
   automation: {
     slug: "automation",
-    outcome: "Zero-touch pipelines that run your busywork while you sleep.",
-    deliverables: ["Process audit & mapping", "Automated pipelines", "Error handling & alerts", "Runbook & handoff"],
-    idealFor: "Ops teams with high-volume manual workflows.",
-    timeframe: "3–6 weeks",
+    outcome: "The repetitive admin runs itself, so you get your evenings back.",
+    deliverables: ["Quote & invoice automation", "Reminders & receipts", "Data entry automation", "Tool integrations"],
+    idealFor: "Owners buried in paperwork and repetitive back-office tasks.",
+    timeframe: "1–2 weeks",
   },
-  strategy: {
-    slug: "strategy",
-    outcome: "A board-ready AI roadmap tied to dollars and timelines.",
-    deliverables: ["Opportunity assessment", "Build-vs-buy analysis", "Cost & ROI model", "90-day execution plan"],
-    idealFor: "Leadership teams deciding where to place AI bets.",
-    timeframe: "2–3 weeks",
-  },
-  rag: {
-    slug: "rag",
-    outcome: "A trustworthy knowledge engine that cites its sources.",
-    deliverables: ["Hybrid retrieval system", "Source-grounded answers", "Hallucination evals", "Admin & feedback tools"],
-    idealFor: "Companies sitting on knowledge their teams can't find.",
-    timeframe: "4–7 weeks",
-  },
-  governance: {
-    slug: "governance",
-    outcome: "Ship AI fast without shipping risk.",
-    deliverables: ["Eval harness", "PII & access controls", "Audit logging", "Policy framework"],
-    idealFor: "Regulated industries and risk-conscious leadership.",
-    timeframe: "3–5 weeks",
-  },
-  enablement: {
-    slug: "enablement",
-    outcome: "Your team ships AI confidently, long after we leave.",
-    deliverables: ["Hands-on workshops", "Prompt & eval libraries", "Internal playbooks", "Ongoing advisory"],
-    idealFor: "Teams that want to build the muscle in-house.",
+  setup: {
+    slug: "setup",
+    outcome: "Everything set up and maintained for you — zero tech headaches.",
+    deliverables: ["Done-for-you setup", "Works with your existing tools", "Ongoing maintenance", "A real person to call"],
+    idealFor: "Owners who want results without becoming an AI expert.",
     timeframe: "Ongoing",
   },
 };
@@ -155,20 +155,20 @@ export const caseStudyDetails: Record<string, CaseStudyDetail> = {
   northwind: {
     slug: "northwind",
     challenge:
-      "A fast-growing B2B SaaS company's support team was drowning in repetitive tickets — password resets, how-tos, billing questions. First-response times kept climbing and senior agents burned out on work far below their level.",
+      "A busy home-services company was losing jobs every week to missed calls — owners on a roof can't answer the phone, and callers who hit voicemail just dial the next company on Google.",
     approach: [
-      "Analyzed 6 months of tickets to find the highest-volume, automatable intents.",
-      "Built a support agent grounded in their help center, API docs, and product data.",
-      "Added strict guardrails: cite sources, never guess, escalate anything uncertain to a human with full context.",
-      "Ran an eval suite against real historical tickets before launch, then rolled out intent by intent.",
+      "Set up an AI assistant to answer every call, text, and website chat instantly.",
+      "Trained it on their services, service area, pricing ranges, and FAQs.",
+      "Connected it to their calendar so it books and reschedules jobs automatically.",
+      "Routed anything unusual straight to the owner with a text summary.",
     ],
     outcome:
-      "The agent resolves the bulk of repetitive tickets end-to-end, drafts replies for the rest, and routes complex issues to the right human — so the team spends its time on the conversations that actually need them.",
+      "Now no call goes unanswered — day, night, or weekend. The assistant captures the lead, answers common questions, and books the job, while the crew stays focused on the work.",
     stats: [
-      { value: "−52%", label: "Tickets handled by humans" },
-      { value: "<2 min", label: "Median first response" },
-      { value: "100%", label: "Answers cited & grounded" },
-      { value: "4.6/5", label: "CSAT on automated replies" },
+      { value: "+38%", label: "More booked jobs" },
+      { value: "0", label: "Missed calls" },
+      { value: "24/7", label: "Always answering" },
+      { value: "Days", label: "To go live" },
     ],
     quote: {
       text: "Illustrative engagement — your story could go here.",
@@ -178,47 +178,47 @@ export const caseStudyDetails: Record<string, CaseStudyDetail> = {
   meridian: {
     slug: "meridian",
     challenge:
-      "Clinicians at Meridian wasted hours hunting through 2M+ documents for guidance — with zero tolerance for a wrong or unsourced answer.",
+      "A dental practice was missing dozens of calls a week during appointments. Each missed call from a prospective patient often meant a booking lost to a competing clinic.",
     approach: [
-      "Built a hybrid retrieval system over the full clinical corpus.",
-      "Grounded every answer in citations with confidence scoring.",
-      "Designed a hallucination eval harness reviewed by clinical staff.",
-      "Added PII controls and full audit logging for compliance.",
+      "Set up instant text-back on every missed call.",
+      "The assistant answers common questions (hours, insurance, pricing) by text.",
+      "It offers open appointment slots and books the patient on the spot.",
+      "Front-desk staff get a clean summary instead of a voicemail backlog.",
     ],
     outcome:
-      "A clinical assistant that clinicians actually trust — answers are fast, cited, and safe, with a human always able to verify the source.",
+      "Missed calls turn into booked appointments instead of lost patients, and the front desk stops playing phone tag — all without adding headcount.",
     stats: [
-      { value: "4.1 hrs", label: "Saved / clinician / week" },
-      { value: "2M+", label: "Documents indexed" },
-      { value: "0", label: "Unsourced answers shipped" },
-      { value: "96%", label: "Clinician satisfaction" },
+      { value: "−71%", label: "Missed-call no-shows" },
+      { value: "+25%", label: "New patient bookings" },
+      { value: "<1 min", label: "Text-back time" },
+      { value: "Days", label: "To go live" },
     ],
     quote: {
-      text: "They were obsessive about evals and safety, which is exactly what you want when AI touches patient data.",
-      author: "Dr. Marcus Lee, VP Clinical Ops",
+      text: "Illustrative engagement — your story could go here.",
+      author: "Vertex AI",
     },
   },
   atlas: {
     slug: "atlas",
     challenge:
-      "Atlas's underwriters spent days drafting memos and manually flagging risk, creating a bottleneck on every loan decision.",
+      "A salon and spa had great service but a thin online presence — too few recent reviews, and a calendar with gaps from clients who never rebooked.",
     approach: [
-      "Built an underwriting copilot that drafts memos from application data.",
-      "Layered in risk-flagging with explainable rationale.",
-      "Kept a human firmly in the loop for every final decision.",
-      "Integrated directly into the existing underwriting workflow.",
+      "Automated review requests by text right after each appointment.",
+      "Sent unhappy feedback privately to the owner before it went public.",
+      "Added rebooking reminders to bring clients back on schedule.",
+      "Kept the messages on-brand and easy to turn off anytime.",
     ],
     outcome:
-      "Underwriters move 9× faster on routine decisions and spend their time on the judgment calls that actually need a human.",
+      "A steady stream of fresh 5-star reviews lifted their ranking and visibility, while automated rebooking kept the calendar full.",
     stats: [
-      { value: "9×", label: "Faster decisions" },
-      { value: "−61%", label: "Memo drafting time" },
-      { value: "100%", label: "Human-reviewed" },
-      { value: "$2.4M", label: "Annual capacity unlocked" },
+      { value: "+180", label: "New 5-star reviews" },
+      { value: "4.9★", label: "Average rating" },
+      { value: "+22%", label: "Repeat bookings" },
+      { value: "Days", label: "To go live" },
     ],
     quote: {
-      text: "Vertex handed us production software and trained our team to own it. We've shipped four more features ourselves since.",
-      author: "Priya Nair, Head of Engineering",
+      text: "Illustrative engagement — your story could go here.",
+      author: "Vertex AI",
     },
   },
 };

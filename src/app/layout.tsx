@@ -28,13 +28,13 @@ const SITE_URL = "https://getvertex.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Vertex AI — AI Support Automation for B2B SaaS",
+    default: "Vertex AI — AI Automation for Small Businesses",
     template: "%s · Vertex AI",
   },
   description:
-    "Vertex AI builds production-grade support automation for B2B SaaS teams — AI agents grounded in your docs that resolve repetitive tickets accurately and escalate the rest. Live in weeks, not slideware.",
+    "Vertex AI sets up practical AI for small businesses — a 24/7 assistant that answers customers, captures and follows up with every lead, and books appointments. Done for you, live in days.",
   keywords:
-    "AI support automation, B2B SaaS support AI, customer support automation, AI support agent, RAG support assistant, ticket deflection, AI consulting, LLM development",
+    "AI for small business, AI receptionist, missed call text back, AI chatbot for business, lead capture automation, appointment booking AI, small business automation, AI phone answering",
   authors: [{ name: "Vertex AI" }],
   openGraph: {
     title: "Vertex AI — AI Strategy & Implementation Consulting",

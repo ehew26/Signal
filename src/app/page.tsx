@@ -74,8 +74,8 @@ export default function HomePage() {
             <Reveal>
               <SectionHeading
                 eyebrow="What we do"
-                title={<>End-to-end AI, <span className="gradient-text">built to last</span></>}
-                sub="From the first strategy session to a hardened production system your team owns. Six ways we create leverage."
+                title={<>Everything your business needs, <span className="gradient-text">automated</span></>}
+                sub="Six ways we help you win more customers and spend less time on the busywork — all set up and managed for you."
               />
             </Reveal>
 
@@ -297,18 +297,18 @@ export default function HomePage() {
                 Let&apos;s build
               </span>
               <h2 className="mx-auto mt-5 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
-                Ready to put AI to <span className="gradient-text-flow">work?</span>
+                Ready to stop missing <span className="gradient-text-flow">customers?</span>
               </h2>
               <p className="mx-auto mt-5 max-w-xl text-lg text-mist-dim">
-                Book a 30-minute strategy call. We&apos;ll pressure-test your idea and
-                leave you with a clear, honest plan — whether or not you hire us.
+                Book a free 20-minute call. We&apos;ll show you exactly where
+                you&apos;re losing leads and how AI can fix it — no pressure, no jargon.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Link href="/contact" className="btn-primary">
-                  Book a strategy call <ArrowRight className="h-4 w-4" />
+                  Book a free call <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link href="/dashboard" className="btn-ghost">
-                  Explore the dashboard
+                <Link href="/#pricing" className="btn-ghost">
+                  See plans &amp; pricing
                 </Link>
               </div>
               <p className="mt-6 font-mono text-xs text-mist-faint">hello@vertex-ai.com</p>

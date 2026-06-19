@@ -6,10 +6,10 @@ import { ArrowRight, Play, Sparkles } from "lucide-react";
 import { heroMetrics } from "@/lib/data";
 
 const TERMINAL_LINES = [
-  { p: "$", t: "vertex deploy support-agent --env prod", c: "text-cyan" },
-  { p: ">", t: "Running eval suite … 142/142 passed ✓", c: "text-emerald" },
-  { p: ">", t: "Routing model warm · p95 latency 840ms", c: "text-mist-dim" },
-  { p: ">", t: "Agent live. Handling 1,240 conversations/day.", c: "text-mist" },
+  { p: "✆", t: "Missed call — texting the customer back…", c: "text-cyan" },
+  { p: "✓", t: "Lead captured: roof estimate request", c: "text-emerald" },
+  { p: "▣", t: "Booked: Tue 9:00 AM — confirmation sent", c: "text-mist-dim" },
+  { p: "★", t: "Review request sent to 3 happy customers", c: "text-mist" },
 ];
 
 function Terminal() {
@@ -28,7 +28,7 @@ function Terminal() {
           <span className="h-3 w-3 rounded-full bg-rose/80" />
           <span className="h-3 w-3 rounded-full bg-amber/80" />
           <span className="h-3 w-3 rounded-full bg-emerald/80" />
-          <span className="ml-2 font-mono text-xs text-mist-faint">vertex — agent deploy</span>
+          <span className="ml-2 font-mono text-xs text-mist-faint">vertex — live activity</span>
         </div>
         <div className="space-y-2 p-5 font-mono text-[13px] leading-relaxed min-h-[148px]">
           {TERMINAL_LINES.slice(0, count).map((line, i) => (
@@ -72,28 +72,28 @@ export default function Hero() {
         <div>
           <div className="chip animate-fade-in">
             <Sparkles className="h-3.5 w-3.5 text-violet" />
-            AI support automation for B2B SaaS
+            AI automation for small businesses
           </div>
 
           <h1 className="mt-6 text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-            <span className="gradient-text">Resolve more tickets,</span>
+            <span className="gradient-text">Capture every lead.</span>
             <br />
-            <span className="gradient-text-flow">with fewer agents.</span>
+            <span className="gradient-text-flow">Automate the busywork.</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist-dim">
-            Vertex AI builds support automation for B2B SaaS teams — AI agents
-            grounded in your docs and product that resolve repetitive tickets
-            accurately and hand the rest to your team. Live in weeks, not
-            quarters. No slideware. No black boxes.
+            Vertex AI sets up practical AI for small businesses — a 24/7 assistant
+            that answers customers, captures and follows up with every lead, and
+            books appointments. So you never lose a job to a missed call or a slow
+            reply. Done for you, live in days.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href="/contact" className="btn-primary">
-              Book a strategy call <ArrowRight className="h-4 w-4" />
+              Book a free call <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/#work" className="btn-ghost">
-              <Play className="h-4 w-4" /> See the work
+              <Play className="h-4 w-4" /> See examples
             </Link>
           </div>
 

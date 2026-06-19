@@ -6,10 +6,10 @@
 
 import {
   Bot,
+  Phone,
+  Calendar,
+  Star,
   Workflow,
-  LineChart,
-  Database,
-  ShieldCheck,
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
@@ -28,52 +28,52 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    id: "agents",
-    title: "Custom AI Agents",
+    id: "chatbot",
+    title: "AI Receptionist & Chatbot",
     blurb:
-      "Autonomous, tool-using agents wired into your stack — handling support, research, and ops with human-grade judgment.",
+      "Answers customer calls, texts, and website chats 24/7 — answers FAQs and books jobs so you never miss business, even after hours.",
     icon: Bot,
-    points: ["Multi-step tool use", "Human-in-the-loop guardrails", "Sub-second routing"],
+    points: ["Replies in seconds, 24/7", "Trained on your business", "Hands off to you when needed"],
+  },
+  {
+    id: "leads",
+    title: "Lead Capture & Follow-Up",
+    blurb:
+      "Instantly captures every lead and follows up by text and email, so hot prospects don't go cold while you're on the job.",
+    icon: Phone,
+    points: ["Instant lead response", "Automated follow-up", "Nothing slips through"],
+  },
+  {
+    id: "booking",
+    title: "Appointment Booking",
+    blurb:
+      "Lets customers book and reschedule themselves, synced to your calendar — with automatic reminders that cut no-shows.",
+    icon: Calendar,
+    points: ["Self-serve scheduling", "Calendar sync", "Reminders cut no-shows"],
+  },
+  {
+    id: "reviews",
+    title: "Reviews & Reputation",
+    blurb:
+      "Automatically asks happy customers for reviews at the right moment — and quietly routes unhappy ones to you first.",
+    icon: Star,
+    points: ["Automated review requests", "More 5-star reviews", "Catch issues privately"],
   },
   {
     id: "automation",
     title: "Workflow Automation",
     blurb:
-      "Kill the busywork. We map your highest-leverage processes and automate them end-to-end with reliable, observable pipelines.",
+      "Automates the repetitive admin — quotes, invoices, reminders, data entry — so you spend your time on the work that pays.",
     icon: Workflow,
-    points: ["Process discovery", "Zero-touch pipelines", "Full audit trails"],
+    points: ["Quotes & invoices", "Reminders & receipts", "No more copy-paste"],
   },
   {
-    id: "strategy",
-    title: "AI Strategy & Roadmaps",
+    id: "setup",
+    title: "Done-For-You Setup",
     blurb:
-      "A board-ready plan that ties AI initiatives to revenue, risk, and timeline — so you invest in what actually compounds.",
-    icon: LineChart,
-    points: ["Opportunity sizing", "Build-vs-buy analysis", "90-day execution plan"],
-  },
-  {
-    id: "rag",
-    title: "Knowledge & RAG Systems",
-    blurb:
-      "Turn scattered docs into a trustworthy, cited knowledge engine your team and customers can actually rely on.",
-    icon: Database,
-    points: ["Hybrid retrieval", "Source-grounded answers", "Evals & hallucination control"],
-  },
-  {
-    id: "governance",
-    title: "AI Governance & Safety",
-    blurb:
-      "Ship fast without shipping risk. Policy, evaluation, and monitoring frameworks built for regulated environments.",
-    icon: ShieldCheck,
-    points: ["Eval harnesses", "PII & access controls", "Compliance-ready logging"],
-  },
-  {
-    id: "enablement",
-    title: "Team Enablement",
-    blurb:
-      "We don't just build and leave. Your team ships confidently with hands-on training and reusable internal playbooks.",
+      "We set it all up and keep it running. No tech skills required, no new tools to learn — it works with what you already use.",
     icon: Sparkles,
-    points: ["Workshops & playbooks", "Prompt & eval libraries", "Ongoing advisory"],
+    points: ["Fully managed setup", "Works with your tools", "Ongoing support"],
   },
 ];
 
@@ -86,37 +86,37 @@ export type ProcessStep = {
 export const processSteps: ProcessStep[] = [
   {
     step: "01",
-    title: "Discover",
+    title: "Quick call",
     description:
-      "We audit your workflows, data, and goals to find the AI bets with the highest, fastest ROI — and the ones to avoid.",
+      "A 20-minute chat about your business — where you're losing leads, missing calls, or drowning in admin. No tech jargon.",
   },
   {
     step: "02",
-    title: "Design",
+    title: "We build it",
     description:
-      "A concrete architecture and success metrics. You get a build plan, cost model, and risk map before a line of code ships.",
+      "We set everything up for you — chatbot, lead follow-up, booking — trained on your business. You don't lift a finger.",
   },
   {
     step: "03",
-    title: "Build",
+    title: "Go live",
     description:
-      "Rapid, evaluated iterations. We ship working software in weeks, not quarters, with evals gating every release.",
+      "Your AI assistant goes live in days, answering customers and capturing leads around the clock. We test it with you first.",
   },
   {
     step: "04",
-    title: "Scale",
+    title: "We maintain it",
     description:
-      "Production hardening, monitoring, and team enablement so the system keeps compounding long after we're gone.",
+      "We keep it running and improving, and you get a real person to call. Cancel anytime — no lock-in, no surprises.",
   },
 ];
 
 export type Metric = { value: string; label: string };
 
 export const heroMetrics: Metric[] = [
-  { value: "Senior", label: "Practitioners on every engagement" },
-  { value: "2 wks", label: "To a working prototype" },
-  { value: "Evals", label: "Gating every release" },
-  { value: "0", label: "Lock-in — you own the code" },
+  { value: "24/7", label: "Answers customers, day or night" },
+  { value: "<1 min", label: "Response to every new lead" },
+  { value: "0", label: "Missed calls or leads" },
+  { value: "Days", label: "To go live" },
 ];
 
 export type CaseStudy = {
@@ -133,35 +133,35 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     id: "northwind",
-    client: "B2B SaaS company",
-    industry: "B2B SaaS",
-    result: "Support resolution agent",
-    metric: "−52%",
-    metricLabel: "tickets handled by humans",
+    client: "Home-services company",
+    industry: "Home Services",
+    result: "AI receptionist & lead follow-up",
+    metric: "+38%",
+    metricLabel: "more booked jobs",
     summary:
-      "An agent grounded in their docs and product that resolves repetitive tickets end-to-end and escalates the rest with full context.",
+      "A 24/7 assistant that answers calls and texts, captures every lead, and books jobs — even after hours and on weekends.",
     accent: "from-violet to-cyan",
   },
   {
     id: "meridian",
-    client: "Regional health network",
+    client: "Dental practice",
     industry: "Healthcare",
-    result: "Clinical knowledge assistant",
-    metric: "4.1 hrs",
-    metricLabel: "saved per clinician / week",
+    result: "Missed-call text-back & booking",
+    metric: "−71%",
+    metricLabel: "missed-call no-shows",
     summary:
-      "A source-grounded RAG assistant over 2M clinical documents — with zero tolerance for hallucination.",
+      "Every missed call gets an instant text back that answers questions and books the appointment, so new patients don't call the next clinic.",
     accent: "from-cyan to-emerald",
   },
   {
     id: "atlas",
-    client: "Consumer fintech",
-    industry: "Fintech",
-    result: "Underwriting copilot",
-    metric: "9×",
-    metricLabel: "faster decisions",
+    client: "Salon & spa",
+    industry: "Local Services",
+    result: "Reviews & rebooking automation",
+    metric: "+180",
+    metricLabel: "new 5-star reviews",
     summary:
-      "An underwriting copilot that drafts memos and flags risk, keeping a human firmly in the loop.",
+      "Automated review requests and rebooking reminders that lifted their rating and kept the calendar full.",
     accent: "from-amber to-rose",
   },
 ];
@@ -209,46 +209,46 @@ export type Plan = {
 
 export const plans: Plan[] = [
   {
-    name: "Sprint",
-    price: "$12k",
-    cadence: "/ 2-week sprint",
-    tagline: "Validate one high-value AI use case, fast.",
+    name: "Starter",
+    price: "$299",
+    cadence: "/ month",
+    tagline: "Answer customers and capture every lead, 24/7.",
     features: [
-      "Discovery & opportunity sizing",
-      "One working prototype",
-      "Eval baseline & cost model",
-      "Executive readout",
+      "AI chatbot on your website",
+      "Instant lead capture + text-back",
+      "Email & text lead alerts",
+      "Setup done for you",
     ],
-    cta: "Start a sprint",
+    cta: "Get started",
   },
   {
-    name: "Build",
-    price: "$28k",
+    name: "Growth",
+    price: "$599",
     cadence: "/ month",
-    tagline: "Ship a production system with a dedicated pod.",
+    tagline: "Automate booking, follow-up, and reviews.",
     features: [
-      "Dedicated senior pod",
-      "Production-grade build & evals",
-      "Monitoring & observability",
-      "Weekly demos & async access",
-      "Team enablement included",
+      "Everything in Starter",
+      "Appointment booking + reminders",
+      "Automated follow-up sequences",
+      "Automated review requests",
+      "Priority support",
     ],
     highlighted: true,
-    cta: "Book a strategy call",
+    cta: "Book a call",
   },
   {
-    name: "Partner",
+    name: "Done-For-You",
     price: "Custom",
-    cadence: "/ engagement",
-    tagline: "Embedded AI leadership across your org.",
+    cadence: "/ project",
+    tagline: "Full automation, fully managed for you.",
     features: [
-      "Fractional Head of AI",
-      "Multi-team roadmap & governance",
-      "Vendor & build-vs-buy strategy",
-      "Quarterly board reporting",
-      "Priority SLAs",
+      "Custom workflows for your business",
+      "Integrations with your tools",
+      "Dedicated setup & management",
+      "Ongoing optimization",
+      "A real person to call",
     ],
-    cta: "Talk to a partner",
+    cta: "Talk to us",
   },
 ];
 
@@ -266,20 +266,20 @@ export const clientLogos = [
 
 export const faqs = [
   {
-    q: "How fast can you actually ship something?",
-    a: "Our 2-week Sprint produces a working prototype against your real data. Most production builds reach a usable v1 within 4–6 weeks.",
+    q: "Do I need to be technical to use this?",
+    a: "Not at all. We set everything up for you and keep it running. There's nothing to install and no new software to learn — it works with the phone number, website, and tools you already have.",
   },
   {
-    q: "We're worried about hallucinations and data security. How do you handle that?",
-    a: "Every engagement ships with an eval harness, source-grounding, and access controls. For regulated clients we add PII redaction, audit logging, and human-in-the-loop gating.",
+    q: "How fast can it go live?",
+    a: "Most small businesses are up and running within a few days. We build it, test it with you, and flip it on once you're happy.",
   },
   {
-    q: "Do you lock us into proprietary tools?",
-    a: "Never. We build on your cloud and your stack, document everything, and train your team to own it. No black boxes.",
+    q: "Will customers know they're talking to AI? Will it sound robotic?",
+    a: "It's trained on your business so it sounds like you, and it hands off to a real person whenever something needs a human. The goal is happier customers, not a frustrating phone tree.",
   },
   {
-    q: "What if we don't know where to start?",
-    a: "That's the most common starting point. Our Discovery phase finds the highest-ROI bets and tells you honestly which AI ideas aren't worth it yet.",
+    q: "What does it cost, and am I locked in?",
+    a: "Plans start at $299/month with setup included, and you can cancel anytime — no long contracts, no lock-in. Most clients make it back from a single extra booked job.",
   },
 ];
 

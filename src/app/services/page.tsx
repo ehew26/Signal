@@ -9,7 +9,7 @@ import { serviceDetails } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "From AI strategy to custom agents, automation, RAG systems, governance, and team enablement — end-to-end AI consulting built to last.",
+    "AI receptionist & chatbot, lead capture & follow-up, appointment booking, reviews, and workflow automation for small businesses — set up and managed for you.",
 };
 
 export default function ServicesPage() {
@@ -17,8 +17,8 @@ export default function ServicesPage() {
     <PageShell>
       <PageHeader
         eyebrow="Services"
-        title={<>End-to-end AI, <span className="gradient-text">built to last</span></>}
-        sub="Six ways we create leverage — from the first strategy session to a hardened production system your team owns."
+        title={<>Everything your business needs, <span className="gradient-text">automated</span></>}
+        sub="Six ways we help you win more customers and spend less time on busywork — set up and managed for you, no tech skills required."
       />
 
       <section className="px-5 pb-28 sm:px-8">
@@ -81,12 +81,12 @@ export default function ServicesPage() {
               Not sure where to start?
             </h2>
             <p className="mx-auto mt-3 max-w-lg text-mist-dim">
-              That&apos;s the most common starting point. A 2-week Sprint finds your
-              highest-ROI bet — and tells you honestly which ideas to skip.
+              Tell us where you&apos;re losing customers and we&apos;ll recommend
+              exactly what to automate first — on a free 20-minute call.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Link href="/contact" className="btn-primary">
-                Book a strategy call <ArrowRight className="h-4 w-4" />
+                Book a free call <ArrowRight className="h-4 w-4" />
               </Link>
               <Link href="/#pricing" className="btn-ghost">See pricing</Link>
             </div>
