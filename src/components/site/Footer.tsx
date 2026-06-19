@@ -6,10 +6,10 @@ const columns = [
   {
     title: "Services",
     links: [
-      { label: "AI Agents", href: "/services" },
-      { label: "Automation", href: "/services" },
-      { label: "Strategy", href: "/services" },
-      { label: "RAG Systems", href: "/services" },
+      { label: "AI Receptionist", href: "/services" },
+      { label: "Lead Follow-Up", href: "/services" },
+      { label: "Booking", href: "/services" },
+      { label: "Reviews", href: "/services" },
     ],
   },
   {
@@ -38,8 +38,8 @@ export default function Footer() {
         <div>
           <Logo />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-mist-dim">
-            Production-grade AI for ambitious companies. Strategy, custom agents,
-            and automation that move revenue — not slideware.
+            Practical AI for small businesses — answer customers, capture every
+            lead, and book more jobs. Done for you, live in days.
           </p>
           <div className="mt-5 flex gap-2">
             {[AtSign, Share2, Mail].map((Icon, i) => (
