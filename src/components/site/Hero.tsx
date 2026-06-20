@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { heroMetrics } from "@/lib/data";
 import PhoneDemo from "@/components/site/PhoneDemo";
+import Magnetic from "@/components/site/Magnetic";
 
 export default function Hero() {
   return (
@@ -22,9 +23,9 @@ export default function Hero() {
           </p>
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:justify-start">
-            <Link href="/contact" className="btn-primary">
+            <Magnetic href="/contact" className="btn-primary">
               Book a free call
-            </Link>
+            </Magnetic>
             <Link
               href="/#work"
               className="inline-flex items-center gap-1 text-base font-medium text-violet hover:underline"

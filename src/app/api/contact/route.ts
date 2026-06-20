@@ -13,6 +13,7 @@ import { getSupabase } from "@/lib/supabase";
 export type Lead = {
   name: string;
   email: string;
+  phone?: string;
   company?: string;
   reason?: string;
   budget?: string;
@@ -25,16 +26,19 @@ function validate(body: Partial<Lead>): { ok: true; lead: Lead } | { ok: false; 
   const name = (body.name ?? "").trim();
   const email = (body.email ?? "").trim();
   const message = (body.message ?? "").trim();
+  const phone = (body.phone ?? "").trim();
 
   if (name.length < 2) return { ok: false, error: "Please enter your name." };
   if (!EMAIL_RE.test(email)) return { ok: false, error: "Please enter a valid email address." };
   if (message.length < 10) return { ok: false, error: "Tell us a little more (at least 10 characters)." };
+  if (phone.length > 40) return { ok: false, error: "That phone number looks too long." };
 
   return {
     ok: true,
     lead: {
       name,
       email,
+      phone: phone || undefined,
       company: (body.company ?? "").trim() || undefined,
       reason: (body.reason ?? "").trim() || undefined,
       budget: (body.budget ?? "").trim() || undefined,
@@ -84,6 +88,7 @@ async function notifyTeam(lead: Lead) {
   if (!webhook) return;
   const lines = [
     `*New lead — ${lead.name}* (${lead.email})`,
+    lead.phone && `Phone: ${lead.phone}`,
     lead.company && `Company: ${lead.company}`,
     lead.reason && `About: ${lead.reason}`,
     lead.budget && `Budget: ${lead.budget}`,

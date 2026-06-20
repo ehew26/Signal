@@ -2,6 +2,7 @@ import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import Aurora from "@/components/Aurora";
 import Reveal from "@/components/Reveal";
+import StickyCTA from "@/components/site/StickyCTA";
 
 export function PageHeader({
   eyebrow,
@@ -39,6 +40,7 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
       <Navbar />
       <main>{children}</main>
       <Footer />
+      <StickyCTA />
     </>
   );
 }

@@ -8,13 +8,11 @@ import Aurora from "@/components/Aurora";
 import Reveal from "@/components/Reveal";
 import Tilt from "@/components/site/Tilt";
 import Parallax from "@/components/site/Parallax";
-import {
-  services,
-  caseStudies,
-  processSteps,
-  plans,
-  clientLogos,
-} from "@/lib/data";
+import Magnetic from "@/components/site/Magnetic";
+import StickyCTA from "@/components/site/StickyCTA";
+import BookingScene from "@/components/site/BookingScene";
+import HowItWorksScroll from "@/components/site/HowItWorksScroll";
+import { services, caseStudies, plans, clientLogos } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 function SectionHeading({
@@ -50,6 +48,17 @@ export default function HomePage() {
 
       <main>
         <Hero />
+
+        {/* ---------- Trust row ---------- */}
+        <section className="px-5 pt-10 sm:px-8">
+          <ul className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-medium text-mist-dim">
+            {["Live in days", "Setup included", "No long contracts", "Cancel anytime", "You own it"].map((t) => (
+              <li key={t} className="flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-violet" /> {t}
+              </li>
+            ))}
+          </ul>
+        </section>
 
         {/* ---------- Logo marquee ---------- */}
         <section className="py-10">
@@ -226,34 +235,31 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ---------- Process ---------- */}
-        <section id="process" className="relative scroll-mt-24 py-24">
-          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        {/* ---------- Booking scene ---------- */}
+        <section className="bg-ink-2 px-5 py-20 sm:px-8 sm:py-28">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <Reveal>
-              <SectionHeading
-                eyebrow="How it works"
-                title={<>A path from <span className="gradient-text">idea to impact</span></>}
-                sub="A proven four-phase method that de-risks AI and ships working software fast."
-              />
+              <span className="eyebrow">The outcome</span>
+              <h2 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+                Watch your calendar fill itself.
+              </h2>
+              <p className="mt-5 max-w-lg text-lg leading-relaxed text-mist-dim">
+                While you&apos;re on the job, your assistant is answering customers,
+                capturing leads, and booking appointments — turning missed calls
+                into paying work, automatically.
+              </p>
+              <Link href="/contact" className="mt-7 inline-flex items-center gap-1 text-base font-medium text-violet hover:underline">
+                Put it to work for me <ArrowRight className="h-4 w-4" />
+              </Link>
             </Reveal>
-
-            <div className="relative mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <div className="absolute left-0 top-7 hidden h-px w-full bg-gradient-to-r from-transparent via-line-strong to-transparent lg:block" />
-              {processSteps.map((p, i) => (
-                <Reveal key={p.step} delay={((i % 4) + 1) as 1 | 2 | 3 | 4}>
-                  <div className="relative">
-                    <div className="relative z-10 mb-6 grid h-14 w-14 place-items-center rounded-2xl panel font-mono text-lg font-semibold text-violet">
-                      {p.step}
-                      <span className="absolute inset-0 -z-10 rounded-2xl bg-violet/10 blur-md" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-mist">{p.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-mist-dim">{p.description}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+            <Reveal delay={1}>
+              <BookingScene />
+            </Reveal>
           </div>
         </section>
+
+        {/* ---------- How it works (scroll-scrubbed) ---------- */}
+        <HowItWorksScroll />
 
         {/* ---------- Founding clients ---------- */}
         <section className="relative py-24">
@@ -345,6 +351,14 @@ export default function HomePage() {
                 </Reveal>
               ))}
             </div>
+
+            <Reveal className="mx-auto mt-8 max-w-3xl">
+              <p className="text-center text-sm text-mist-dim">
+                <span className="font-medium text-mist">Risk-free to try.</span>{" "}
+                No setup fees, no long contracts — cancel anytime. Most owners earn
+                it back from a single extra booked job.
+              </p>
+            </Reveal>
           </div>
         </section>
 
@@ -378,9 +392,9 @@ export default function HomePage() {
                 you&apos;re losing leads and how AI can fix it — no pressure, no jargon.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Link href="/contact" className="btn-primary">
+                <Magnetic href="/contact" className="btn-primary">
                   Book a free call <ArrowRight className="h-4 w-4" />
-                </Link>
+                </Magnetic>
                 <Link href="/#pricing" className="btn-ghost">
                   See plans &amp; pricing
                 </Link>
@@ -392,6 +406,7 @@ export default function HomePage() {
       </main>
 
       <Footer />
+      <StickyCTA />
     </>
   );
 }

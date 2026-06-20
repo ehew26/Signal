@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
-import { contactReasons, budgetRanges } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -65,61 +64,35 @@ export default function ContactForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-mist-dim">
-            Name
+            Your name
           </label>
-          <input id="name" name="name" required placeholder="Jane Doe" className={fieldClass} />
+          <input id="name" name="name" required placeholder="Jane Smith" className={fieldClass} />
         </div>
         <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-mist-dim">
-            Work email
+          <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-mist-dim">
+            Phone <span className="text-mist-faint">(for a callback)</span>
           </label>
-          <input id="email" name="email" type="email" required placeholder="jane@company.com" className={fieldClass} />
-        </div>
-        <div>
-          <label htmlFor="company" className="mb-1.5 block text-sm font-medium text-mist-dim">
-            Company <span className="text-mist-faint">(optional)</span>
-          </label>
-          <input id="company" name="company" placeholder="Acme Inc." className={fieldClass} />
-        </div>
-        <div>
-          <label htmlFor="reason" className="mb-1.5 block text-sm font-medium text-mist-dim">
-            I&apos;m reaching out about
-          </label>
-          <select id="reason" name="reason" className={cn(fieldClass, "appearance-none")} defaultValue="">
-            <option value="" disabled className="bg-ink-2">Select one…</option>
-            {contactReasons.map((r) => (
-              <option key={r} value={r} className="bg-ink-2">{r}</option>
-            ))}
-          </select>
+          <input id="phone" name="phone" type="tel" placeholder="(555) 123-4567" className={fieldClass} />
         </div>
       </div>
 
       <div className="mt-4">
-        <label htmlFor="budget" className="mb-1.5 block text-sm font-medium text-mist-dim">
-          Budget <span className="text-mist-faint">(optional)</span>
+        <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-mist-dim">
+          Email
         </label>
-        <div className="flex flex-wrap gap-2">
-          {budgetRanges.map((b, i) => (
-            <label key={b} className="cursor-pointer">
-              <input type="radio" name="budget" value={b} defaultChecked={i === budgetRanges.length - 1} className="peer sr-only" />
-              <span className="inline-flex rounded-full border border-line px-3.5 py-1.5 text-sm text-mist-dim transition-colors peer-checked:border-violet/60 peer-checked:bg-violet/10 peer-checked:text-mist">
-                {b}
-              </span>
-            </label>
-          ))}
-        </div>
+        <input id="email" name="email" type="email" required placeholder="you@business.com" className={fieldClass} />
       </div>
 
       <div className="mt-4">
         <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-mist-dim">
-          What are you trying to do?
+          What kind of business do you run, and what&apos;s slipping through the cracks?
         </label>
         <textarea
           id="message"
           name="message"
           required
-          rows={5}
-          placeholder="Tell us about the problem, your data, and what success looks like…"
+          rows={4}
+          placeholder="e.g. I run a roofing company and keep missing calls while I'm on a job…"
           className={cn(fieldClass, "resize-none")}
         />
       </div>
@@ -152,7 +125,7 @@ export default function ContactForm() {
           </>
         ) : (
           <>
-            Send message <ArrowRight className="h-4 w-4" />
+            Send &amp; get a callback <ArrowRight className="h-4 w-4" />
           </>
         )}
       </button>

@@ -156,6 +156,21 @@
   .delay-5 { transition-delay: 400ms; }
 }
 
+@keyframes meshDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(36px, -28px) scale(1.08); }
+  66% { transform: translate(-28px, 22px) scale(0.95); }
+}
+.mesh-blob {
+  border-radius: 9999px;
+  filter: blur(56px);
+  animation: meshDrift 20s ease-in-out infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mesh-blob { animation: none; }
+}
+
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .mask-fade-x {
