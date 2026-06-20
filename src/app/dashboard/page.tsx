@@ -25,7 +25,11 @@ import {
   type ProjectStatus,
   type Activity,
 } from "@/lib/data";
-import { getProjects, getNewLeadsCount } from "@/lib/queries";
+import {
+  getProjects,
+  getNewLeadsCount,
+  getActiveSubscriptionsCount,
+} from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -75,7 +79,11 @@ function Panel({ className, children }: { className?: string; children: React.Re
 }
 
 export default async function DashboardPage() {
-  const [projects, newLeads] = await Promise.all([getProjects(), getNewLeadsCount()]);
+  const [projects, newLeads, activeSubs] = await Promise.all([
+    getProjects(),
+    getNewLeadsCount(),
+    getActiveSubscriptionsCount(),
+  ]);
 
   return (
     <Shell
@@ -93,6 +101,11 @@ export default async function DashboardPage() {
             <span className="font-semibold">{newLeads}</span>{" "}
             {newLeads === 1 ? "new lead" : "new leads"} captured in the last 30 days
           </p>
+          {activeSubs !== null && (
+            <span className="flex items-center gap-1.5 rounded-full bg-emerald/10 px-2.5 py-1 text-xs font-medium text-emerald">
+              💳 {activeSubs} active {activeSubs === 1 ? "subscription" : "subscriptions"}
+            </span>
+          )}
           <span className="ml-auto flex items-center gap-1.5 text-xs text-emerald">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" /> Live from Supabase
           </span>

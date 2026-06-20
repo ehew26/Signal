@@ -12,6 +12,7 @@ import Magnetic from "@/components/site/Magnetic";
 import StickyCTA from "@/components/site/StickyCTA";
 import BookingScene from "@/components/site/BookingScene";
 import HowItWorksScroll from "@/components/site/HowItWorksScroll";
+import PlanCta from "@/components/site/PlanCta";
 import { services, caseStudies, plans, clientLogos } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -340,12 +341,11 @@ export default function HomePage() {
                         </li>
                       ))}
                     </ul>
-                    <Link
-                      href="/contact"
-                      className={cn("mt-8 w-full", plan.highlighted ? "btn-primary" : "btn-ghost")}
-                    >
-                      {plan.cta}
-                    </Link>
+                    <PlanCta
+                      planId={plan.planId}
+                      label={plan.cta}
+                      highlighted={plan.highlighted}
+                    />
                   </div>
                   </Tilt>
                 </Reveal>

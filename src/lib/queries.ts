@@ -38,3 +38,14 @@ export async function getNewLeadsCount(): Promise<number | null> {
     return null;
   }
 }
+
+/** Live count of active paying subscriptions, or null if unavailable. */
+export async function getActiveSubscriptionsCount(): Promise<number | null> {
+  try {
+    const { data, error } = await getSupabase().rpc("active_subscriptions_count");
+    if (error || typeof data !== "number") return null;
+    return data;
+  } catch {
+    return null;
+  }
+}

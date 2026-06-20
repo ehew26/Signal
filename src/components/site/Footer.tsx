@@ -26,6 +26,7 @@ const columns = [
     links: [
       { label: "Dashboard", href: "/dashboard" },
       { label: "Client Portal", href: "/portal" },
+      { label: "Manage billing", href: "/billing" },
       { label: "Sign in", href: "/login" },
     ],
   },
