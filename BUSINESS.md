@@ -152,7 +152,9 @@ second senior engineer per ~3 concurrent Builds.
 - [ ] Wire `/api/contact` to a CRM + Slack notification.
 - [ ] Replace mock dashboard/portal data with Supabase (see README).
 - [ ] Publish the 3 seed case studies and 3 blog posts (already drafted).
-- [ ] Stand up Stripe for Sprint deposits and Build retainers.
+- [x] Self-serve Stripe subscriptions are **built** (Starter $299 / Growth $599,
+      auto-onboarding email, self-serve billing portal). Activate by adding your
+      Stripe keys — see `STRIPE_SETUP.md`.
 - [ ] Book 5 strategy calls from the founder's existing network.
 - [ ] Ship one Insights post per week.
 - [ ] Close the first 2 Sprints; convert at least 1 to Build.

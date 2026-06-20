@@ -205,6 +205,8 @@ export type Plan = {
   features: string[];
   highlighted?: boolean;
   cta: string;
+  /** Self-serve plan id — when set, the CTA starts Stripe Checkout. */
+  planId?: "starter" | "growth";
 };
 
 export const plans: Plan[] = [
@@ -219,7 +221,8 @@ export const plans: Plan[] = [
       "Email & text lead alerts",
       "Setup done for you",
     ],
-    cta: "Get started",
+    cta: "Start Starter — $299/mo",
+    planId: "starter",
   },
   {
     name: "Growth",
@@ -234,7 +237,8 @@ export const plans: Plan[] = [
       "Priority support",
     ],
     highlighted: true,
-    cta: "Book a call",
+    cta: "Start Growth — $599/mo",
+    planId: "growth",
   },
   {
     name: "Done-For-You",
