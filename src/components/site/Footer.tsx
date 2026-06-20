@@ -18,6 +18,7 @@ const columns = [
       { label: "About", href: "/about" },
       { label: "Insights", href: "/insights" },
       { label: "Pricing", href: "/#pricing" },
+      { label: "Free Lead Leak Audit", href: "/audit" },
       { label: "Contact", href: "/contact" },
     ],
   },

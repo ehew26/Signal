@@ -12,6 +12,7 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/insights", label: "Insights" },
   { href: "/#pricing", label: "Pricing" },
+  { href: "/audit", label: "Free Audit" },
 ];
 
 export default function Navbar() {
