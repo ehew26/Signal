@@ -23,14 +23,14 @@ export default function Hero() {
           </p>
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:justify-start">
-            <Magnetic href="/contact" className="btn-primary">
-              Book a free call
+            <Magnetic href="/audit" className="btn-primary">
+              See what you&apos;re losing
             </Magnetic>
             <Link
-              href="/#work"
+              href="/contact"
               className="inline-flex items-center gap-1 text-base font-medium text-violet hover:underline"
             >
-              See how it works <ArrowRight className="h-4 w-4" />
+              Book a free call <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
