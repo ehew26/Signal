@@ -68,6 +68,68 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ---------- Feature: built for your business ---------- */}
+        <section className="px-5 py-20 sm:px-8 sm:py-28">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <Reveal>
+              <span className="eyebrow">Made for real businesses</span>
+              <h2 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+                Built for the way you actually work.
+              </h2>
+              <p className="mt-5 max-w-lg text-lg leading-relaxed text-mist-dim">
+                Roofers, plumbers, dentists, salons, cleaners — if you lose
+                business to a missed call or a slow reply, this is for you. Your
+                assistant answers, books, and follows up while you do the work.
+              </p>
+              <Link href="/services" className="mt-7 inline-flex items-center gap-1 text-base font-medium text-violet hover:underline">
+                See what it does <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Reveal>
+            <Reveal delay={1}>
+              <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-black/5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1400&q=80"
+                  alt="A local service professional at work"
+                  className="aspect-[4/3] h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---------- Feature: results ---------- */}
+        <section className="bg-ink-2 px-5 py-20 sm:px-8 sm:py-28">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <Reveal className="order-2 lg:order-1">
+              <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-black/5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1400&q=80"
+                  alt="Two small-business owners celebrating a win"
+                  className="aspect-[4/3] h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </Reveal>
+            <Reveal delay={1} className="order-1 lg:order-2">
+              <span className="eyebrow">Why it matters</span>
+              <h2 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+                More booked jobs. Happier customers.
+              </h2>
+              <p className="mt-5 max-w-lg text-lg leading-relaxed text-mist-dim">
+                Every missed call is money walking to a competitor. With instant
+                answers, automatic follow-up, and easy booking, more of your leads
+                turn into paying customers — without you lifting a finger.
+              </p>
+              <Link href="/contact" className="mt-7 inline-flex items-center gap-1 text-base font-medium text-violet hover:underline">
+                Book a free call <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Reveal>
+          </div>
+        </section>
+
         {/* ---------- Services ---------- */}
         <section id="services" className="relative scroll-mt-24 py-24">
           <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -228,8 +290,8 @@ export default function HomePage() {
             <Reveal>
               <SectionHeading
                 eyebrow="Engagements"
-                title={<>Pricing that scales <span className="gradient-text">with ambition</span></>}
-                sub="Transparent, outcome-focused engagements. Start small, scale when it works."
+                title={<>Simple, <span className="gradient-text">honest pricing</span></>}
+                sub="Setup included, no long contracts, cancel anytime. Most owners earn it back from a single extra booked job."
               />
             </Reveal>
 

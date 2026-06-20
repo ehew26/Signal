@@ -6,7 +6,7 @@ import { ArrowRight, Loader2, Lock } from "lucide-react";
 
 const DEMO = { email: "demo@vertex-ai.com", password: "vertex-demo" };
 const fieldClass =
-  "w-full rounded-xl border border-line bg-white/[0.02] px-4 py-3 text-sm text-mist placeholder:text-mist-faint outline-none transition-colors focus:border-violet/60 focus:bg-white/[0.04]";
+  "w-full rounded-xl border border-line bg-black/[0.02] px-4 py-3 text-sm text-mist placeholder:text-mist-faint outline-none transition-colors focus:border-violet/60 focus:bg-black/[0.04]";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={submit} className="w-full max-w-sm">
-      <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.03] px-3 py-1 text-xs text-mist-dim">
+      <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-black/[0.03] px-3 py-1 text-xs text-mist-dim">
         <Lock className="h-3.5 w-3.5 text-violet" /> Secure sign in
       </div>
       <h1 className="text-3xl font-semibold tracking-tight">Welcome back</h1>

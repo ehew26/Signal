@@ -112,7 +112,7 @@ export default function Shell({
   );
 
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[264px_1fr]">
+    <div className="dash-dark min-h-screen lg:grid lg:grid-cols-[264px_1fr]">
       {/* Desktop sidebar */}
       <aside className="sticky top-0 hidden h-screen border-r border-line bg-ink-2 lg:block">
         {SidebarBody}

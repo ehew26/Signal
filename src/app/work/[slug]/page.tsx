@@ -42,7 +42,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">{study.result}</h1>
             <p className="mt-4 max-w-2xl text-lg text-mist-dim">{study.summary}</p>
-            <p className="mt-5 inline-flex rounded-full border border-line bg-white/[0.03] px-3 py-1.5 text-xs text-mist-faint">
+            <p className="mt-5 inline-flex rounded-full border border-line bg-black/[0.03] px-3 py-1.5 text-xs text-mist-faint">
               Illustrative example engagement — figures are target outcomes, not results from a named client.
             </p>
           </Reveal>
@@ -87,7 +87,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </Reveal>
 
           <Reveal>
-            <div className="rounded-2xl border border-line bg-white/[0.02] p-7">
+            <div className="rounded-2xl border border-line bg-black/[0.02] p-7">
               <p className="text-sm leading-relaxed text-mist-dim">
                 This is an illustrative engagement that shows how we&apos;d approach
                 this problem. Want to be the named client behind a story like this?{" "}
