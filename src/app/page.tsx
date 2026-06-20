@@ -6,6 +6,8 @@ import Hero from "@/components/site/Hero";
 import Faq from "@/components/site/Faq";
 import Aurora from "@/components/Aurora";
 import Reveal from "@/components/Reveal";
+import Tilt from "@/components/site/Tilt";
+import Parallax from "@/components/site/Parallax";
 import {
   services,
   caseStudies,
@@ -86,15 +88,17 @@ export default function HomePage() {
               </Link>
             </Reveal>
             <Reveal delay={1}>
-              <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-black/5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1400&q=80"
-                  alt="A local service professional at work"
-                  className="aspect-[4/3] h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
+              <Parallax amount={28}>
+                <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-black/5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1400&q=80"
+                    alt="A local service professional at work"
+                    className="aspect-[4/3] h-full w-full scale-110 object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </Parallax>
             </Reveal>
           </div>
         </section>
@@ -103,15 +107,17 @@ export default function HomePage() {
         <section className="bg-ink-2 px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <Reveal className="order-2 lg:order-1">
-              <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-black/5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1400&q=80"
-                  alt="Two small-business owners celebrating a win"
-                  className="aspect-[4/3] h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
+              <Parallax amount={28}>
+                <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-black/5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1400&q=80"
+                    alt="Two small-business owners celebrating a win"
+                    className="aspect-[4/3] h-full w-full scale-110 object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </Parallax>
             </Reveal>
             <Reveal delay={1} className="order-1 lg:order-2">
               <span className="eyebrow">Why it matters</span>
@@ -144,7 +150,8 @@ export default function HomePage() {
             <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {services.map((s, i) => (
                 <Reveal key={s.id} delay={((i % 3) + 1) as 1 | 2 | 3}>
-                  <article className="group relative h-full overflow-hidden rounded-2xl panel p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-glow">
+                  <Tilt className="h-full">
+                  <article className="group relative h-full overflow-hidden rounded-2xl panel p-7 transition-shadow duration-300 hover:shadow-glow">
                     <div className="absolute right-0 top-0 h-32 w-32 -translate-y-1/3 translate-x-1/3 rounded-full bg-violet/10 blur-2xl transition-opacity duration-300 group-hover:bg-violet/20" />
                     <div className="relative">
                       <span className="grid h-12 w-12 place-items-center rounded-xl bg-brand-gradient/10 ring-1 ring-line-strong">
@@ -162,6 +169,7 @@ export default function HomePage() {
                       </ul>
                     </div>
                   </article>
+                  </Tilt>
                 </Reveal>
               ))}
             </div>
@@ -188,9 +196,10 @@ export default function HomePage() {
             <div className="mt-14 grid gap-5 lg:grid-cols-3">
               {caseStudies.map((c, i) => (
                 <Reveal key={c.id} delay={((i % 3) + 1) as 1 | 2 | 3}>
+                  <Tilt className="h-full">
                   <Link
                     href={`/work/${c.id}`}
-                    className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl panel p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-card"
+                    className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl panel p-7 transition-shadow duration-300 hover:shadow-card"
                   >
                     <div>
                       <div className="flex items-center justify-between">
@@ -210,6 +219,7 @@ export default function HomePage() {
                       </p>
                     </div>
                   </Link>
+                  </Tilt>
                 </Reveal>
               ))}
             </div>
@@ -298,6 +308,7 @@ export default function HomePage() {
             <div className="mt-14 grid gap-5 lg:grid-cols-3">
               {plans.map((plan, i) => (
                 <Reveal key={plan.name} delay={((i % 3) + 1) as 1 | 2 | 3}>
+                  <Tilt className="h-full" max={5}>
                   <div
                     className={cn(
                       "relative flex h-full flex-col rounded-2xl p-7",
@@ -330,6 +341,7 @@ export default function HomePage() {
                       {plan.cta}
                     </Link>
                   </div>
+                  </Tilt>
                 </Reveal>
               ))}
             </div>
