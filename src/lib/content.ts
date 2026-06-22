@@ -59,6 +59,7 @@ export type TeamMember = {
 };
 
 export const team: TeamMember[] = [
+  { name: "Ed Hewish", role: "Director of Sales", initials: "EH", bio: "Heads sales and client partnerships, helping service businesses turn missed calls and slow follow-up into booked jobs.", accent: "from-violet to-cyan" },
   {
     name: "Ada Reyes",
     role: "Founder & Principal",
