@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
+import { syncLeadToHubspot } from "@/lib/hubspot";
 
 /**
  * Lead capture endpoint.
@@ -120,6 +121,8 @@ export async function POST(request: Request) {
 
   await persistLead(result.lead);
   await notifyTeam(result.lead);
+  // Sync to HubSpot CRM (no-op until HUBSPOT_TOKEN is configured).
+  await syncLeadToHubspot(result.lead);
 
   return NextResponse.json({
     ok: true,

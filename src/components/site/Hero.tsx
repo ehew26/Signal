@@ -9,17 +9,18 @@ export default function Hero() {
     <section className="relative px-5 pt-32 sm:px-8 sm:pt-40">
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
         <div className="text-center lg:text-left">
-          <span className="chip animate-fade-in">AI automation for small businesses</span>
+          <span className="chip animate-fade-in">AI receptionist for Tampa home-service pros</span>
 
           <h1 className="mt-6 text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4.2rem]">
-            Capture every lead.
+            Never miss another
             <br />
-            <span className="text-violet">Automate the busywork.</span>
+            <span className="text-violet">customer call.</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-mist-dim sm:text-xl lg:mx-0">
-            A friendly AI assistant that answers your customers, captures every
-            lead, and books appointments — 24/7. Set up for you, live in days.
+            Vertex AI answers every call and text for your Tampa home-service
+            business, captures the lead, and books the job — 24/7, even after
+            hours. Set up for you, live in days.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:justify-start">
