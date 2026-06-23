@@ -9,8 +9,8 @@ export const company = {
   tagline: "Production-grade AI for ambitious companies.",
   email: "hello@vertex-ai.com",
   salesEmail: "newbusiness@vertex-ai.com",
-  phone: "+1 (415) 555-0142",
-  location: "San Francisco, CA · Remote-first",
+  phone: "(941) 899-5270",
+  location: "Tampa, FL · Serving local businesses",
   founded: 2023,
   social: {
     x: "https://x.com/vertexai",
