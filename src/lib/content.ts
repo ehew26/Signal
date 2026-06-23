@@ -7,8 +7,8 @@ export const company = {
   name: "Vertex AI",
   legalName: "Vertex AI, LLC",
   tagline: "Production-grade AI for ambitious companies.",
-  email: "hello@vertex-ai.com",
-  salesEmail: "newbusiness@vertex-ai.com",
+  email: "ed@getvertex.ai",
+  salesEmail: "ed@getvertex.ai",
   phone: "(941) 899-5270",
   location: "Tampa, FL · Serving local businesses",
   founded: 2023,
@@ -59,6 +59,7 @@ export type TeamMember = {
 };
 
 export const team: TeamMember[] = [
+  { name: "Ed Hewish", role: "Director of Sales", initials: "EH", bio: "Heads sales and client partnerships, helping service businesses turn missed calls and slow follow-up into booked jobs.", accent: "from-violet to-cyan" },
   {
     name: "Ada Reyes",
     role: "Founder & Principal",

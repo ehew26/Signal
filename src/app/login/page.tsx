@@ -52,7 +52,7 @@ export default function LoginPage() {
           <LoginForm />
         </Suspense>
         <Link href="/" className="mt-8 text-xs text-mist-faint transition-colors hover:text-mist-dim">
-          ← Back to vertex-ai.com
+          ← Back to getvertex.ai
         </Link>
       </section>
     </main>

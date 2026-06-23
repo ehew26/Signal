@@ -14,6 +14,7 @@ import BookingScene from "@/components/site/BookingScene";
 import HowItWorksScroll from "@/components/site/HowItWorksScroll";
 import PlanCta from "@/components/site/PlanCta";
 import { services, caseStudies, plans, clientLogos } from "@/lib/data";
+import { company } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 function SectionHeading({
@@ -399,7 +400,7 @@ export default function HomePage() {
                   See plans &amp; pricing
                 </Link>
               </div>
-              <p className="mt-6 font-mono text-xs text-mist-faint">hello@vertex-ai.com</p>
+              <p className="mt-6 font-mono text-xs text-mist-faint">{company.email}</p>
             </div>
           </Reveal>
         </section>

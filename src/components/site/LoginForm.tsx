@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight, Loader2, Lock } from "lucide-react";
 
-const DEMO = { email: "demo@vertex-ai.com", password: "vertex-demo" };
+const DEMO = { email: "demo@getvertex.ai", password: "vertex-demo" };
 const fieldClass =
   "w-full rounded-xl border border-line bg-black/[0.02] px-4 py-3 text-sm text-mist placeholder:text-mist-faint outline-none transition-colors focus:border-violet/60 focus:bg-black/[0.04]";
 
