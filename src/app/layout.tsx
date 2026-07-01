@@ -16,16 +16,16 @@ const SITE_URL = "https://getvertex.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Vertex AI — AI Receptionist & Automation for Tampa Home-Service Businesses",
+    default: "Vertex AI — AI Receptionist & Automation for Small Businesses",
     template: "%s · Vertex AI",
   },
   description:
-    "Tampa-based Vertex AI sets up a 24/7 AI receptionist for local home-service businesses — answering every call and text, capturing leads, and booking jobs automatically. Done for you, live in days.",
+    "Vertex AI sets up a 24/7 AI receptionist for small businesses across the USA — answering every call and text, capturing leads, and booking jobs automatically. Done for you, live in days.",
   keywords:
-    "AI receptionist Tampa, AI answering service Tampa FL, missed call text back, HVAC lead capture, plumber answering service, roofing lead automation, home services AI, appointment booking AI, small business automation Tampa",
+    "AI receptionist, AI answering service, missed call text back, lead capture automation, appointment booking AI, small business automation, AI phone answering, follow-up automation",
   authors: [{ name: "Vertex AI" }],
   openGraph: {
-    title: "Vertex AI — AI Receptionist for Tampa Home-Service Businesses",
+    title: "Vertex AI — AI Receptionist for Small Businesses",
     description:
       "Never miss another call. Vertex AI answers, captures, and books your leads 24/7 — done for you, live in days.",
     type: "website",
@@ -35,32 +35,26 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vertex AI — AI Receptionist for Tampa Home-Service Businesses",
+    title: "Vertex AI — AI Receptionist for Small Businesses",
     description: "Never miss another call. Vertex answers, captures, and books your leads 24/7.",
   },
   robots: { index: true, follow: true },
 };
 
-// LocalBusiness structured data — helps Vertex surface as a real Tampa business
-// in search and maps. Uses the centralized company contact details.
+// Structured data — helps Vertex surface as a real service business in search.
+// Uses the centralized company contact details. Serves the whole USA.
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: company.name,
   description:
-    "AI receptionist, lead capture, booking, and follow-up automation for local home-service businesses.",
+    "AI receptionist, lead capture, booking, and follow-up automation for small businesses.",
   url: SITE_URL,
   telephone: company.phone,
   email: company.email,
-  areaServed: [
-    { "@type": "City", name: "Tampa" },
-    { "@type": "AdministrativeArea", name: "Tampa Bay" },
-    { "@type": "State", name: "Florida" },
-  ],
+  areaServed: { "@type": "Country", name: "United States" },
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Tampa",
-    addressRegion: "FL",
     addressCountry: "US",
   },
   priceRange: "$$",

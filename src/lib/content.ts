@@ -10,7 +10,7 @@ export const company = {
   email: "ed@getvertex.ai",
   salesEmail: "ed@getvertex.ai",
   phone: "(941) 899-5270",
-  location: "Tampa, FL · Serving local businesses",
+  location: "Serving small businesses across the USA",
   founded: 2023,
   social: {
     x: "https://x.com/vertexai",
