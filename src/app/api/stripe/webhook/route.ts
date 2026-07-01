@@ -3,6 +3,7 @@ import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { getServiceSupabase } from "@/lib/supabase";
 import { sendEmail, welcomeEmail } from "@/lib/email";
+import { notifyN8n } from "@/lib/n8n";
 
 export const dynamic = "force-dynamic";
 // Stripe signature verification needs the raw, unparsed request body.
@@ -140,6 +141,16 @@ async function onCheckoutCompleted(stripe: Stripe, event: Stripe.Event) {
       plan
     )}*` + (session.amount_total ? ` ($${(session.amount_total / 100).toFixed(0)}/mo)` : "")
   );
+
+  // Fire an n8n webhook so onboarding can be automated (no-op until configured).
+  await notifyN8n("customer.subscribed", {
+    email,
+    name,
+    plan: planLabel(plan),
+    amountTotal: session.amount_total,
+    stripeCustomerId,
+    stripeSubscriptionId,
+  });
 }
 
 async function onSubscriptionChanged(event: Stripe.Event) {
