@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
 import { syncLeadToHubspot } from "@/lib/hubspot";
+import { notifyN8n } from "@/lib/n8n";
 
 /**
  * Lead capture endpoint.
@@ -123,6 +124,8 @@ export async function POST(request: Request) {
   await notifyTeam(result.lead);
   // Sync to HubSpot CRM (no-op until HUBSPOT_TOKEN is configured).
   await syncLeadToHubspot(result.lead);
+  // Fire an n8n webhook to automate downstream (no-op until N8N_WEBHOOK_URL set).
+  await notifyN8n("lead.created", { ...result.lead });
 
   return NextResponse.json({
     ok: true,
