@@ -39,6 +39,7 @@ of proven building blocks:
 | **Knowledge / RAG** | [LlamaIndex](https://github.com/run-llama/llama_index) | 503k | Answer from the client's FAQs, pricing, docs |
 | | [Haystack](https://github.com/deepset-ai/haystack) | 256k | Production RAG pipelines, retrieval + memory |
 | **CRM** | **HubSpot** (you have a live connector!) | — | Pipeline, contacts, deal tracking — no build needed |
+| **Prospect research (agent)** | [Agent-Reach](https://github.com/Panniantong/Agent-Reach) | — | Lets an AI agent read prospects' sites, Google reviews, YouTube, Reddit, X — key-free — to enrich the outbound list. See GROWTH_PLAN.md §12a |
 | **Scheduling** | Cal.com | 30k+ | Self-serve booking, calendar sync, reminders |
 | **SMS / voice telephony** | Twilio (API) | — | Missed-call text-back, reminders, the actual phone number |
 | **Support / live chat** | Chatwoot | 20k+ | Omnichannel inbox if you add managed support |

@@ -295,9 +295,38 @@ close rate × avg job value = $ lost). This becomes the #1 conversion asset.
 | CRM / pipeline | HubSpot free or Attio | set up |
 | Outbound | Apollo/Instantly (email) + dialer | set up |
 | Prospect data | Google Maps + Apify/Apollo scrape | set up |
+| Prospect research (agent) | **[Agent-Reach](https://github.com/Panniantong/Agent-Reach)** — lets an AI agent read prospects' sites, Google reviews, YouTube, Reddit, X/LinkedIn with no per-API fees | set up (see §12a) |
 | Scheduling | Cal.com / Calendly | set up |
 | PM / SOPs | Notion | set up |
 | Reporting | Supabase → emailed report (cron) | build next |
+
+### 12a. Agent-Reach — AI prospect research
+[Agent-Reach](https://github.com/Panniantong/Agent-Reach) is a Python CLI that
+gives an AI agent unified, key-free access to web + social content (Twitter/X,
+Reddit, YouTube, GitHub, general web via Jina Reader / Exa search). Use it to
+**enrich the prospect list** before outbound — pull each Tampa home-service
+business's website copy, Google/Facebook reviews, service area, and owner
+name so every cold email/call opens with something specific and true.
+
+**Where it fits the funnel:** `Google Maps list → Agent-Reach enrichment →
+personalized outbound → /audit → discovery call`. It replaces manual
+copy-pasting of each prospect's details and powers the "secret-shopper" and
+"Lead Leak Audit" hooks (Sales §2–3) at scale.
+
+**Setup (run in your own agent/coding environment — it's a local CLI, not part
+of the website deployment):**
+1. Tell your AI agent (Claude Code, Cursor, etc.): *"Install Agent-Reach for me"*
+   — it clones and configures the tool automatically.
+2. Basic platforms (web, YouTube, RSS, public GitHub) work immediately, no keys.
+3. For login-gated platforms (X, Reddit, LinkedIn-type), authenticate in a
+   browser once — **use throwaway accounts**, never your primary logins, to
+   avoid bans. Credentials stay local in `~/.agent-reach/config.yaml`.
+4. Verify with `agent-reach doctor` (shows which platforms are live).
+
+**Guardrails:** scrape only public info, respect each platform's terms, and
+keep enrichment to what makes outreach *relevant* (recent reviews, services,
+hours) — not personal data. This is a research aid for the human-led outbound
+in §5, not an autonomous mass-messaging bot.
 
 ---
 
