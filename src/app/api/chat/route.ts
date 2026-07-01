@@ -21,9 +21,23 @@ export const runtime = "nodejs";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
-const NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
+const NVIDIA_DEFAULT_BASE = "https://integrate.api.nvidia.com/v1";
 const NVIDIA_DEFAULT_MODEL = "deepseek-ai/deepseek-v4-pro";
 const CLAUDE_MODEL = "claude-opus-4-8";
+
+/**
+ * OpenAI-compatible base URL for the DeepSeek call. Point HEADROOM_PROXY_URL
+ * (or NVIDIA_BASE_URL) at a running `headroom proxy` to compress context and
+ * cut token cost 60-95%; defaults to NVIDIA direct so nothing breaks unset.
+ */
+function nvidiaEndpoint(): string {
+  const base = (
+    process.env.HEADROOM_PROXY_URL ||
+    process.env.NVIDIA_BASE_URL ||
+    NVIDIA_DEFAULT_BASE
+  ).replace(/\/+$/, "");
+  return `${base}/chat/completions`;
+}
 
 const SYSTEM_PROMPT = `You are "Ava", the AI receptionist demo for Vertex AI — a company that sets up AI phone/text answering, lead capture, booking, and follow-up for small businesses across the USA (home services, clinics, salons, trades, and more).
 
@@ -56,7 +70,7 @@ async function tryNvidia(messages: ChatMessage[]): Promise<string | null> {
   const apiKey = process.env.NVIDIA_API_KEY;
   if (!apiKey) return null;
   try {
-    const res = await fetch(NVIDIA_URL, {
+    const res = await fetch(nvidiaEndpoint(), {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -91,7 +105,11 @@ async function tryClaude(messages: ChatMessage[]): Promise<string | null> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return null;
   try {
-    const client = new Anthropic({ apiKey });
+    // Optionally route Claude through Headroom too (ANTHROPIC_BASE_URL → proxy).
+    const client = new Anthropic({
+      apiKey,
+      baseURL: process.env.ANTHROPIC_BASE_URL || undefined,
+    });
     const response = await client.messages.create({
       model: CLAUDE_MODEL,
       max_tokens: 400,
