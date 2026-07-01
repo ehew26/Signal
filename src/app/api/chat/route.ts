@@ -1,18 +1,25 @@
 import { NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 /**
  * Live AI chat demo — lets a prospect talk to a Vertex-style AI receptionist
- * right on the site. Backed by Claude when ANTHROPIC_API_KEY is set; otherwise
- * it falls back to a lightweight scripted reply so the widget always works.
+ * right on the site. Backed by NVIDIA's DeepSeek v4 Pro (OpenAI-compatible NIM
+ * API) when NVIDIA_API_KEY is set; otherwise it falls back to lightweight
+ * scripted replies so the widget always works.
+ *
+ * Env:
+ *   NVIDIA_API_KEY  — required to enable the live model
+ *   NVIDIA_MODEL    — optional, defaults to "deepseek-ai/deepseek-v4-pro"
  *
  * Body: { messages: { role: "user" | "assistant"; content: string }[] }
  */
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
+
+const NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
+const DEFAULT_MODEL = "deepseek-ai/deepseek-v4-pro";
 
 const SYSTEM_PROMPT = `You are "Ava", the AI receptionist demo for Vertex AI — a Tampa, FL company that sets up AI phone/text answering, lead capture, booking, and follow-up for local home-services businesses (HVAC, plumbing, electrical, roofing, garage doors, etc.).
 
@@ -57,27 +64,41 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Send a message to start." }, { status: 422 });
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.NVIDIA_API_KEY;
   if (!apiKey) {
     return NextResponse.json({ ok: true, reply: fallbackReply(messages), demo: true });
   }
 
   try {
-    const client = new Anthropic({ apiKey });
-    const response = await client.messages.create({
-      model: "claude-opus-4-8",
-      max_tokens: 400,
-      system: SYSTEM_PROMPT,
-      messages,
+    const res = await fetch(NVIDIA_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        model: process.env.NVIDIA_MODEL || DEFAULT_MODEL,
+        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
+        temperature: 1,
+        top_p: 0.95,
+        max_tokens: 800,
+        // DeepSeek NIM: disable chain-of-thought for fast, clean chat replies.
+        chat_template_kwargs: { thinking: false },
+        stream: false,
+      }),
     });
-    const reply = response.content
-      .filter((b): b is Anthropic.TextBlock => b.type === "text")
-      .map((b) => b.text)
-      .join("")
-      .trim();
+
+    if (!res.ok) {
+      console.error("[chat] nvidia error:", res.status, await res.text());
+      return NextResponse.json({ ok: true, reply: fallbackReply(messages), demo: true });
+    }
+
+    const data = await res.json();
+    const reply = (data?.choices?.[0]?.message?.content ?? "").trim();
     return NextResponse.json({ ok: true, reply: reply || fallbackReply(messages) });
   } catch (err) {
-    console.error("[chat] anthropic error, falling back:", err);
+    console.error("[chat] nvidia request failed, falling back:", err);
     return NextResponse.json({ ok: true, reply: fallbackReply(messages), demo: true });
   }
 }
