@@ -16,7 +16,7 @@ type Msg = { role: "user" | "assistant"; content: string };
 const GREETING: Msg = {
   role: "assistant",
   content:
-    "Hi! I'm Ava, Vertex AI's demo assistant 👋 Tell me about your business — like \"I run an HVAC company in Tampa\" — and I'll show you how I'd answer your customers and book jobs 24/7.",
+    "Hi! I'm Ava, Vertex AI's demo assistant 👋 Tell me about your business — like \"I run an HVAC company\" — and I'll show you how I'd answer your customers and book jobs 24/7.",
 };
 
 export default function ChatWidget() {
