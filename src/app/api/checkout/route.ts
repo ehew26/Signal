@@ -6,6 +6,7 @@ import {
   siteUrl,
   type CheckoutPlan,
 } from "@/lib/stripe";
+import { checkRateLimit, clientIp, tooManyRequests } from "@/lib/ratelimit";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +17,9 @@ export const dynamic = "force-dynamic";
  * Body: { planId: "starter" | "growth", email?: string }
  */
 export async function POST(request: Request) {
+  const rate = await checkRateLimit("checkout", clientIp(request), { requests: 10, window: "1 h" });
+  if (!rate.success) return tooManyRequests(rate.retryAfterSeconds);
+
   const stripe = getStripe();
   if (!stripe) {
     // Stripe not configured yet — tell the client to fall back to contact.
