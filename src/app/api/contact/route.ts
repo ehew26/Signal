@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
 import { syncLeadToHubspot } from "@/lib/hubspot";
 import { notifyN8n } from "@/lib/n8n";
+import { checkRateLimit, clientIp, tooManyRequests } from "@/lib/ratelimit";
 
 /**
  * Lead capture endpoint.
@@ -108,6 +109,9 @@ async function notifyTeam(lead: Lead) {
 }
 
 export async function POST(request: Request) {
+  const rate = await checkRateLimit("contact", clientIp(request), { requests: 5, window: "1 h" });
+  if (!rate.success) return tooManyRequests(rate.retryAfterSeconds);
+
   let body: Partial<Lead>;
   try {
     body = await request.json();

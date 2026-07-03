@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { checkRateLimit, clientIp, tooManyRequests } from "@/lib/ratelimit";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -129,6 +130,9 @@ async function tryClaude(messages: ChatMessage[]): Promise<string | null> {
 }
 
 export async function POST(request: Request) {
+  const rate = await checkRateLimit("chat", clientIp(request), { requests: 30, window: "5 m" });
+  if (!rate.success) return tooManyRequests(rate.retryAfterSeconds);
+
   let body: { messages?: ChatMessage[] };
   try {
     body = await request.json();
