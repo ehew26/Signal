@@ -9,36 +9,20 @@ export const runtime = "nodejs";
  * Live AI chat demo — lets a prospect talk to a Vertex-style AI receptionist.
  *
  * Backend chain (each step used only if the one before is unavailable/errors):
- *   1. NVIDIA DeepSeek v4 Pro   (NVIDIA_API_KEY)   — primary
- *   2. Anthropic Claude         (ANTHROPIC_API_KEY) — backup
- *   3. Smart scripted replies   (always) — so the widget never breaks
+ *   1. Anthropic Claude       (ANTHROPIC_API_KEY) — the AI
+ *   2. Smart scripted replies (always) — safety net so the widget never breaks
  *
  * Env:
- *   NVIDIA_API_KEY / NVIDIA_MODEL (default deepseek-ai/deepseek-v4-pro)
- *   ANTHROPIC_API_KEY
+ *   ANTHROPIC_API_KEY            (required for real AI replies)
+ *   ANTHROPIC_MODEL              (optional, default claude-opus-4-8)
+ *   ANTHROPIC_BASE_URL           (optional, e.g. a proxy)
  *
  * Body: { messages: { role: "user" | "assistant"; content: string }[] }
  */
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
-const NVIDIA_DEFAULT_BASE = "https://integrate.api.nvidia.com/v1";
-const NVIDIA_DEFAULT_MODEL = "deepseek-ai/deepseek-v4-pro";
-const CLAUDE_MODEL = "claude-opus-4-8";
-
-/**
- * OpenAI-compatible base URL for the DeepSeek call. Point HEADROOM_PROXY_URL
- * (or NVIDIA_BASE_URL) at a running `headroom proxy` to compress context and
- * cut token cost 60-95%; defaults to NVIDIA direct so nothing breaks unset.
- */
-function nvidiaEndpoint(): string {
-  const base = (
-    process.env.HEADROOM_PROXY_URL ||
-    process.env.NVIDIA_BASE_URL ||
-    NVIDIA_DEFAULT_BASE
-  ).replace(/\/+$/, "");
-  return `${base}/chat/completions`;
-}
+const CLAUDE_DEFAULT_MODEL = "claude-opus-4-8";
 
 const SYSTEM_PROMPT = `You are "Ava", the AI receptionist demo for Vertex AI — a company that sets up AI phone/text answering, lead capture, booking, and follow-up for small businesses across the USA (home services, clinics, salons, trades, and more).
 
@@ -66,53 +50,18 @@ function fallbackReply(messages: ChatMessage[]): string {
   return "Hi! I'm Ava, Vertex AI's demo assistant. Tell me about your business (e.g. \"I run an HVAC company\") and I'll show you how I'd answer your customers and book jobs 24/7.";
 }
 
-/** Primary: NVIDIA DeepSeek. Returns the reply text, or null if unavailable/failed. */
-async function tryNvidia(messages: ChatMessage[]): Promise<string | null> {
-  const apiKey = process.env.NVIDIA_API_KEY;
-  if (!apiKey) return null;
-  try {
-    const res = await fetch(nvidiaEndpoint(), {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        model: process.env.NVIDIA_MODEL || NVIDIA_DEFAULT_MODEL,
-        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
-        temperature: 1,
-        top_p: 0.95,
-        max_tokens: 800,
-        chat_template_kwargs: { thinking: false },
-        stream: false,
-      }),
-    });
-    if (!res.ok) {
-      console.error("[chat] nvidia error:", res.status, await res.text());
-      return null;
-    }
-    const data = await res.json();
-    const reply = (data?.choices?.[0]?.message?.content ?? "").trim();
-    return reply || null;
-  } catch (err) {
-    console.error("[chat] nvidia request failed:", err);
-    return null;
-  }
-}
-
-/** Backup: Anthropic Claude. Returns the reply text, or null if unavailable/failed. */
+/** The AI: Anthropic Claude. Returns the reply text, or null if unavailable/failed. */
 async function tryClaude(messages: ChatMessage[]): Promise<string | null> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return null;
   try {
-    // Optionally route Claude through Headroom too (ANTHROPIC_BASE_URL → proxy).
+    // Optionally route Claude through a proxy (ANTHROPIC_BASE_URL).
     const client = new Anthropic({
       apiKey,
       baseURL: process.env.ANTHROPIC_BASE_URL || undefined,
     });
     const response = await client.messages.create({
-      model: CLAUDE_MODEL,
+      model: process.env.ANTHROPIC_MODEL || CLAUDE_DEFAULT_MODEL,
       max_tokens: 400,
       system: SYSTEM_PROMPT,
       messages,
@@ -149,10 +98,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Send a message to start." }, { status: 422 });
   }
 
-  // NVIDIA first, then Claude, then scripted.
-  const nvidia = await tryNvidia(messages);
-  if (nvidia) return NextResponse.json({ ok: true, reply: nvidia, model: "nvidia" });
-
+  // Claude, then scripted safety net.
   const claude = await tryClaude(messages);
   if (claude) return NextResponse.json({ ok: true, reply: claude, model: "claude" });
 
