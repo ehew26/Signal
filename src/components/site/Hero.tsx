@@ -14,24 +14,24 @@ export default function Hero() {
       />
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
         <div className="text-center lg:text-left">
-          <span className="chip animate-fade-in">
+          <span className="chip hero-rise hero-rise-1">
             <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-cyan" />
             AI receptionist for small businesses
           </span>
 
-          <h1 className="mt-6 text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4.2rem]">
+          <h1 className="hero-rise hero-rise-2 mt-6 text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4.2rem]">
             Never miss another
             <br />
             <span className="gradient-text">customer call.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-mist-dim sm:text-xl lg:mx-0">
+          <p className="hero-rise hero-rise-3 mx-auto mt-6 max-w-xl text-lg leading-relaxed text-mist-dim sm:text-xl lg:mx-0">
             Vertex AI answers every call and text for your small business,
             captures the lead, and books the job — 24/7, even after hours.
             Set up for you, live in days.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:justify-start">
+          <div className="hero-rise hero-rise-4 mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:justify-start">
             <Magnetic href="/audit" className="btn-primary">
               See what you&apos;re losing
             </Magnetic>
