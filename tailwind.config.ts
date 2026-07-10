@@ -35,16 +35,16 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -12px rgba(0,0,0,0.12)",
-        lift: "0 2px 8px rgba(0,0,0,0.05), 0 24px 48px -24px rgba(0,0,0,0.20)",
-        float: "0 40px 80px -40px rgba(0,0,0,0.28)",
+        soft: "0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5)",
+        lift: "0 2px 8px rgba(0,0,0,0.35), 0 24px 48px -24px rgba(0,0,0,0.6)",
+        float: "0 40px 80px -40px rgba(0,0,0,0.7)",
         card: "var(--panel-shadow)",
-        glow: "0 12px 32px -12px rgba(0,113,227,0.35)",
-        "glow-cyan": "0 12px 32px -12px rgba(90,200,250,0.35)",
+        glow: "0 0 32px -8px rgba(139,92,246,0.6)",
+        "glow-cyan": "0 0 32px -8px rgba(34,211,238,0.55)",
       },
       backgroundImage: {
         "brand-gradient": "linear-gradient(135deg, rgb(var(--violet)), rgb(var(--cyan)))",
-        "brand-radial": "radial-gradient(60% 60% at 50% 0%, rgba(0,113,227,0.10), transparent 70%)",
+        "brand-radial": "radial-gradient(60% 60% at 50% 0%, rgba(139,92,246,0.14), transparent 70%)",
       },
       borderRadius: {
         "4xl": "2rem",

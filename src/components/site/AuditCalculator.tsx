@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
  */
 
 const fieldClass =
-  "w-full rounded-xl border border-line bg-black/[0.02] px-4 py-3 text-sm text-mist placeholder:text-mist-faint outline-none transition-colors focus:border-violet/60 focus:bg-black/[0.04]";
+  "w-full rounded-xl border border-line bg-white/[0.04] px-4 py-3 text-sm text-mist placeholder:text-mist-faint outline-none transition-colors focus:border-violet/60 focus:bg-white/[0.06]";
 
 type Status = "idle" | "submitting" | "success" | "error";
 

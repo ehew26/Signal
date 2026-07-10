@@ -24,16 +24,16 @@ export default function StickyCTA() {
       }`}
     >
       <div className="mx-auto mb-3 flex max-w-2xl items-center gap-2 px-3">
-        <div className="flex w-full items-center gap-2 rounded-full border border-line bg-[rgba(255,255,255,0.85)] p-1.5 shadow-lift backdrop-blur-xl">
+        <div className="flex w-full items-center gap-2 rounded-full border border-line-strong bg-[rgba(10,13,26,0.8)] p-1.5 shadow-lift backdrop-blur-xl">
           <a
             href={TEL}
-            className="flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium text-mist transition-colors hover:bg-black/[0.04]"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium text-mist transition-colors hover:bg-white/[0.06]"
           >
-            <Phone className="h-4 w-4 text-violet" /> Call or text
+            <Phone className="h-4 w-4 text-cyan" /> Call or text
           </a>
           <Link
             href="/contact"
-            className="flex flex-[1.2] items-center justify-center gap-1.5 rounded-full bg-violet px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-violet-deep"
+            className="flex flex-[1.2] items-center justify-center gap-1.5 rounded-full bg-brand-gradient px-4 py-2.5 text-sm font-semibold text-white shadow-glow transition-all hover:brightness-110"
           >
             Book a free call <ArrowRight className="h-4 w-4" />
           </Link>

@@ -6,15 +6,23 @@ import Magnetic from "@/components/site/Magnetic";
 
 export default function Hero() {
   return (
-    <section className="relative px-5 pt-32 sm:px-8 sm:pt-40">
+    <section className="relative overflow-hidden px-5 pt-32 sm:px-8 sm:pt-40">
+      {/* Futuristic horizon grid behind the hero */}
+      <div
+        aria-hidden="true"
+        className="grid-floor pointer-events-none absolute inset-x-[-20%] top-[46%] -z-10 h-[70%] opacity-60"
+      />
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
         <div className="text-center lg:text-left">
-          <span className="chip animate-fade-in">AI receptionist for small businesses</span>
+          <span className="chip animate-fade-in">
+            <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-cyan" />
+            AI receptionist for small businesses
+          </span>
 
           <h1 className="mt-6 text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4.2rem]">
             Never miss another
             <br />
-            <span className="text-violet">customer call.</span>
+            <span className="gradient-text">customer call.</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-mist-dim sm:text-xl lg:mx-0">
