@@ -273,6 +273,15 @@
   .gradient-text, .gradient-text-flow, .border-glow::before { animation: none; }
 }
 
+/* Mobile / touch performance: phones can't composite a fixed background or a
+   heavy animated blur without dropping frames, and the neural canvas is
+   already disabled on touch. Drop these to a lightweight static version so
+   scrolling and the chat demo stay smooth. Desktop keeps the full effect. */
+@media (pointer: coarse) {
+  body { background-attachment: scroll; }
+  .mesh-blob { animation: none; filter: blur(38px); }
+}
+
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .mask-fade-x {
