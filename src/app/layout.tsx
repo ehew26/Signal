@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import ChatWidget from "@/components/site/ChatWidget";
 import NeuralBackground from "@/components/NeuralBackground";
+import Spotlight from "@/components/Spotlight";
+import ScrollProgress from "@/components/ScrollProgress";
 import { company } from "@/lib/content";
 import "./globals.css";
 
@@ -73,6 +75,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
         <NeuralBackground />
+        <Spotlight />
+        <ScrollProgress />
         {children}
         <ChatWidget />
         <Analytics />
