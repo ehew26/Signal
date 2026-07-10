@@ -75,7 +75,7 @@ function ProgressRing({ value }: { value: number }) {
 const dotStyles: Record<Milestone["status"], string> = {
   done: "bg-emerald text-ink",
   active: "bg-violet text-white ring-4 ring-violet/20",
-  upcoming: "bg-white/[0.06] text-mist-faint",
+  upcoming: "bg-black/[0.05] text-mist-faint",
 };
 
 export default function PortalPage() {
@@ -190,7 +190,7 @@ export default function PortalPage() {
             {deliverables.map((d) => (
               <li
                 key={d.name}
-                className="group flex items-center gap-3 rounded-xl border border-line bg-white/[0.02] px-3 py-3 transition-colors hover:border-line-strong"
+                className="group flex items-center gap-3 rounded-xl border border-line bg-black/[0.02] px-3 py-3 transition-colors hover:border-line-strong"
               >
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-violet/10 text-violet">
                   <FileText className="h-4 w-4" />
@@ -202,7 +202,7 @@ export default function PortalPage() {
                   </p>
                 </div>
                 <button
-                  className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-mist-faint transition-colors hover:bg-white/[0.05] hover:text-mist"
+                  className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-mist-faint transition-colors hover:bg-black/[0.04] hover:text-mist"
                   aria-label={`Download ${d.name}`}
                 >
                   <Download className="h-4 w-4" />

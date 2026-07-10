@@ -51,7 +51,7 @@ export default function AreaChart() {
           x2={w - padX}
           y1={h - padY - g * (h - padY * 2)}
           y2={h - padY - g * (h - padY * 2)}
-          stroke="rgba(255,255,255,0.06)"
+          stroke="rgba(20,24,62,0.08)"
           strokeWidth="1"
         />
       ))}
