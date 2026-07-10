@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import ChatWidget from "@/components/site/ChatWidget";
+import NeuralBackground from "@/components/NeuralBackground";
 import { company } from "@/lib/content";
 import "./globals.css";
 
@@ -71,6 +72,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
+        <NeuralBackground />
         {children}
         <ChatWidget />
         <Analytics />

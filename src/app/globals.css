@@ -4,33 +4,33 @@
 
 @layer base {
   :root {
-    /* Apple-style light theme */
-    --ink: 255 255 255;
-    --ink-2: 245 245 247;
-    --ink-3: 250 250 250;
-    --panel: 255 255 255;
-    --mist: 29 29 31;        /* near-black headline/body */
-    --mist-dim: 94 94 99;    /* secondary */
-    --mist-faint: 134 134 139;
-    --violet: 0 113 227;     /* Apple blue accent */
-    --violet-deep: 0 100 220;
-    --cyan: 0 153 204;
-    --emerald: 40 167 69;
-    --amber: 197 132 0;
-    --rose: 209 50 50;
-    --line: rgba(0, 0, 0, 0.10);
-    --line-strong: rgba(0, 0, 0, 0.16);
+    /* Deep-space futuristic theme */
+    --ink: 5 7 17;           /* page background — near-black space */
+    --ink-2: 10 13 26;
+    --ink-3: 15 19 36;
+    --panel: 13 16 32;
+    --mist: 233 237 250;     /* headline/body on dark */
+    --mist-dim: 158 167 194;
+    --mist-faint: 104 112 140;
+    --violet: 139 92 246;    /* electric violet */
+    --violet-deep: 109 62 236;
+    --cyan: 34 211 238;      /* electric cyan */
+    --emerald: 52 211 153;
+    --amber: 251 191 36;
+    --rose: 251 113 133;
+    --line: rgba(148, 163, 255, 0.10);
+    --line-strong: rgba(148, 163, 255, 0.20);
 
-    --panel-bg: #ffffff;
-    --panel-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 12px 32px -16px rgba(0, 0, 0, 0.14);
-    --glass-bg: rgba(255, 255, 255, 0.72);
+    --panel-bg: linear-gradient(180deg, rgba(21, 25, 48, 0.72) 0%, rgba(12, 15, 30, 0.72) 100%);
+    --panel-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+    --glass-bg: rgba(10, 13, 26, 0.55);
 
     --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-inter), system-ui, sans-serif;
     --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-inter), system-ui, sans-serif;
     --font-mono: "SF Mono", ui-monospace, "JetBrains Mono", monospace;
   }
 
-  /* Dark scope for the gated dashboards/portal */
+  /* Dark scope for the gated dashboards/portal (kept for scoping; matches root) */
   .dash-dark {
     --ink: 5 6 13;
     --ink-2: 10 12 23;
@@ -74,36 +74,60 @@
   }
   p { text-wrap: pretty; }
 
-  ::selection { background-color: rgba(0, 113, 227, 0.18); color: inherit; }
+  ::selection { background-color: rgba(139, 92, 246, 0.35); color: rgb(var(--mist)); }
 
   ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.18); border-radius: 99px; border: 3px solid transparent; background-clip: content-box; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.3); background-clip: content-box; }
+  ::-webkit-scrollbar-thumb { background: rgba(148, 163, 255, 0.22); border-radius: 99px; border: 3px solid transparent; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 255, 0.38); background-clip: content-box; }
 }
 
 @layer components {
-  .gradient-text { color: rgb(var(--violet)); }
-  .gradient-text-flow { color: rgb(var(--violet)); }
+  /* Animated holographic gradient text */
+  .gradient-text {
+    background: linear-gradient(100deg, rgb(var(--violet)) 0%, rgb(var(--cyan)) 45%, #7dd3fc 55%, rgb(var(--violet)) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradientFlow 7s ease-in-out infinite;
+  }
+  .gradient-text-flow {
+    background: linear-gradient(100deg, rgb(var(--violet)), rgb(var(--cyan)), rgb(var(--violet)));
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradientFlow 7s ease-in-out infinite;
+  }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-sm font-medium tracking-tight text-violet;
+    @apply inline-flex items-center gap-2 text-sm font-medium tracking-tight text-cyan;
   }
 
   .glass {
     background: var(--glass-bg);
     border: 1px solid var(--line);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(160%) blur(20px);
+    -webkit-backdrop-filter: saturate(160%) blur(20px);
   }
 
   .panel {
     background: var(--panel-bg);
     border: 1px solid var(--line);
     box-shadow: var(--panel-shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .panel:hover {
+    border-color: var(--line-strong);
   }
 
   .hairline { border: 1px solid var(--line); }
 
+  /* Neon gradient hairline border (for highlighted cards) */
   .border-glow { position: relative; border-radius: inherit; }
   .border-glow::before {
     content: "";
@@ -111,35 +135,60 @@
     inset: 0;
     padding: 1px;
     border-radius: inherit;
-    background: linear-gradient(120deg, rgba(0,113,227,0.5), rgba(90,200,250,0.4));
+    background: linear-gradient(120deg, rgba(139, 92, 246, 0.85), rgba(34, 211, 238, 0.7), rgba(139, 92, 246, 0.85));
+    background-size: 220% 100%;
+    animation: gradientFlow 6s linear infinite;
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
   }
 
-  /* ---------- Buttons (Apple) ---------- */
+  /* ---------- Buttons (futuristic) ---------- */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-medium text-white;
-    background: rgb(var(--violet));
-    transition: background 0.18s ease, transform 0.18s ease;
+    position: relative;
+    background: linear-gradient(120deg, rgb(var(--violet)) 0%, rgb(var(--violet-deep)) 40%, rgb(var(--cyan)) 130%);
+    box-shadow: 0 0 24px -6px rgba(139, 92, 246, 0.55), 0 4px 16px -4px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.25s ease, transform 0.18s ease, filter 0.25s ease;
+    overflow: hidden;
   }
-  .btn-primary:hover { background: rgb(var(--violet-deep)); }
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.22) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 0.6s ease;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 40px -6px rgba(139, 92, 246, 0.8), 0 0 20px -8px rgba(34, 211, 238, 0.6), 0 4px 16px -4px rgba(0, 0, 0, 0.5);
+    filter: brightness(1.08);
+  }
+  .btn-primary:hover::after { transform: translateX(120%); }
   .btn-primary:active { transform: scale(0.98); }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-medium text-violet;
-    background: transparent;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-medium text-mist;
+    background: rgba(148, 163, 255, 0.05);
     border: 1px solid var(--line-strong);
-    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.25s ease, transform 0.18s ease;
   }
-  .btn-ghost:hover { background: rgba(0, 0, 0, 0.04); }
+  .btn-ghost:hover {
+    background: rgba(148, 163, 255, 0.10);
+    border-color: rgba(34, 211, 238, 0.45);
+    box-shadow: 0 0 20px -8px rgba(34, 211, 238, 0.5);
+  }
   .btn-ghost:active { transform: scale(0.98); }
 
   .chip {
     @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium text-mist-dim;
     border: 1px solid var(--line);
-    background: rgb(var(--ink-2));
+    background: rgba(148, 163, 255, 0.06);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   /* ---------- Scroll reveal ---------- */
@@ -156,6 +205,11 @@
   .delay-5 { transition-delay: 400ms; }
 }
 
+@keyframes gradientFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 @keyframes meshDrift {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(36px, -28px) scale(1.08); }
@@ -167,8 +221,30 @@
   animation: meshDrift 20s ease-in-out infinite;
   will-change: transform;
 }
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.7; box-shadow: 0 0 6px 1px rgba(34, 211, 238, 0.5); }
+  50% { opacity: 1; box-shadow: 0 0 12px 3px rgba(34, 211, 238, 0.8); }
+}
+.pulse-dot {
+  animation: pulseGlow 2.2s ease-in-out infinite;
+}
+
+/* Perspective grid floor — futuristic horizon */
+.grid-floor {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.14) 1px, transparent 1px);
+  background-size: 44px 44px;
+  transform: perspective(500px) rotateX(62deg);
+  transform-origin: center top;
+  -webkit-mask-image: radial-gradient(ellipse 70% 90% at 50% 0%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 90% at 50% 0%, #000 30%, transparent 75%);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .mesh-blob { animation: none; }
+  .mesh-blob, .pulse-dot { animation: none; }
+  .gradient-text, .gradient-text-flow, .border-glow::before { animation: none; }
 }
 
 @layer utilities {
