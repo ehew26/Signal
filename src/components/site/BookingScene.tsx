@@ -71,7 +71,7 @@ export default function BookingScene() {
                   className={`grid h-9 place-items-center rounded-md text-[10px] font-medium ${
                     booking
                       ? "bg-violet/12 text-violet ring-1 ring-violet/20"
-                      : "bg-white/[0.05] text-transparent"
+                      : "bg-black/[0.03] text-transparent"
                   }`}
                 >
                   {booking ? booking.time : "·"}

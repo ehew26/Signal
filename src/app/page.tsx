@@ -100,7 +100,7 @@ export default function HomePage() {
             </Reveal>
             <Reveal delay={1}>
               <Parallax amount={28}>
-                <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-white/10">
+                <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-black/5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1400&q=80"
@@ -115,11 +115,11 @@ export default function HomePage() {
         </section>
 
         {/* ---------- Feature: results ---------- */}
-        <section className="bg-ink-2/60 px-5 py-20 sm:px-8 sm:py-28">
+        <section className="bg-ink-2 px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <Reveal className="order-2 lg:order-1">
               <Parallax amount={28}>
-                <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-white/10">
+                <div className="overflow-hidden rounded-[1.5rem] shadow-lift ring-1 ring-black/5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1400&q=80"
@@ -238,7 +238,7 @@ export default function HomePage() {
         </section>
 
         {/* ---------- Booking scene ---------- */}
-        <section className="bg-ink-2/60 px-5 py-20 sm:px-8 sm:py-28">
+        <section className="bg-ink-2 px-5 py-20 sm:px-8 sm:py-28">
           <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <span className="eyebrow">The outcome</span>
