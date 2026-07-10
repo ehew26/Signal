@@ -62,8 +62,8 @@ export default function Shell({
                     className={cn(
                       "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
                       active
-                        ? "bg-white/[0.06] text-mist"
-                        : "text-mist-dim hover:bg-white/[0.03] hover:text-mist"
+                        ? "bg-black/[0.05] text-mist"
+                        : "text-mist-dim hover:bg-black/[0.03] hover:text-mist"
                     )}
                   >
                     <span
@@ -100,7 +100,7 @@ export default function Shell({
           </div>
           <button
             onClick={logout}
-            className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-mist-faint transition-colors hover:bg-white/[0.05] hover:text-mist"
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-lg text-mist-faint transition-colors hover:bg-black/[0.04] hover:text-mist"
             aria-label="Sign out"
             title="Sign out"
           >
@@ -112,7 +112,7 @@ export default function Shell({
   );
 
   return (
-    <div className="dash-dark min-h-screen lg:grid lg:grid-cols-[264px_1fr]">
+    <div className="min-h-screen lg:grid lg:grid-cols-[264px_1fr]">
       {/* Desktop sidebar */}
       <aside className="sticky top-0 hidden h-screen border-r border-line bg-ink-2 lg:block">
         {SidebarBody}
