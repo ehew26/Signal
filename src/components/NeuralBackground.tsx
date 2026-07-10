@@ -92,8 +92,8 @@ export default function NeuralBackground() {
           const dy = a.y - b.y;
           const d = Math.hypot(dx, dy);
           if (d < LINK_DIST) {
-            const alpha = (1 - d / LINK_DIST) * 0.14;
-            ctx!.strokeStyle = `rgba(139, 122, 255, ${alpha})`;
+            const alpha = (1 - d / LINK_DIST) * 0.16;
+            ctx!.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
             ctx!.lineWidth = 1;
             ctx!.beginPath();
             ctx!.moveTo(a.x, a.y);
@@ -106,8 +106,8 @@ export default function NeuralBackground() {
         const dym = a.y - mouse.y;
         const dmc = Math.hypot(dxm, dym);
         if (dmc < MOUSE_DIST) {
-          const alpha = (1 - dmc / MOUSE_DIST) * 0.22;
-          ctx!.strokeStyle = `rgba(34, 211, 238, ${alpha})`;
+          const alpha = (1 - dmc / MOUSE_DIST) * 0.28;
+          ctx!.strokeStyle = `rgba(124, 58, 237, ${alpha})`;
           ctx!.lineWidth = 1;
           ctx!.beginPath();
           ctx!.moveTo(a.x, a.y);
@@ -119,7 +119,7 @@ export default function NeuralBackground() {
       // dots
       for (const p of particles) {
         ctx!.fillStyle =
-          p.hue === "violet" ? "rgba(160, 130, 255, 0.55)" : "rgba(80, 220, 245, 0.55)";
+          p.hue === "violet" ? "rgba(124, 58, 237, 0.5)" : "rgba(6, 182, 212, 0.5)";
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx!.fill();
@@ -162,7 +162,7 @@ export default function NeuralBackground() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 opacity-70"
+      className="pointer-events-none fixed inset-0 -z-10 opacity-60"
     />
   );
 }

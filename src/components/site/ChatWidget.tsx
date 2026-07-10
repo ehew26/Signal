@@ -83,7 +83,7 @@ export default function ChatWidget() {
         )}
         style={{ height: "min(70vh, 560px)" }}
       >
-        <div className="flex items-center gap-3 border-b border-line bg-white/[0.02] px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-line bg-black/[0.02] px-4 py-3">
           <span className="relative grid h-9 w-9 place-items-center rounded-full bg-brand-gradient text-sm font-semibold text-white">
             A
             <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-ink bg-emerald" />
@@ -105,7 +105,7 @@ export default function ChatWidget() {
                   "max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed",
                   m.role === "user"
                     ? "bg-brand-gradient text-white"
-                    : "bg-white/[0.04] text-mist-dim"
+                    : "bg-black/[0.04] text-mist-dim"
                 )}
               >
                 {m.content}
@@ -114,7 +114,7 @@ export default function ChatWidget() {
           ))}
           {loading && (
             <div className="flex justify-start">
-              <div className="rounded-2xl bg-white/[0.04] px-3.5 py-2.5 text-mist-faint">
+              <div className="rounded-2xl bg-black/[0.04] px-3.5 py-2.5 text-mist-faint">
                 <Loader2 className="h-4 w-4 animate-spin" />
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function ChatWidget() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type a message…"
-            className="flex-1 rounded-xl border border-line bg-black/20 px-3.5 py-2.5 text-sm text-mist outline-none placeholder:text-mist-faint focus:border-violet/60"
+            className="flex-1 rounded-xl border border-line bg-black/[0.03] px-3.5 py-2.5 text-sm text-mist outline-none placeholder:text-mist-faint focus:border-violet/60"
           />
           <button
             type="submit"

@@ -42,7 +42,7 @@ export default function HowItWorksScroll() {
                   <li key={s.title} className="flex gap-4">
                     <div
                       className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-semibold transition-all duration-300 ${
-                        on ? "bg-violet text-white" : "bg-white/[0.06] text-mist-faint"
+                        on ? "bg-violet text-white" : "bg-black/[0.05] text-mist-faint"
                       }`}
                     >
                       {i + 1}
@@ -85,7 +85,7 @@ export default function HowItWorksScroll() {
                     <span
                       key={i}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
-                        i === active ? "w-6 bg-violet" : "w-1.5 bg-white/20"
+                        i === active ? "w-6 bg-violet" : "w-1.5 bg-black/15"
                       }`}
                     />
                   ))}

@@ -51,7 +51,7 @@ export default function BillingPortalForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@business.com"
-        className="mt-2 w-full rounded-xl border border-line bg-black/20 px-4 py-3 text-mist outline-none transition-colors placeholder:text-mist-faint focus:border-line-strong"
+        className="mt-2 w-full rounded-xl border border-line bg-black/[0.02] px-4 py-3 text-mist outline-none transition-colors placeholder:text-mist-faint focus:border-line-strong"
       />
       <button
         type="submit"
