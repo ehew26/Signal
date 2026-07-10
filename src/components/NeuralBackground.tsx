@@ -18,6 +18,10 @@ export default function NeuralBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Skip the whole rAF/canvas loop on touch devices: there's no cursor to
+    // gravitate toward, so the interactive payoff is nil while the per-frame
+    // repaint is a real drain on phones. The static gradient + aurora remain.
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
