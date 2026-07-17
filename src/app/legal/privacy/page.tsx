@@ -1,53 +1,39 @@
 import type { Metadata } from "next";
-import PageShell, { PageHeader } from "@/components/site/PageShell";
-import { company } from "@/lib/content";
+import { store } from "@/lib/store";
+import LegalPage from "@/components/store/LegalPage";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How Vertex AI collects, uses, and protects your information.",
+  description: `How ${store.name} collects, uses, and protects your information.`,
 };
 
 const sections = [
   {
     h: "Information we collect",
-    p: "We collect information you provide directly — such as your name, email, company, and message when you contact us — and basic, aggregated analytics about how visitors use our site. We do not sell personal information.",
+    p: "We collect information you provide at checkout — name, email, and shipping address — and basic, aggregated analytics about how visitors use our site. Payment details are handled directly by our payment processor (Stripe) and never touch our servers.",
   },
   {
     h: "How we use it",
-    p: "We use your information to respond to inquiries, deliver and improve our services, and communicate about engagements you've requested. Client data handled during an engagement is governed by the terms of that engagement's agreement.",
+    p: "We use your information to process and ship your orders, provide support, prevent fraud, and — only if you opt in — send you occasional updates about new drops and restocks. We never sell your personal information.",
+  },
+  {
+    h: "Personalization",
+    p: "Our product recommendations are generated on your own device from what you browse. These preferences stay in your browser's local storage and are not uploaded to us or tied to your identity.",
   },
   {
     h: "Data security",
-    p: "We apply industry-standard safeguards to protect your information, including encryption in transit, access controls, and audit logging. For client engagements involving sensitive data, we implement additional controls including PII redaction where appropriate.",
+    p: "We use industry-standard measures to protect your data. Checkout runs over encrypted connections and is PCI-compliant via Stripe.",
   },
   {
-    h: "Third parties",
-    p: "We use a small number of reputable service providers (hosting, analytics, email) who process data on our behalf under appropriate agreements. We share information with them only as needed to operate our business.",
-  },
-  {
-    h: "Your rights",
-    p: "You may request access to, correction of, or deletion of your personal information at any time. Contact us and we'll respond promptly.",
+    h: "Your choices",
+    p: "You can unsubscribe from marketing at any time, and you can request access to or deletion of your personal data by emailing us. Clearing your browser storage removes your on-device personalization.",
   },
   {
     h: "Contact",
-    p: `Questions about this policy? Email ${company.email}.`,
+    p: `Questions about privacy? Email ${store.supportEmail} and we'll help.`,
   },
 ];
 
 export default function PrivacyPage() {
-  return (
-    <PageShell>
-      <PageHeader eyebrow="Legal" title="Privacy Policy" sub="Last updated June 17, 2026" />
-      <section className="px-5 pb-28 sm:px-8">
-        <div className="mx-auto max-w-3xl space-y-8">
-          {sections.map((s) => (
-            <div key={s.h}>
-              <h2 className="text-xl font-semibold text-mist">{s.h}</h2>
-              <p className="mt-2 leading-relaxed text-mist-dim">{s.p}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-    </PageShell>
-  );
+  return <LegalPage title="Privacy Policy" sections={sections} />;
 }

@@ -1,41 +1,33 @@
 import type { MetadataRoute } from "next";
-import { caseStudies } from "@/lib/data";
-import { posts } from "@/lib/content";
+import { getProducts } from "@/lib/catalog";
+import { CATEGORY_META, type Category } from "@/lib/products";
+import { store } from "@/lib/store";
 
-const BASE = "https://getvertex.vercel.app";
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  const BASE = store.url;
 
-  const staticRoutes = [
-    "",
-    "/services",
-    "/about",
-    "/insights",
-    "/contact",
-    "/login",
-    "/legal/privacy",
-    "/legal/terms",
-  ].map((path) => ({
+  const staticRoutes = ["", "/shop", "/cart", "/legal/privacy", "/legal/terms"].map((path) => ({
     url: `${BASE}${path}`,
     lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: path === "" ? 1 : 0.7,
+    changeFrequency: "weekly" as const,
+    priority: path === "" ? 1 : 0.6,
   }));
 
-  const workRoutes = caseStudies.map((c) => ({
-    url: `${BASE}/work/${c.id}`,
+  const categoryRoutes = (Object.keys(CATEGORY_META) as Category[]).map((c) => ({
+    url: `${BASE}/collections/${c}`,
     lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
   }));
 
-  const postRoutes = posts.map((p) => ({
-    url: `${BASE}/insights/${p.slug}`,
+  const products = await getProducts();
+  const productRoutes = products.map((p) => ({
+    url: `${BASE}/product/${p.slug}`,
     lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
   }));
 
-  return [...staticRoutes, ...workRoutes, ...postRoutes];
+  return [...staticRoutes, ...categoryRoutes, ...productRoutes];
 }
