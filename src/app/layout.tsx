@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
-import ChatWidget from "@/components/site/ChatWidget";
-import NeuralBackground from "@/components/NeuralBackground";
-import Spotlight from "@/components/Spotlight";
-import ScrollProgress from "@/components/ScrollProgress";
-import { company } from "@/lib/content";
+import { CartProvider } from "@/lib/cart";
+import Navbar from "@/components/store/Navbar";
+import Footer from "@/components/store/Footer";
+import CartDrawer from "@/components/store/CartDrawer";
+import { getActiveCategories } from "@/lib/catalog";
+import { store } from "@/lib/store";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,71 +15,60 @@ const inter = Inter({
   display: "swap",
 });
 
-const SITE_URL = "https://getvertex.vercel.app";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(store.url),
   title: {
-    default: "Vertex AI — AI Receptionist & Automation for Small Businesses",
-    template: "%s · Vertex AI",
+    default: `${store.name} — ${store.tagline}`,
+    template: `%s · ${store.name}`,
   },
-  description:
-    "Vertex AI sets up a 24/7 AI receptionist for small businesses across the USA — answering every call and text, capturing leads, and booking jobs automatically. Done for you, live in days.",
+  description: store.promise,
   keywords:
-    "AI receptionist, AI answering service, missed call text back, lead capture automation, appointment booking AI, small business automation, AI phone answering, follow-up automation",
-  authors: [{ name: "Vertex AI" }],
+    "beauty tools, wellness, LED face mask, ice globes, gua sha, skincare devices, self-care, recovery, viral beauty",
+  authors: [{ name: store.name }],
   openGraph: {
-    title: "Vertex AI — AI Receptionist for Small Businesses",
-    description:
-      "Never miss another call. Vertex AI answers, captures, and books your leads 24/7 — done for you, live in days.",
+    title: `${store.name} — ${store.tagline}`,
+    description: store.promise,
     type: "website",
-    url: SITE_URL,
-    siteName: "Vertex AI",
+    url: store.url,
+    siteName: store.name,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vertex AI — AI Receptionist for Small Businesses",
-    description: "Never miss another call. Vertex answers, captures, and books your leads 24/7.",
+    title: `${store.name} — ${store.tagline}`,
+    description: store.promise,
   },
   robots: { index: true, follow: true },
 };
 
-// Structured data — helps Vertex surface as a real service business in search.
-// Uses the centralized company contact details. Serves the whole USA.
-const localBusinessJsonLd = {
+const storeJsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: company.name,
-  description:
-    "AI receptionist, lead capture, booking, and follow-up automation for small businesses.",
-  url: SITE_URL,
-  telephone: company.phone,
-  email: company.email,
-  areaServed: { "@type": "Country", name: "United States" },
-  address: {
-    "@type": "PostalAddress",
-    addressCountry: "US",
-  },
-  priceRange: "$$",
-  sameAs: [company.social.linkedin, company.social.x],
+  "@type": "Store",
+  name: store.name,
+  description: store.promise,
+  url: store.url,
+  email: store.email,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const categories = await getActiveCategories();
+  const navCategories = categories.map((c) => ({ key: c.key, label: c.label }));
+
   return (
     <html lang="en" className={inter.variable}>
       <body className="bg-ink text-mist antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(storeJsonLd) }}
         />
-        <NeuralBackground />
-        <Spotlight />
-        <ScrollProgress />
-        {children}
-        <ChatWidget />
+        <CartProvider>
+          <Navbar categories={navCategories} />
+          <main>{children}</main>
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
         <Analytics />
       </body>
     </html>

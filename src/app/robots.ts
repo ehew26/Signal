@@ -1,14 +1,13 @@
 import type { MetadataRoute } from "next";
-
-const BASE = "https://getvertex.vercel.app";
+import { store } from "@/lib/store";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/dashboard", "/portal", "/api/"],
+      disallow: ["/admin", "/api/", "/order/"],
     },
-    sitemap: `${BASE}/sitemap.xml`,
+    sitemap: `${store.url}/sitemap.xml`,
   };
 }
