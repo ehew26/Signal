@@ -97,7 +97,7 @@ export default function NeuralBackground() {
           const d = Math.hypot(dx, dy);
           if (d < LINK_DIST) {
             const alpha = (1 - d / LINK_DIST) * 0.16;
-            ctx!.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
+            ctx!.strokeStyle = `rgba(110, 122, 58, ${alpha})`;
             ctx!.lineWidth = 1;
             ctx!.beginPath();
             ctx!.moveTo(a.x, a.y);
@@ -111,7 +111,7 @@ export default function NeuralBackground() {
         const dmc = Math.hypot(dxm, dym);
         if (dmc < MOUSE_DIST) {
           const alpha = (1 - dmc / MOUSE_DIST) * 0.28;
-          ctx!.strokeStyle = `rgba(124, 58, 237, ${alpha})`;
+          ctx!.strokeStyle = `rgba(85, 107, 46, ${alpha})`;
           ctx!.lineWidth = 1;
           ctx!.beginPath();
           ctx!.moveTo(a.x, a.y);
@@ -123,7 +123,7 @@ export default function NeuralBackground() {
       // dots
       for (const p of particles) {
         ctx!.fillStyle =
-          p.hue === "violet" ? "rgba(124, 58, 237, 0.5)" : "rgba(6, 182, 212, 0.5)";
+          p.hue === "violet" ? "rgba(85, 107, 46, 0.5)" : "rgba(150, 130, 60, 0.5)";
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx!.fill();

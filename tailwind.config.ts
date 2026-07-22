@@ -39,12 +39,12 @@ const config: Config = {
         lift: "0 2px 8px rgba(0,0,0,0.35), 0 24px 48px -24px rgba(0,0,0,0.6)",
         float: "0 40px 80px -40px rgba(0,0,0,0.7)",
         card: "var(--panel-shadow)",
-        glow: "0 0 32px -8px rgba(139,92,246,0.6)",
-        "glow-cyan": "0 0 32px -8px rgba(34,211,238,0.55)",
+        glow: "0 0 32px -8px rgba(85,107,46,0.55)",
+        "glow-cyan": "0 0 32px -8px rgba(150,130,60,0.5)",
       },
       backgroundImage: {
         "brand-gradient": "linear-gradient(135deg, rgb(var(--violet)), rgb(var(--cyan)))",
-        "brand-radial": "radial-gradient(60% 60% at 50% 0%, rgba(139,92,246,0.14), transparent 70%)",
+        "brand-radial": "radial-gradient(60% 60% at 50% 0%, rgba(85,107,46,0.14), transparent 70%)",
       },
       borderRadius: {
         "4xl": "2rem",

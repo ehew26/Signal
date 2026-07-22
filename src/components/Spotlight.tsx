@@ -59,7 +59,7 @@ export default function Spotlight() {
         marginLeft: "-260px",
         marginTop: "-260px",
         background:
-          "radial-gradient(circle, rgba(124,58,237,0.10) 0%, rgba(6,182,212,0.07) 40%, transparent 70%)",
+          "radial-gradient(circle, rgba(85,107,46,0.10) 0%, rgba(150,130,60,0.07) 40%, transparent 70%)",
       }}
     />
   );

@@ -46,8 +46,8 @@ export default function ScrollProgress() {
         className="h-full w-full origin-left"
         style={{
           transform: "scaleX(0)",
-          background: "linear-gradient(90deg, #7c3aed, #6366f1, #06b6d4)",
-          boxShadow: "0 0 10px rgba(124,58,237,0.5)",
+          background: "linear-gradient(90deg, #556b2e, #6e7a3a, #96823c)",
+          boxShadow: "0 0 10px rgba(85,107,46,0.5)",
         }}
       />
     </div>

@@ -8,7 +8,7 @@ export default function Aurora({ className = "" }: { className?: string }) {
     >
       <div
         className="mesh-blob absolute left-[6%] top-[-16%] h-[540px] w-[540px]"
-        style={{ background: "radial-gradient(circle, rgba(124,58,237,0.22), transparent 65%)" }}
+        style={{ background: "radial-gradient(circle, rgba(85,107,46,0.22), transparent 65%)" }}
       />
       <div
         className="mesh-blob absolute right-[2%] top-[-4%] h-[480px] w-[480px]"
@@ -16,7 +16,7 @@ export default function Aurora({ className = "" }: { className?: string }) {
       />
       <div
         className="mesh-blob absolute left-[40%] top-[18%] h-[560px] w-[560px]"
-        style={{ background: "radial-gradient(circle, rgba(99,102,241,0.16), transparent 65%)", animationDelay: "9s" }}
+        style={{ background: "radial-gradient(circle, rgba(150,130,60,0.16), transparent 65%)", animationDelay: "9s" }}
       />
       <div
         className="mesh-blob absolute right-[24%] top-[6%] h-[360px] w-[360px]"

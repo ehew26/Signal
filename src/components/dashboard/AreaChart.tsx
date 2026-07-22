@@ -34,12 +34,12 @@ export default function AreaChart() {
     <svg viewBox={`0 0 ${w} ${h}`} className="h-full w-full" preserveAspectRatio="none">
       <defs>
         <linearGradient id="rev" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.4" />
-          <stop offset="100%" stopColor="#7c5cff" stopOpacity="0" />
+          <stop offset="0%" stopColor="#8a9a5b" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#8a9a5b" stopOpacity="0" />
         </linearGradient>
         <linearGradient id="pipe" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.18" />
-          <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+          <stop offset="0%" stopColor="#96823c" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#96823c" stopOpacity="0" />
         </linearGradient>
       </defs>
 
@@ -57,12 +57,12 @@ export default function AreaChart() {
       ))}
 
       <path d={pipeline.area} fill="url(#pipe)" />
-      <path d={pipeline.line} fill="none" stroke="#22d3ee" strokeWidth="2" strokeOpacity="0.7" />
+      <path d={pipeline.line} fill="none" stroke="#96823c" strokeWidth="2" strokeOpacity="0.7" />
       <path d={revenue.area} fill="url(#rev)" />
-      <path d={revenue.line} fill="none" stroke="#7c5cff" strokeWidth="2.5" />
+      <path d={revenue.line} fill="none" stroke="#8a9a5b" strokeWidth="2.5" />
 
       {revenue.pts.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r="3" fill="#05060d" stroke="#7c5cff" strokeWidth="2" />
+        <circle key={i} cx={x} cy={y} r="3" fill="#05060d" stroke="#8a9a5b" strokeWidth="2" />
       ))}
 
       {data.map((d, i) => (
