@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { store } from "@/lib/store";
 
-/** Lumé wordmark — a soft luminous dot + refined type. */
 export default function Logo({
   className,
   href = "/",
@@ -14,16 +12,15 @@ export default function Logo({
 }) {
   return (
     <Link href={href} className={cn("group inline-flex items-center gap-2.5", className)}>
-      <span className="relative grid h-8 w-8 place-items-center">
-        <span
-          className="absolute inset-0 rounded-full opacity-90 blur-[6px] transition group-hover:opacity-100"
-          style={{ background: "radial-gradient(circle at 35% 30%, #fbcfe8, #a78bfa 60%, #38bdf8)" }}
-        />
-        <span className="relative h-4 w-4 rounded-full bg-white ring-1 ring-white/70" />
+      <span className="relative grid h-9 w-9 place-items-center rounded-[10px] bg-violet">
+        <svg viewBox="0 0 24 24" className="h-5 w-5 text-white" fill="none" aria-hidden="true">
+          <path d="M3 4l9 16L21 4" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+          <circle cx="12" cy="20" r="1.6" fill="currentColor" />
+        </svg>
       </span>
       {withText && (
-        <span className="text-[20px] font-semibold tracking-tight text-mist font-display">
-          {store.name}
+        <span className="text-[19px] font-semibold tracking-tight text-mist font-display">
+          Vertex<span className="text-mist-faint"> AI</span>
         </span>
       )}
     </Link>

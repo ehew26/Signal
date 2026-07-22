@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Vertex AI — Live Receptionist Demo</title>
+<style>
+:root{--bg:#070b16;--vio:#7c5cff;--blu:#3aa0ff;--grn:#3ad29f;--txt:#eaf0ff;--mut:#93a0cc;--line:#222c4d;}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(1200px 700px at 50% -10%,#141d3a,#070b16);color:var(--txt);font:15px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif;display:flex;flex-direction:column;align-items:center;padding:24px 14px 60px}
+.brandbar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--blu),var(--vio));display:flex;align-items:center;justify-content:center;font-weight:800}
+.brandbar b{font-size:16px}.brandbar span{color:var(--mut);font-size:12px}
+.setup{background:#111830;border:1px solid var(--line);border-radius:16px;padding:18px;width:100%;max-width:420px;margin-bottom:18px}
+.setup h2{margin:0 0 4px;font-size:16px}.setup p{margin:0 0 14px;color:var(--mut);font-size:13px}
+.setup label{display:block;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;margin:10px 0 4px}
+.setup input{width:100%;background:#0b1122;border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:10px 12px;font-size:14px}
+.rowf{display:flex;gap:10px}.rowf>div{flex:1}
+.chk{display:flex;align-items:center;gap:8px;margin-top:14px;color:var(--mut);font-size:13px}
+.big{width:100%;margin-top:16px;background:linear-gradient(135deg,var(--blu),var(--vio));border:0;color:#fff;font-weight:800;font-size:15px;padding:13px;border-radius:11px;cursor:pointer}
+.phone{width:100%;max-width:420px;background:linear-gradient(180deg,#0c1428,#0a1020);border:1px solid var(--line);border-radius:30px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5);display:none}
+.phone.on{display:block}
+.status{padding:16px 18px;background:linear-gradient(180deg,#12203f,#0c1730);border-bottom:1px solid var(--line);text-align:center}
+.status .biz{font-weight:800;font-size:17px}
+.status .st{color:var(--grn);font-size:12px;margin-top:2px}
+.status .st.after{color:#ffcf5c}
+.log{padding:16px;min-height:300px;max-height:52vh;overflow:auto;display:flex;flex-direction:column;gap:10px}
+.bub{max-width:80%;padding:10px 13px;border-radius:15px;font-size:14px;white-space:pre-wrap}
+.ai{align-self:flex-start;background:#1b294d;border-bottom-left-radius:5px}
+.ai .who{font-size:10px;color:var(--blu);font-weight:700;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em}
+.me{align-self:flex-end;background:#2b2350;border-bottom-right-radius:5px}
+.me .who{font-size:10px;color:#c4a9ff;font-weight:700;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;text-align:right}
+.typing{align-self:flex-start;color:var(--mut);font-size:13px;font-style:italic}
+.controls{padding:14px 16px;border-top:1px solid var(--line);background:#0b1122;display:flex;flex-direction:column;gap:8px}
+.reply{background:#18264a;border:1px solid var(--line);color:var(--txt);text-align:left;padding:11px 13px;border-radius:11px;cursor:pointer;font-size:14px}
+.reply:hover{border-color:var(--blu)}
+.inp{display:flex;gap:8px}
+.inp input{flex:1;background:#0b1122;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:11px 12px;font-size:14px}
+.inp button{background:var(--blu);border:0;color:#04203f;font-weight:800;border-radius:10px;padding:0 16px;cursor:pointer}
+.hint{color:var(--mut);font-size:11px;text-align:center}
+.owner{width:100%;max-width:420px;margin-top:16px;display:none}
+.owner.on{display:block}
+.owner .head{color:var(--mut);font-size:12px;text-align:center;margin-bottom:8px}
+.sms{background:#0f1a10;border:1px solid #234a2f;border-radius:16px;padding:14px 16px}
+.sms .t{font-weight:800;color:#5ee0ac;margin-bottom:8px}
+.sms .l{display:flex;gap:8px;font-size:14px;margin:4px 0}
+.sms .l b{color:var(--mut);min-width:70px;display:inline-block}
+.punch{background:#241a10;border:1px solid #5a4020;border-radius:14px;padding:14px 16px;margin-top:12px;font-size:14px}
+.punch b{color:#ffcf5c}
+.restart{width:100%;max-width:420px;margin-top:14px;background:transparent;border:1px solid var(--line);color:var(--txt);padding:11px;border-radius:11px;cursor:pointer}
+.foot{color:var(--mut);font-size:11px;max-width:420px;text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="brandbar"><div class="logo">V</div><div><b>Vertex AI</b> <span>&middot; live receptionist demo</span></div></div>
+
+<div class="setup" id="setup">
+  <h2>Set up the demo</h2>
+  <p>Enter the prospect's business, then run the call in front of them. The AI answers as their receptionist, takes an after-hours emergency, and texts the job to "the owner."</p>
+  <label>Business name</label>
+  <input id="biz" value="Katz Plumbing"/>
+  <div class="rowf">
+    <div><label>City</label><input id="city" value="Fort Myers"/></div>
+    <div><label>Trade word</label><input id="trade" value="plumbing"/></div>
+  </div>
+  <label class="chk"><input type="checkbox" id="voice" checked/> Speak the receptionist out loud</label>
+  <label>Receptionist voice</label>
+  <div class="inp">
+    <select id="voiceSel" style="flex:1;background:#0b1122;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:11px 12px;font-size:14px"><option>Loading voices...</option></select>
+    <button id="preview" type="button">Preview</button>
+  </div>
+  <div class="hint" style="text-align:left;margin-top:6px">Tip: if you see a voice labeled "Natural", "Neural", or "Online", pick it &mdash; those sound the most human.</div>
+  <button class="big" id="start">Start the demo call</button>
+</div>
+
+<div class="phone" id="phone">
+  <div class="status"><div class="biz" id="pbiz">Katz Plumbing</div><div class="st after" id="pst">Incoming call &middot; 9:14 PM (after hours)</div></div>
+  <div class="log" id="log"></div>
+  <div class="controls" id="controls"></div>
+</div>
+
+<div class="owner" id="owner">
+  <div class="head">What lands on the owner's phone, seconds later:</div>
+  <div class="sms" id="sms"></div>
+  <div class="punch" id="punch"></div>
+</div>
+
+<button class="restart" id="restart" style="display:none">Run it again</button>
+<div class="foot">This is a scripted demo that runs entirely in the browser &mdash; it always works, no phone line needed. The live version answers a real number; ask Vertex to set that up for your shop.</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let voiceOn=true, biz="Katz Plumbing", city="Fort Myers", trade="plumbing";
+let captured={address:"", name:"", phone:""};
+
+let selectedVoice=null;
+function pickVoiceList(){
+  const vs=window.speechSynthesis?speechSynthesis.getVoices():[];
+  const score=v=>{let s=0;const n=v.name;
+    if(/natural|neural|online/i.test(n))s+=100;
+    if(/(Aria|Jenny|Emma|Libby|Sonia|Michelle|Ava|Nova|Samantha|Serena)/i.test(n))s+=40;
+    if(/Google/i.test(n))s+=30;
+    if(/en-US/i.test(v.lang))s+=20; else if(/^en/i.test(v.lang))s+=10;
+    return s;};
+  return vs.filter(v=>/^en/i.test(v.lang)).sort((a,b)=>score(b)-score(a));
+}
+function populateVoices(){
+  const sel=$('voiceSel'); if(!sel)return;
+  const list=pickVoiceList(); if(!list.length)return;
+  const cur=selectedVoice&&selectedVoice.name;
+  sel.innerHTML=list.map(v=>'<option value="'+v.name+'">'+v.name.replace(/Microsoft ?/,'').replace(/ ?- English.*/,'')+' &middot; '+v.lang+'</option>').join('');
+  if(!selectedVoice)selectedVoice=list[0];
+  sel.value=cur||list[0].name;
+  sel.onchange=function(){selectedVoice=list.find(v=>v.name===sel.value)||list[0];};
+}
+function speak(text,onDone){
+  if(!voiceOn||!window.speechSynthesis){ if(onDone)setTimeout(onDone,600); return; }
+  speechSynthesis.cancel();
+  const sentences=(text.match(/[^.!?]+[.!?]*/g)||[text]).map(s=>s.trim()).filter(Boolean);
+  let idx=0;
+  const sayNext=function(){
+    if(idx>=sentences.length){ if(onDone)onDone(); return; }
+    const u=new SpeechSynthesisUtterance(sentences[idx]);
+    if(selectedVoice)u.voice=selectedVoice;
+    u.rate=0.9; u.pitch=0.96; u.volume=1;
+    u.onend=function(){ idx++; setTimeout(sayNext,200); };
+    u.onerror=function(){ idx++; setTimeout(sayNext,200); };
+    speechSynthesis.speak(u);
+  };
+  setTimeout(sayNext,260);
+}
+
+function bubble(who,text){
+  const d=document.createElement('div');
+  d.className='bub '+(who==='ai'?'ai':'me');
+  d.innerHTML='<div class="who">'+(who==='ai'?biz+' reception':'Caller')+'</div>'+text;
+  $('log').appendChild(d); $('log').scrollTop=$('log').scrollHeight;
+}
+function typing(on){
+  let t=$('typingEl');
+  if(on){ if(!t){t=document.createElement('div');t.id='typingEl';t.className='typing';t.textContent='...';$('log').appendChild(t);$('log').scrollTop=$('log').scrollHeight;} }
+  else if(t)t.remove();
+}
+
+function buildScript(){
+ return [
+  {type:'aiSay',text:"Thanks for calling "+biz+", this is the front desk. How can I help you tonight?"},
+  {type:'choice',opts:[
+     "I've got a pipe that burst, water's going everywhere in my kitchen!",
+     "My water heater is leaking all over the garage floor."]},
+  {type:'aiSay',text:"Oh no. Okay, let's get you help fast. Is the water actively flowing right now, or were you able to shut it off?"},
+  {type:'choice',opts:[
+     "It's still going, I can't find the shutoff valve!",
+     "I shut the main off, but there's already a mess."]},
+  {type:'aiSay',text:"Got it. I'm flagging this as an emergency so a technician gets to you quickly. What's the service address?"},
+  {type:'input',key:'address',ph:'Type an address... e.g. 812 SE 4th Ave'},
+  {type:'aiSay',text:function(){return "Thank you. And your name, and the best number to call you right back on?";}},
+  {type:'input',key:'namephone',ph:'Type a name & number... e.g. Dave, 239-555-0148'},
+  {type:'aiSay',text:function(){return "Perfect"+(captured.name?', '+captured.name:'')+". Just to confirm, a burst pipe"+(captured.address?' at '+captured.address:'')+", flagged urgent. A technician will call you within a few minutes. Anything else I can note?";}},
+  {type:'choice',opts:["No, that's it. Thank you so much!","No, please just hurry!"]},
+  {type:'aiSay',text:"You're all set. Help is on the way. Hang tight."},
+  {type:'end'}
+ ];
+}
+
+let script=[], i=0;
+function next(){
+  if(i>=script.length)return;
+  const t=script[i++];
+  const text = typeof t.text==='function'? t.text(): t.text;
+  if(t.type==='aiSay'){
+    typing(true);
+    setTimeout(function(){ typing(false); bubble('ai',text); speak(text, showControls); }, 650);
+  } else { showControlsFor(t); }
+}
+function showControls(){
+  const t=script[i];
+  if(!t){finish();return;}
+  if(t.type==='aiSay'){ next(); return; }
+  showControlsFor(t);
+}
+function showControlsFor(t){
+  const c=$('controls'); c.innerHTML='';
+  if(t.type==='choice'){
+    t.opts.forEach(function(o){ const b=document.createElement('button');b.className='reply';b.textContent=o;
+      b.onclick=function(){ bubble('me',o); c.innerHTML=''; i++; next(); }; c.appendChild(b); });
+    const h=document.createElement('div');h.className='hint';h.textContent="(you're the caller - pick a reply)";c.appendChild(h);
+  } else if(t.type==='input'){
+    const wrap=document.createElement('div');wrap.className='inp';
+    const inp=document.createElement('input');inp.placeholder=t.ph;
+    const btn=document.createElement('button');btn.textContent='Send';
+    const go=function(){ const v=inp.value.trim(); if(!v)return;
+      if(t.key==='address')captured.address=v;
+      if(t.key==='namephone'){ const m=v.match(/([0-9()\-\s.]{7,})/); captured.phone=m?m[1].trim():''; captured.name=v.replace(/([0-9()\-\s.]{7,})/,'').replace(/[,&]+$/,'').trim()||v; }
+      bubble('me',v); c.innerHTML=''; i++; next(); };
+    btn.onclick=go; inp.addEventListener('keydown',function(e){if(e.key==='Enter')go();});
+    wrap.appendChild(inp);wrap.appendChild(btn);c.appendChild(wrap);
+    setTimeout(function(){inp.focus();},50);
+  } else if(t.type==='end'){ finish(); }
+}
+function finish(){
+  $('controls').innerHTML='<div class="hint">Call ended &middot; 1 min 12 sec</div>';
+  const addr=captured.address||'812 SE 4th Ave';
+  const name=captured.name||'Dave';
+  const phone=captured.phone||'(239) 555-0148';
+  $('sms').innerHTML='<div class="t">NEW EMERGENCY LEAD - '+biz+'</div>'
+    +'<div class="l"><b>Name</b><span>'+name+'</span></div>'
+    +'<div class="l"><b>Phone</b><span>'+phone+'</span></div>'
+    +'<div class="l"><b>Address</b><span>'+addr+'</span></div>'
+    +'<div class="l"><b>Issue</b><span>Burst pipe, actively flooding - flagged URGENT</span></div>'
+    +'<div class="l"><b>Time</b><span>9:14 PM (after hours)</span></div>';
+  $('punch').innerHTML='<b>Here is the point:</b> it is 9:14 PM. Without someone answering, that call goes to voicemail - and most callers just dial the next '+trade+' shop. Vertex answered on the first ring, captured the job, and texted it to you. <b>That is a booked emergency you would have lost.</b>';
+  $('owner').classList.add('on');
+  $('restart').style.display='block';
+  $('owner').scrollIntoView({behavior:'smooth'});
+}
+
+$('start').onclick=function(){
+  biz=$('biz').value.trim()||'your shop'; city=$('city').value.trim()||'town'; trade=$('trade').value.trim()||'plumbing';
+  voiceOn=$('voice').checked;
+  $('pbiz').textContent=biz;
+  $('setup').style.display='none'; $('phone').classList.add('on');
+  $('log').innerHTML=''; $('controls').innerHTML=''; $('owner').classList.remove('on');
+  captured={address:'',name:'',phone:''}; script=buildScript(); i=0;
+  setTimeout(next,400);
+};
+$('restart').onclick=function(){ $('phone').classList.remove('on'); $('owner').classList.remove('on'); $('restart').style.display='none'; $('setup').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); };
+
+if(window.speechSynthesis)speechSynthesis.onvoiceschanged=populateVoices;
+populateVoices(); setTimeout(populateVoices,300); setTimeout(populateVoices,900);
+$('preview').onclick=function(){ const s=voiceOn; voiceOn=true; speak('Thanks for calling. This is the front desk. How can I help you tonight?', function(){voiceOn=s;}); };
+</script>
+</body>
+</html>
