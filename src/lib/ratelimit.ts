@@ -2,7 +2,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 
 /**
- * Rate limiting for the store's public API routes (checkout, products).
+ * Rate limiting for Vertex AI's public API routes (contact, chat, checkout).
  *
  * Uses Upstash Redis (sliding window) when UPSTASH_REDIS_REST_URL /
  * UPSTASH_REDIS_REST_TOKEN are set. With no Redis configured, `limit()`
@@ -24,7 +24,7 @@ function getLimiter(name: string, config: RateLimitConfig): Ratelimit | null {
   const limiter = new Ratelimit({
     redis: Redis.fromEnv(),
     limiter: Ratelimit.slidingWindow(config.requests, config.window),
-    prefix: `lume/${name}`,
+    prefix: `vertex-ai/${name}`,
   });
   limiters.set(name, limiter);
   return limiter;
