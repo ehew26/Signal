@@ -52,8 +52,8 @@ function ProgressRing({ value }: { value: number }) {
     <svg viewBox="0 0 120 120" className="h-32 w-32 -rotate-90">
       <defs>
         <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#7c5cff" />
-          <stop offset="100%" stopColor="#22d3ee" />
+          <stop offset="0%" stopColor="#8a9a5b" />
+          <stop offset="100%" stopColor="#96823c" />
         </linearGradient>
       </defs>
       <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="10" />

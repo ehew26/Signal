@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    /* Luminous light-futuristic theme */
+    /* Military olive-drab-on-white theme */
     --ink: 255 255 255;       /* page background — bright */
-    --ink-2: 246 247 253;
-    --ink-3: 250 251 255;
+    --ink-2: 247 247 243;
+    --ink-3: 251 251 247;
     --panel: 255 255 255;
-    --mist: 13 16 38;         /* near-black, slight indigo */
-    --mist-dim: 74 82 112;
-    --mist-faint: 126 134 163;
-    --violet: 124 58 237;     /* electric violet #7c3aed */
-    --violet-deep: 109 40 217;
-    --cyan: 6 182 212;        /* cyan #06b6d4 */
-    --indigo: 99 102 241;
+    --mist: 26 28 18;         /* near-black, slight olive */
+    --mist-dim: 82 84 66;
+    --mist-faint: 128 130 110;
+    --violet: 85 107 46;      /* olive drab #556B2E (primary accent) */
+    --violet-deep: 61 74 30;  /* deep field olive #3D4A1E */
+    --cyan: 150 130 60;       /* khaki / brass #96823C (secondary accent) */
+    --indigo: 110 122 58;     /* mid olive #6E7A3A */
     --emerald: 16 185 129;
     --amber: 217 119 6;
     --rose: 244 63 94;
-    --line: rgba(20, 24, 62, 0.09);
-    --line-strong: rgba(20, 24, 62, 0.16);
+    --line: rgba(45, 47, 26, 0.10);
+    --line-strong: rgba(45, 47, 26, 0.18);
 
     --panel-bg: rgba(255, 255, 255, 0.72);
-    --panel-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 2px 6px rgba(20, 24, 62, 0.05), 0 24px 60px -28px rgba(56, 42, 140, 0.28);
+    --panel-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 2px 6px rgba(45, 47, 26, 0.05), 0 24px 60px -28px rgba(56, 60, 24, 0.28);
     --glass-bg: rgba(255, 255, 255, 0.62);
 
     --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-inter), system-ui, sans-serif;
@@ -40,9 +40,9 @@
     --mist: 231 233 243;
     --mist-dim: 154 160 185;
     --mist-faint: 100 107 133;
-    --violet: 124 92 255;
-    --violet-deep: 91 61 240;
-    --cyan: 34 211 238;
+    --violet: 138 154 91;     /* light olive/sage for dark bg */
+    --violet-deep: 110 122 58;
+    --cyan: 176 161 96;       /* light khaki */
     --emerald: 52 211 153;
     --amber: 251 191 36;
     --rose: 251 113 133;
@@ -62,9 +62,9 @@
     background-color: rgb(var(--ink));
     /* living, barely-there gradient wash so the page never feels flat */
     background-image:
-      radial-gradient(1100px 620px at 82% -8%, rgba(124, 58, 237, 0.10), transparent 60%),
-      radial-gradient(950px 560px at 6% 2%, rgba(6, 182, 212, 0.09), transparent 58%),
-      radial-gradient(1000px 700px at 50% 108%, rgba(99, 102, 241, 0.08), transparent 60%);
+      radial-gradient(1100px 620px at 82% -8%, rgba(85, 107, 46, 0.12), transparent 60%),
+      radial-gradient(950px 560px at 6% 2%, rgba(150, 130, 60, 0.10), transparent 58%),
+      radial-gradient(1000px 700px at 50% 108%, rgba(110, 122, 58, 0.09), transparent 60%);
     background-attachment: fixed;
     color: rgb(var(--mist));
     font-family: var(--font-sans);
@@ -81,17 +81,17 @@
   }
   p { text-wrap: pretty; }
 
-  ::selection { background-color: rgba(124, 58, 237, 0.18); color: rgb(var(--mist)); }
+  ::selection { background-color: rgba(85, 107, 46, 0.20); color: rgb(var(--mist)); }
 
   ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.28); border-radius: 99px; border: 3px solid transparent; background-clip: content-box; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.45); background-clip: content-box; }
+  ::-webkit-scrollbar-thumb { background: rgba(85, 107, 46, 0.30); border-radius: 99px; border: 3px solid transparent; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(85, 107, 46, 0.48); background-clip: content-box; }
 }
 
 @layer components {
   /* Animated holographic gradient text */
   .gradient-text {
-    background: linear-gradient(100deg, rgb(var(--violet)) 0%, rgb(var(--cyan)) 45%, #7dd3fc 55%, rgb(var(--violet)) 100%);
+    background: linear-gradient(100deg, rgb(var(--violet)) 0%, rgb(var(--cyan)) 45%, #d8cfa0 55%, rgb(var(--violet)) 100%);
     background-size: 220% 100%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -142,7 +142,7 @@
     inset: 0;
     padding: 1px;
     border-radius: inherit;
-    background: linear-gradient(120deg, rgba(139, 92, 246, 0.85), rgba(34, 211, 238, 0.7), rgba(139, 92, 246, 0.85));
+    background: linear-gradient(120deg, rgba(85, 107, 46, 0.85), rgba(150, 130, 60, 0.7), rgba(85, 107, 46, 0.85));
     background-size: 220% 100%;
     animation: gradientFlow 6s linear infinite;
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -156,7 +156,7 @@
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-medium text-white;
     position: relative;
     background: linear-gradient(120deg, rgb(var(--violet)) 0%, rgb(var(--violet-deep)) 40%, rgb(var(--cyan)) 130%);
-    box-shadow: 0 0 24px -6px rgba(139, 92, 246, 0.55), 0 4px 16px -4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 24px -6px rgba(85, 107, 46, 0.5), 0 4px 16px -4px rgba(0, 0, 0, 0.5);
     transition: box-shadow 0.25s ease, transform 0.18s ease, filter 0.25s ease;
     overflow: hidden;
   }
@@ -169,7 +169,7 @@
     transition: transform 0.6s ease;
   }
   .btn-primary:hover {
-    box-shadow: 0 0 40px -6px rgba(139, 92, 246, 0.8), 0 0 20px -8px rgba(34, 211, 238, 0.6), 0 4px 16px -4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 40px -6px rgba(85, 107, 46, 0.8), 0 0 20px -8px rgba(150, 130, 60, 0.6), 0 4px 16px -4px rgba(0, 0, 0, 0.5);
     filter: brightness(1.08);
   }
   .btn-primary:hover::after { transform: translateX(120%); }
@@ -185,8 +185,8 @@
   }
   .btn-ghost:hover {
     background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(124, 58, 237, 0.45);
-    box-shadow: 0 8px 24px -12px rgba(124, 58, 237, 0.5);
+    border-color: rgba(85, 107, 46, 0.45);
+    box-shadow: 0 8px 24px -12px rgba(85, 107, 46, 0.5);
   }
   .btn-ghost:active { transform: scale(0.98); }
 
@@ -259,8 +259,8 @@
 /* Perspective grid floor — futuristic horizon (indigo lines on light) */
 .grid-floor {
   background-image:
-    linear-gradient(rgba(99, 102, 241, 0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.16) 1px, transparent 1px);
+    linear-gradient(rgba(85, 107, 46, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(85, 107, 46, 0.16) 1px, transparent 1px);
   background-size: 44px 44px;
   transform: perspective(500px) rotateX(62deg);
   transform-origin: center top;
